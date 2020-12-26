@@ -7,16 +7,22 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.kirgu_tsd.ru"
-    },
-    "cordova-plugin-ionic-webview": {
+    "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.kirgu_tsd.ru"
     },
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "com.kirgu_tsd.ru"
     },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.kirgu_tsd.ru"
+    },
     "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.kirgu_tsd.ru"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.kirgu_tsd.ru"
+    },
+    "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.kirgu_tsd.ru"
     }
   },

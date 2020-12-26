@@ -1,0 +1,276 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Документы</div>
+
+                <div class="right">
+
+                    <a @click="addDocument" href="#" class="link {{#unless documents}}disabled{{/unless}}">
+
+                        <i class="icon material-icons">add</i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            {{#if documents}}
+
+                {{#js_if "this.documents.length > 0"}}
+
+                    <div class="list">
+
+                        <ul>
+
+                            {{#each documents}}
+
+                                <li class="swipeout">
+
+                                    <a @click="openDocument('{{Номер}}')" class="item-content item-link swipeout-content">
+
+                                        <div class="item-inner">
+
+                                            <div class="item-title">{{Номер}}</div>
+
+                                        </div>
+
+                                    </a>
+
+                                    <div class="swipeout-actions-right">
+
+                                        <a  @click="deleteDocument('{{Номер}}')" href="#" class="color-red swipeout-close button-remove">Удалить</a>
+
+                                    </div>
+
+                                </li>
+
+                            {{/each}}
+
+                        </ul>
+
+                    </div>
+
+                {{else}}
+
+                    <div class="margin">У вас нет добавленных документов.</div>
+
+                {{/js_if}}
+
+            {{else}}
+
+                <div class="margin text-align-center">
+
+                    <div class="preloader"></div>
+
+                </div>
+
+            {{/if}}
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            openDocument: function (doc_num){
+
+                let component = this;
+                let page = component.$el;
+
+                let document = component.documents.find(function (document) {
+
+                    return document.Номер == doc_num;
+
+                });
+
+                console.log(document);
+
+                app.view.current.router.navigate('/documents/document', {
+                    context: {
+                        document: document
+                    }
+                });
+
+            },
+            deleteDocument: function (doc_num){
+
+                let component = this;
+                let page = component.$el;
+
+                app.dialog.confirm('Вы уверенны, что хотите удалить ' + doc_num + '?', 'Внимание', function () {
+
+                    let documents = component.documents.filter(function (document) {
+
+                        return document.Номер !== doc_num;
+
+                    });
+
+                    localforage.setItem('documents', documents, function () {
+
+                        component.initDocuments();
+
+                    });
+
+                });
+
+            },
+            initDocuments: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                localforage.getItem('documents').then(function(value) {
+
+                    if (value !== undefined && value !== null) {
+
+                        component.documents = value;
+
+                    } else {
+
+                        component.documents = [];
+                    }
+
+                    component.$update();
+
+                });
+
+            },
+            addDocument: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                app.dialog.prompt('', 'Введите номер документа...', function (value) {
+
+                    if (value.length == 0) {
+
+                        app.dialog.alert('Похоже вы ничего не ввели...', 'Упс :(');
+
+                        return false;
+
+                    }
+
+                    let document = component.documents.find(function (document) {
+
+                        return document.Номер == value;
+
+                    });
+
+                    if (document) {
+
+                        app.dialog.alert('', 'Документ уже добавлен!');
+
+                    } else {
+
+                        component.searchDocument(value);
+
+                    }
+
+                });
+
+            },
+            searchDocument: function (doc_num) {
+
+                let component = this;
+                let page = component.$el;
+
+                let url = app.params.backend + '/' + 'transfer_doc_str_all' + '/' + app.params.user.code + '/' + doc_num + '/';
+
+                app.request({
+                    url: encodeURI(url),
+                    dataType: 'json',
+                    beforeSend: function () {
+
+                        app.preloader.show();
+
+                    },
+                    success: function (response) {
+
+                        let document = response[0];
+
+                        console.log(document);
+
+                        if (document.Статус == 'Успешно') {
+
+                            component.documents.push(document);
+
+                            localforage.setItem('documents', component.documents, function() {
+
+                                component.initDocuments();
+
+                            });
+
+                        } else {
+
+                            app.toast.create({
+                                text: document.ОписаниеОшибки,
+                                position: 'top',
+                                cssClass: 'bg-color-red',
+                                closeTimeout: 5000
+                            }).open();
+
+                        }
+
+                    },
+                    complete: function () {
+
+                        app.preloader.hide();
+
+                    }
+                });
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+                let component = this;
+                let page = component.$el;
+
+                component.initDocuments();
+
+            }
+        }
+
+    }
+
+</script>

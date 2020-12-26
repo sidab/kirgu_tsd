@@ -1,26 +1,92 @@
 <template>
 
-    <div class="page bg-color-white">
+    <div class="page">
 
-        <div class="navbar navbar-large">
+        <div class="page-content">
 
-            <div class="navbar-bg bg-color-white"></div>
+            <div class="block-title block-title-medium">Действия</div>
 
-            <div class="navbar-inner sliding">
+            <div class="list media-list links-list {{#js_if "app.params.base.length == 0"}}disabled{{/js_if}}">
 
-                <div class="title">Сервисы</div>
+                <ul>
 
-                <div class="title-large">
+                    <li>
 
-                    <div class="title-large-text">Сервисы</div>
+                        <a href="/item-info" class="item-content">
 
-                </div>
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">info</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Информация о товаре</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/documents" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">description</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Документы</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                </ul>
 
             </div>
 
-        </div>
+            {{#js_if "app.params.base.length == 0"}}
 
-        <div class="page-content">
+                <div class="margin">Для работы необходимо загрузить базу, для этого перейдите в настройки.</div>
+
+            {{/js_if}}
+
+            <div class="list media-list links-list">
+
+                <ul>
+
+                    <li>
+
+                        <a href="/settings" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">settings</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Настройки</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
 
         </div>
 
@@ -49,6 +115,13 @@
         on: {
 
             pageInit: function() {
+
+            },
+            pageReinit: function () {
+
+                let component = this;
+
+                component.$update();
 
             }
 

@@ -3,11 +3,14 @@ var $$ = Dom7;
 var app = new Framework7({
     root: '#app',
     name: 'Киргу ТСД',
-    theme: 'ios',
+    theme: 'md',
     version: 1.0,
     routes: routes,
     init: false,
-    user: localStorage.user ? localStorage.user : false,
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : false,
+    itemsInPart: 20000,
+    base: [],
+    backend:'http://192.168.200.110/proxy.php?url=http://192.168.215.10/murad/hs/tsd',
     dialog: {
         buttonOk: 'Ок',
         buttonCancel: 'Отмена'
@@ -191,6 +194,54 @@ var app = new Framework7({
 
             app.views.current.router.back();
 
+        },
+        getBase: function (base, i) {
+
+            if (i >= base.length) {
+
+                app.dialog.close();
+
+                app.emit('baseInited');
+
+                return false;
+
+            }
+
+            let key = base[i];
+
+            localforage.getItem(key).then(function (value) {
+
+                app.params.base = app.params.base.concat(value);
+
+                app.methods.getBase(base, i + 1);
+
+            });
+
+        },
+        initBase: function () {
+
+            app.dialog.preloader('Инициализация базы...');
+
+            localforage.keys().then(function(keys) {
+
+                let base = keys.filter(function(key){
+
+                    return key.indexOf('base') !== -1;
+
+                });
+
+                if (base.length > 0) {
+
+                    app.methods.getBase(base, 0);
+
+                } else {
+
+                    app.dialog.close();
+
+                }
+
+            });
+
         }
     },
     on: {
@@ -211,117 +262,173 @@ try {
 
 }
 
-app.init();
+$$(document).on('deviceready', function () {
 
-app.request.setup({
-    beforeSend: function(xhr) {
+    app.init();
 
-    },
-    complete: function(xhr) {
+    app.request.setup({
+        beforeSend: function(xhr) {
 
-        console.log(xhr);
+        },
+        complete: function(xhr) {
 
-    },
-    error: function () {
+            console.log(xhr);
 
-    }
-});
+        },
+        error: function () {
 
-app.views.create('.view-main', {
-    url: '/main',
-    main: true
-});
+        }
+    });
 
-if (app.device.android) {
+    if (app.params.user) {
 
-    var attachFastClick = Origami.fastclick;
+        app.methods.initBase();
 
-    attachFastClick(document.body);
+        $$('.view-main').removeClass('display-none');
 
-}
+        app.on('baseInited', function () {
 
-$$(window).on('click', '.input-clear-button', function() {
+            app.views.create('.view-main', {
+                url: '/main',
+                main: true
+            });
 
-    $$(this).prev().val('').focus();
+        });
 
-});
+    } else {
 
-$$(window).on('keypress', 'input', function (e) {
+        app.views.create('.view-auth', {
+            url: '/auth',
+            main: true
+        });
 
-    if (e.which == 13) {
-
-        document.activeElement.blur();
-
-        $$(this).blur();
-
-        Keyboard.hide();
+        $$('.view-auth').removeClass('display-none');
 
     }
 
-});
+    navigator.splashscreen.hide();
 
-$$(window).on('touchmove', function (e) {
+    if (app.device.android) {
 
-    let activeElement = $$(document.activeElement)[0];
+        var attachFastClick = Origami.fastclick;
 
-    if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
-
-        document.activeElement.blur();
-
-        $$('input').blur();
-
-        Keyboard.hide();
+        attachFastClick(document.body);
 
     }
 
-});
+    $$(document).keydown(function(event) {
 
-$$(window).on('keyboardWillShow', function (e) {
+        if ($$('.dialog.modal-in').length > 0) {
 
-    $$('.toolbar-menu').css('visibility', 'hidden');
+            setTimeout(function() {
 
-});
+                if (event.key == 'Enter') {
 
-$$(window).on('keyboardWillHide', function () {
+                    $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
 
-    $$('.toolbar-menu').css('visibility', 'visible');
+                    setTimeout(function() {
 
-});
+                        app.dialog.close();
 
-$$(document).on('tab:show', function () {
+                    });
 
-    var first = true;
+                }
 
-    $$(document).off('click', '.toolbar-menu .tab-link-active').on('click', '.toolbar-menu .tab-link-active', function (event) {
+            },30);
 
-        if (!first) {
+            if (event.key === "Escape") {
 
-            var viewId = $$(this).attr('href');
-            var view = app.views.get(viewId);
-            var viewUrl = view.params.url;
-
-            if (viewId !== '#view-profile') {
-
-                view.router.back(viewUrl, {
-                    force: true
-                });
+                app.dialog.close();
 
             }
 
-            app.methods.backButton(false);
-
         }
+    });
 
-        first = false;
+    $$(window).on('click', '.input-clear-button', function() {
+
+        $$(this).prev().val('').focus();
 
     });
 
-});
+    $$(window).on('keypress', 'input', function (e) {
 
-$$(document).trigger('tab:show');
+        if (e.which == 13) {
 
-$$(document).on('backbutton', function (event) {
+            document.activeElement.blur();
 
-    app.methods.backButton();
+            $$(this).blur();
+
+            Keyboard.hide();
+
+        }
+
+    });
+
+    $$(window).on('touchmove', function (e) {
+
+        let activeElement = $$(document.activeElement)[0];
+
+        if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
+
+            document.activeElement.blur();
+
+            $$('input').blur();
+
+            Keyboard.hide();
+
+        }
+
+    });
+
+    $$(window).on('keyboardWillShow', function (e) {
+
+        $$('.toolbar-menu').css('visibility', 'hidden');
+
+    });
+
+    $$(window).on('keyboardWillHide', function () {
+
+        $$('.toolbar-menu').css('visibility', 'visible');
+
+    });
+
+    $$(document).on('tab:show', function () {
+
+        var first = true;
+
+        $$(document).off('click', '.toolbar-menu .tab-link-active').on('click', '.toolbar-menu .tab-link-active', function (event) {
+
+            if (!first) {
+
+                var viewId = $$(this).attr('href');
+                var view = app.views.get(viewId);
+                var viewUrl = view.params.url;
+
+                if (viewId !== '#view-profile') {
+
+                    view.router.back(viewUrl, {
+                        force: true
+                    });
+
+                }
+
+                app.methods.backButton(false);
+
+            }
+
+            first = false;
+
+        });
+
+    });
+
+    $$(document).trigger('tab:show');
+
+    $$(document).on('backbutton', function (event) {
+
+        app.methods.backButton();
+
+    });
 
 });

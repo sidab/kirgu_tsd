@@ -1,0 +1,269 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Информация о товаре</div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <input type="text" class="barcode bg-color-gray">
+
+            {{#if item}}
+
+                <div class="block-title block-title-medium">{{item.Номенклатура}}</div>
+
+                <div class="list">
+
+                    <ul>
+
+                        {{#if item.Артикул}}
+
+                            <li>
+
+                                <div class="item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Артикул</div>
+
+                                        <div class="item-after">{{item.Артикул}}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/if}}
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Розничная цена</div>
+
+                                    <div class="item-after">{{item.РозничнаяЦена}}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Количество</div>
+
+                                    <div class="item-after">{{item.КоличествоНаСкладе}}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        <li class="accordion-item accordion-item-opened">
+
+                            <a href="#" class="item-content item-link">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Характеристика</div>
+
+                                </div>
+
+                            </a>
+
+                            <div class="accordion-item-content">
+
+                                <div class="block">
+
+                                    <p>{{item.ХарактеристикаНоменклатуры}}</p>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            {{else}}
+
+                <div class="margin">
+
+                    Для поиска товара отсканируйте штрихкод.
+
+                    <div class="scanner-img"></div>
+
+                </div>
+
+            {{/if}}
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} .barcode {
+        position: absolute;
+        opacity: 0;
+    }
+
+    {{this}} .block-title {
+        white-space: normal;
+             }
+
+    {{this}} .list .item-title {
+                 white-space: normal;
+                 word-wrap: break-word;
+             }
+
+    {{this}} .list .item-after {
+                 max-width: 45%;
+                 white-space: normal;
+                 text-align: right;
+                 word-wrap: break-word;
+             }
+
+    {{this}} .scanner-img {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url('img/scanner-1.png');
+        width: 100%;
+        height: 50vh
+             }
+
+    {{this}} .accordion-item-content {
+                 background: rgb(255 0 0 / 10%);
+             }
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            barcodeHandler: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let barcode = page.find('.barcode').val();
+
+                let item = app.params.base.find(function (item) {
+
+                    return item.Штрихкод == barcode;
+
+                });
+
+                if (!item) {
+
+                    item = false;
+
+                    app.toast.create({
+                        text: 'Штрихкод не найден!',
+                        closeTimeout: 2000,
+                        cssClass: 'bg-color-red',
+                        position: 'top'
+                    }).open();
+
+                }
+
+                component.item = item;
+
+                component.$update();
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+                let component = this;
+                let page = component.$el;
+
+                page.find('.barcode').on('input', function () {
+
+                    setTimeout(function() {
+
+                        let barcode = page.find('.barcode').val();
+
+                        if (barcode.length > 11) {
+
+                            if (barcode.length == 12) {
+
+                                barcode = '0' + barcode;
+
+                            }
+
+                            component.barcodeHandler(barcode);
+
+                        }
+
+                    }, 30);
+
+                });
+
+                $$(window).keydown(function(event) {
+
+                    let key = event.keyCode;
+
+                    console.log(key);
+
+                    if (key == 114 || key == 0 || key == 91) {
+
+                        page.find('.barcode').val('');
+
+                        page.find('.barcode').focus();
+
+                    }
+
+                });
+
+            }
+
+        }
+
+    }
+
+</script>

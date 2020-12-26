@@ -19,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "cordova-browser": "^6.0.0",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^5.0.0"
   }

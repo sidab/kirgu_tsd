@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="" />
+    <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="fix">
+      <change afterPath="$PROJECT_DIR$/www/pages/auth/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/www/pages/documents/document.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/www/pages/documents/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/www/pages/item-info/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/www/pages/settings/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/browser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/css/icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/css/icons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/framework7.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/framework7.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/browser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/fetch.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/fetch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/css/icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/css/icons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/js/framework7.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/framework7.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/main.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +46,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1lrngKjgYpPAKtpJiGh8ZljWmtq" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -65,12 +93,25 @@
       <option name="presentableId" value="Default" />
       <updated>1608364187629</updated>
       <workItem from="1608364188796" duration="1893000" />
-      <workItem from="1608530405645" duration="2952000" />
+      <workItem from="1608530405645" duration="29449000" />
+      <workItem from="1608798291317" duration="14571000" />
     </task>
+    <task id="LOCAL-00001" summary="fix">
+      <created>1608534028711</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608534028711</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1360" y="205" key="#Deployment" timestamp="1608533738363">
@@ -81,13 +122,41 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1608533747444">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1608554252754">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533747444" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608554252754" />
+    <state width="1899" height="305" key="GridCell.Tab.0.bottom" timestamp="1608877186352">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="305" key="GridCell.Tab.0.bottom/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608877186352" />
+    <state width="1899" height="305" key="GridCell.Tab.0.bottom/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1608549035229" />
+    <state width="1899" height="305" key="GridCell.Tab.0.center" timestamp="1608877186350">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="305" key="GridCell.Tab.0.center/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608877186350" />
+    <state width="1899" height="305" key="GridCell.Tab.0.center/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1608549035225" />
+    <state width="1899" height="305" key="GridCell.Tab.0.left" timestamp="1608877186348">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="305" key="GridCell.Tab.0.left/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608877186348" />
+    <state width="1899" height="305" key="GridCell.Tab.0.left/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1608549035222" />
+    <state width="1899" height="305" key="GridCell.Tab.0.right" timestamp="1608877186351">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1899" height="305" key="GridCell.Tab.0.right/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608877186351" />
+    <state width="1899" height="305" key="GridCell.Tab.0.right/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1608549035227" />
     <state x="-1451" y="179" key="SettingsEditor" timestamp="1608533455535">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1608535674487">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608535674487" />
+    <state x="-1295" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1608622019538">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="-1295" y="241" width="670" height="676" key="search.everywhere.popup/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608622019538" />
   </component>
 </project>

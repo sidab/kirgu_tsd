@@ -1,0 +1,292 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Настройки</div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="block-title block-title-medium">Сотрудник</div>
+
+            <div class="list">
+
+                <ul>
+
+                    <li>
+
+                        <div class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">ФИО</div>
+
+                                <div class="item-after">{{js "app.params.user.name"}}</div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li>
+
+                        <div class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Логин</div>
+
+                                <div class="item-after">{{js "app.params.user.code"}}</div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="block block-strong">
+
+                <a @click="chooseBase" class="col button button-fill button-raised color-teal margin-bottom">Загрузить базу</a>
+
+                <a @click="clearCache" class="col button button-fill button-raised color-gray margin-bottom">Очистить кэш</a>
+
+                <a @click="logout" class="col button button-fill button-raised color-red">Выход</a>
+
+            </div>
+
+            <div class="block-title  block-title-medium">О приложении</div>
+
+            <div class="list">
+
+                <ul>
+
+                    <li>
+
+                        <div class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Версия</div>
+
+                                <div class="item-after">{{js "app.version"}}</div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            chooseBase: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                app.dialog.create({
+                    title: 'Загрузка базы',
+                    buttons: [
+                        {
+                            text: 'Загрузить остатки отдела',
+                            cssClass: 'text-align-center',
+                            onClick: function () {
+
+                                let url = app.params.backend + '/all_goods/' + app.params.user.code;
+
+                                component.loadBase('ostatkiOtdela', url);
+
+                            }
+                        },
+                        {
+                            text: 'Загрузить полную базу',
+                            cssClass: 'text-align-center',
+                            onClick: function () {
+
+                                let url = app.params.backend + '/all_goods_new/' + app.params.user.code;
+
+                                component.loadBase('allBase', url);
+
+                            }
+                        }
+                    ],
+                    verticalButtons: true,
+                }).open();
+
+            },
+            saveBase: function (i) {
+
+                let component = this;
+
+                let items = app.params.base;
+
+                let itemsCount = items.length;
+
+                let parts = itemsCount / app.params.itemsInPart - 1;
+
+                let saveKey = 'base-' + i;
+
+                let saveItems = items.slice(i * app.params.itemsInPart, i * app.params.itemsInPart + app.params.itemsInPart);
+
+                localforage.setItem(saveKey, saveItems).then(function (value) {
+
+                    if (i < parts) {
+
+                        component.saveBase(i + 1);
+
+                    } else {
+
+                        component.dialogProgress.close();
+
+                        app.dialog.alert('Вы успешно загрузили базу!');
+
+                    }
+
+                });
+
+            },
+            loadBase: function (type, url) {
+
+                let component = this;
+
+                let request = app.request({
+                    url: encodeURI(url),
+                    dataType: 'json',
+                    beforeCreate: function () {
+
+                        component.dialogProgress = app.dialog.progress('Загрузка базы...');
+
+                    },
+                    success: function (response) {
+
+                        component.dialogProgress.setTitle('Сохранение данных...');
+
+                        let items = response[0];
+
+                        app.params.base = items;
+
+                        component.saveBase(0);
+
+                    }
+                });
+
+                request.addEventListener('progress', function (xhr) {
+
+                    let contentLength;
+
+                    if (xhr.lengthComputable) {
+
+                        contentLength = xhr.total;
+
+                        let progress = (xhr.loaded / contentLength) * 100;
+
+                        component.dialogProgress.setProgress(progress);
+
+                        component.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+
+                        if (progress === 100) {
+
+                            setTimeout(function () {
+
+                                dialogProgress.close();
+
+                            }, 500);
+
+                        }
+
+                    }
+
+                }, false);
+
+            },
+            logout: function() {
+
+                app.dialog.confirm('Вы уверены что хотите выйти?', 'Внимание', function () {
+
+                    app.preloader.show();
+
+                    localforage.clear().then(function () {
+
+                        localStorage.clear();
+
+                        location.reload();
+
+                    });
+
+                });
+
+            },
+            clearCache: function () {
+
+                app.dialog.confirm('Вы уверены?', 'Внимание', function () {
+
+                    app.preloader.show();
+
+                    localforage.clear().then(function () {
+
+                        app.preloader.hide();
+
+                    });
+
+                });
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+            }
+
+        }
+
+    }
+
+</script>

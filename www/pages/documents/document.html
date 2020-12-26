@@ -1,0 +1,314 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title">{{document.Номер}}</div>
+
+                <div class="right">
+
+                    <a href="#" class="link">
+
+                        <i class="icon material-icons">format_align_justify</i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <input type="text" class="barcode bg-color-gray">
+
+            {{#if items}}
+
+                <div class="list accordion-list">
+
+                    <ul>
+
+                        {{#each items}}
+
+                            <li class="accordion-item">
+
+                                <a class="item-link item-content">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">{{Номенклатура}}</div>
+
+                                    </div>
+
+                                </a>
+
+                                <div class="accordion-item-content">
+
+                                    <div class="list">
+
+                                        <ul>
+
+                                            <li>
+
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+
+                                                        <div class="item-title">Артикул</div>
+                                                        <div class="item-after item-price">{{Артикул}}</div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            <li>
+
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+
+                                                        <div class="item-title">Розничная цена</div>
+                                                        <div class="item-after item-price">{{ЦенаРозничная}}</div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            <li>
+
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+
+                                                        <div class="item-title">Штрихкод</div>
+                                                        <div class="item-after item-price">{{Штрихкод}}</div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            <li>
+
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+
+                                                        <div class="item-title">Количество остаток</div>
+                                                        <div class="item-after item-price">{{КоличествоОстаток}}</div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            <li>
+
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+
+                                                        <div class="item-title">Кол. по документ</div>
+                                                        <div class="item-after item-price">{{КоличествоДокумент}}</div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            {{#js_if "this.ХарактеристикаНоменклатуры.length > 1"}}
+
+                                                <li class="accordion-item accordion-item-opened">
+
+                                                    <a href="#" class="item-content item-link">
+
+                                                        <div class="item-inner">
+
+                                                            <div class="item-title">Характеристика</div>
+
+                                                        </div>
+
+                                                    </a>
+
+                                                    <div class="accordion-item-content">
+
+                                                        <div class="block">
+
+                                                            <p>{{ХарактеристикаНоменклатуры}}</p>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </li>
+
+                                            {{/js_if}}
+
+                                            <li>
+
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+
+                                                        <div class="item-title">Количество</div>
+
+                                                        <div class="item-after input-quantity-block">
+
+                                                            <input type="number" name="count" data-id="{{УИД_Строки}}" class="item-count text-align-center padding-horizontal" value="{{КоличествоСобрано}}"/>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            <div class="margin padding-bottom">
+
+                                                <button data-id="{{УИД_Строки}}" class="button button-fill button-save col color-teal">
+
+                                                    <i class="icon material-icons">save</i>
+
+                                                    <span>Сохранить</span>
+
+                                                </button>
+
+                                            </div>
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        {{/each}}
+
+                    </ul>
+
+                </div>
+
+            {{/if}}
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} .barcode {
+        position: absolute;
+        opacity: 0;
+    }
+
+    {{this}} .item-title {
+        white-space: normal;
+             }
+    {{this}} .accordion-item-content {
+                 background: rgb(255 59 48 / 0.06);
+             }
+
+    {{this}} .accordion-item-content ul {
+background: transparent;
+             }
+
+    {{this}} .input-quantity-block {
+
+             }
+    {{this}} .input-quantity-block input {
+                 width: 80px;
+                 border-radius: 4px;
+        background: #000;
+        color: #fff;
+        border: 1px solid transparent;
+             }
+
+    {{this}} .input-quantity-block input:focus {
+                 background: rgb(1 150 136);
+        border-color: var(--f7-theme-color);
+             }
+
+    {{this}} .button-save i {
+                 font-size: 14px;
+             }
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            initItems: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let items = component.document.Строки;
+
+                component.items = items;
+
+                component.$update(function () {
+
+                    page.find('.accordion-item').on('accordion:open', function () {
+
+                        $$(this).find('input').focus();
+
+                        $$(this).find('input')[0].select();
+
+                    });
+
+                });
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+                let component = this;
+                let page = component.$el;
+
+                component.initItems();
+
+            }
+
+        }
+
+    }
+
+</script>
