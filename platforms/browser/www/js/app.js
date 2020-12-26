@@ -236,6 +236,8 @@ var app = new Framework7({
 
                 } else {
 
+                    app.emit('baseInited');
+
                     app.dialog.close();
 
                 }
