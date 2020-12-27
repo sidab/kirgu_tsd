@@ -322,21 +322,11 @@ $$(document).on('deviceready', function () {
 
         if ($$('.dialog.modal-in').length > 0) {
 
-            setTimeout(function() {
+            if (event.key == 'Enter') {
 
-                if (event.key == 'Enter') {
+                $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
 
-                    $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
-
-                    setTimeout(function() {
-
-                        app.dialog.close();
-
-                    });
-
-                }
-
-            },30);
+            }
 
             if (event.key === "Escape") {
 
