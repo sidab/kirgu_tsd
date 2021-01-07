@@ -474,6 +474,12 @@ position: relative;
 
                 component.saveDocument();
 
+                setTimeout(function () {
+
+                    app.accordion.close(accordion);
+
+                }, 1000);
+
             },
             saveDocument: function () {
 
@@ -630,7 +636,7 @@ position: relative;
 
                         component.barcodeTimeout = false;
 
-                    }, 30);
+                    }, 100);
 
                 });
 
