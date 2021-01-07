@@ -1,6 +1,6 @@
 <template>
 
-    <div class="page">
+    <div class="page" data-name="document">
 
         <div class="navbar">
 
@@ -18,15 +18,79 @@
 
                 </div>
 
-                <div class="title">{{document.Номер}}</div>
+                <div class="title"></div>
 
                 <div class="right">
 
                     <a href="#" class="link">
 
-                        <i class="icon material-icons">format_align_justify</i>
+                        <i class="icon material-icons text-color-teal">done</i>
 
                     </a>
+
+                    <a @click="search" href="#" class="link">
+
+                        <i class="icon material-icons">find_in_page</i>
+
+                    </a>
+
+                    <a href="#" class="link">
+
+                        <i class="icon material-icons">sort</i>
+
+                    </a>
+
+                    <a href="#" class="link popover-open" data-popover=".popover-filter">
+
+                        <i class="icon material-icons">compare_arrows</i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="popover popover-filter">
+
+            <div class="popover-inner">
+
+                <div class="list">
+
+                    <ul>
+
+                        <li class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Сканированные</div>
+
+                            </div>
+
+                        </li>
+
+                        <li class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Сканированные</div>
+
+                            </div>
+
+                        </li>
+
+                        <li class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Сканированные</div>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
 
                 </div>
 
@@ -46,7 +110,7 @@
 
                         {{#each items}}
 
-                            <li class="accordion-item">
+                            <li class="accordion-item" data-id="{{Штрихкод}}">
 
                                 <a class="item-link item-content">
 
@@ -54,110 +118,36 @@
 
                                         <div class="item-title">{{Номенклатура}}</div>
 
+                                        <div class="item-after">
+
+                                            {{#if ДобавленИзБазы}}
+
+                                                <span class="badge color-orange">Нет в документе</span>
+
+                                            {{/if}}
+
+                                        </div>
+
                                     </div>
 
                                 </a>
 
                                 <div class="accordion-item-content">
 
-                                    <div class="list">
+                                    <div class="list no-hairlines-between">
 
                                         <ul>
 
-                                            <li>
+                                            <div class="row no-gap">
 
-                                                <div class="item-content">
+                                                <li class="col" style="border-right: 1px solid #3b3b3b;">
 
-                                                    <div class="item-inner">
-
-                                                        <div class="item-title">Артикул</div>
-                                                        <div class="item-after item-price">{{Артикул}}</div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </li>
-
-                                            <li>
-
-                                                <div class="item-content">
-
-                                                    <div class="item-inner">
-
-                                                        <div class="item-title">Розничная цена</div>
-                                                        <div class="item-after item-price">{{ЦенаРозничная}}</div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </li>
-
-                                            <li>
-
-                                                <div class="item-content">
-
-                                                    <div class="item-inner">
-
-                                                        <div class="item-title">Штрихкод</div>
-                                                        <div class="item-after item-price">{{Штрихкод}}</div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </li>
-
-                                            <li>
-
-                                                <div class="item-content">
-
-                                                    <div class="item-inner">
-
-                                                        <div class="item-title">Количество остаток</div>
-                                                        <div class="item-after item-price">{{КоличествоОстаток}}</div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </li>
-
-                                            <li>
-
-                                                <div class="item-content">
-
-                                                    <div class="item-inner">
-
-                                                        <div class="item-title">Кол. по документ</div>
-                                                        <div class="item-after item-price">{{КоличествоДокумент}}</div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </li>
-
-                                            {{#js_if "this.ХарактеристикаНоменклатуры.length > 1"}}
-
-                                                <li class="accordion-item accordion-item-opened">
-
-                                                    <a href="#" class="item-content item-link">
+                                                    <div class="item-content">
 
                                                         <div class="item-inner">
 
-                                                            <div class="item-title">Характеристика</div>
-
-                                                        </div>
-
-                                                    </a>
-
-                                                    <div class="accordion-item-content">
-
-                                                        <div class="block">
-
-                                                            <p>{{ХарактеристикаНоменклатуры}}</p>
+                                                            <div class="item-title">Артикул</div>
+                                                            <div class="item-after item-price">{{Артикул}}</div>
 
                                                         </div>
 
@@ -165,7 +155,130 @@
 
                                                 </li>
 
-                                            {{/js_if}}
+                                                <li class="col">
+
+                                                    <div class="item-content">
+
+                                                        <div class="item-inner">
+
+                                                            <div class="item-title">Розничная цена</div>
+
+                                                            <div class="item-after item-price">
+
+                                                                {{#if ЦенаРозничная}}
+
+                                                                    {{ЦенаРозничная}}
+
+                                                                {{else}}
+
+                                                                    {{РозничнаяЦена}}
+
+                                                                {{/if}}
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </li>
+
+                                            </div>
+
+                                            <div class="row no-gap">
+
+                                                <li class="col" style="border-right: 1px solid #3b3b3b;">
+
+                                                    <div class="item-content">
+
+                                                        <div class="item-inner">
+
+                                                            <div class="item-title">Количество остаток</div>
+
+                                                            <div class="item-after item-price">
+
+                                                                {{#if КоличествоОстаток}}
+
+                                                                    {{КоличествоОстаток}}
+
+                                                                {{else}}
+
+                                                                    {{КоличествоНаСкладе}}
+
+                                                                {{/if}}
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </li>
+
+                                                <li class="col">
+
+                                                    <div class="item-content">
+
+                                                        <div class="item-inner">
+
+                                                            <div class="item-title">Количество в документе</div>
+
+                                                            <div class="item-after item-price">{{КоличествоДокумент}}</div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </li>
+
+                                            </div>
+
+                                            <div class="row no-gap">
+
+                                                {{#js_if "this.ХарактеристикаНоменклатуры.length > 1"}}
+
+                                                    <li class="col accordion-item accordion-item-opened" style="border-right: 1px solid #3b3b3b;">
+
+                                                        <a href="#" class="item-content item-link">
+
+                                                            <div class="item-inner">
+
+                                                                <div class="item-title">Характеристика</div>
+
+                                                            </div>
+
+                                                        </a>
+
+                                                        <div class="accordion-item-content">
+
+                                                            <div class="block">
+
+                                                                <p>{{ХарактеристикаНоменклатуры}}</p>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </li>
+
+                                                {{/js_if}}
+
+                                                <li class="col">
+
+                                                    <div class="item-content">
+
+                                                        <div class="item-inner">
+
+                                                            <div class="item-title">Штрихкод</div>
+                                                            <div class="item-after item-price">{{Штрихкод}}</div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </li>
+
+                                            </div>
 
                                             <li>
 
@@ -173,11 +286,23 @@
 
                                                     <div class="item-inner">
 
-                                                        <div class="item-title">Количество</div>
+                                                        <div class="item-title">Количество сканировано</div>
 
                                                         <div class="item-after input-quantity-block">
 
-                                                            <input type="number" name="count" data-id="{{УИД_Строки}}" class="item-count text-align-center padding-horizontal" value="{{КоличествоСобрано}}"/>
+                                                            <div class="input-block margin-right">
+
+                                                                <input type="number" name="count" data-id="{{УИД_Строки}}" class="item-count text-align-center padding-horizontal" value="{{#js_if "this.КоличествоСобрано == 0"}}1{{else}}{{КоличествоСобрано}}{{/js_if}}"/>
+
+                                                            </div>
+
+                                                            <div class="input-plus-block display-none">
+
+                                                                <span class="plus">+</span>
+
+                                                                <input type="number" name="count" data-id="{{УИД_Строки}}" class="border-color-teal item-count input-plus text-align-center padding-horizontal" value="1"/>
+
+                                                            </div>
 
                                                         </div>
 
@@ -186,18 +311,6 @@
                                                 </div>
 
                                             </li>
-
-                                            <div class="margin padding-bottom">
-
-                                                <button data-id="{{УИД_Строки}}" class="button button-fill button-save col color-teal">
-
-                                                    <i class="icon material-icons">save</i>
-
-                                                    <span>Сохранить</span>
-
-                                                </button>
-
-                                            </div>
 
                                         </ul>
 
@@ -228,35 +341,69 @@
         opacity: 0;
     }
 
+    {{this}} .plus {
+                 position: absolute;
+                 top: 2px;
+                 z-index: 999;
+                 left: 15px;
+                 color: #000;
+                 font-weight: bold;
+                 font-size: 16px;
+             }
+
     {{this}} .item-title {
         white-space: normal;
              }
     {{this}} .accordion-item-content {
-                 background: rgb(255 59 48 / 0.06);
+                 background: #2d2d2d;
+                 font-size: 11px;
              }
-
+    {{this}} .list .row {
+                 border-bottom: 1px solid #404040;
+             }
+    {{this}} .accordion-item-content .accordion-item-content {
+    background: #464646;
+    }
     {{this}} .accordion-item-content ul {
 background: transparent;
              }
 
-    {{this}} .input-quantity-block {
+    {{this}} .input-plus-block {
+        position: relative;
+             }
 
+    {{this}} .input-plus-block input {
+        border: 2px solid;
+             }
+
+    {{this}} .input-quantity-block {
+position: relative;
              }
     {{this}} .input-quantity-block input {
                  width: 80px;
                  border-radius: 4px;
-        background: #000;
-        color: #fff;
-        border: 1px solid transparent;
+        background: #eee;
+        color: #000;
+        font-weight: bold;
+        height: 30px;
              }
 
+    {{this}} .input-quantity-block input::selection {
+        background: #d6d6d6;
+    }
+
     {{this}} .input-quantity-block input:focus {
-                 background: rgb(1 150 136);
-        border-color: var(--f7-theme-color);
+                 color: #000;
              }
 
     {{this}} .button-save i {
                  font-size: 14px;
+             }
+
+    {{this}} .accordion-item-content .list {
+                 --f7-list-item-title-font-size: 11px;
+                 --f7-list-item-after-font-size: 11px;
+                 --f7-list-item-min-height: 30px;
              }
 
 </style>
@@ -273,26 +420,188 @@ background: transparent;
 
         },
         methods: {
+            search: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                app.dialog.prompt('', 'Введите штрихкод', function (barcode) {
+
+                    page.find('.barcode').val(barcode);
+
+                    component.barcodeHandler(true);
+
+                });
+
+            },
+            changeCount: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let barcode = page.find('.barcode').val();
+
+                let itemIndex = component.items.findIndex(function (item) {
+
+                    if (item.Штрихкоды) {
+
+                        return item.Штрихкоды.indexOf(barcode) !== -1;
+
+                    } else {
+
+                        return item.Штрихкод == barcode;
+
+                    }
+
+                });
+
+                let accordion = page.find('.accordion-item[data-id="' + component.items[itemIndex].Штрихкод + '"]');
+
+                let quantity = Number(accordion.find('input:not(.input-plus)').val());
+
+                component.items[itemIndex].КоличествоСобрано = quantity;
+
+                app.toast.create({
+                    text: 'Сохранение...',
+                    cssClass: 'bg-color-teal',
+                    closeTimeout: 1000,
+                    position: 'top'
+                }).open();
+
+                accordion.find('.input-plus-block').addClass('display-none');
+
+                accordion.find('.input-plus-block').find('input').val('1');
+
+                component.saveDocument();
+
+            },
+            saveDocument: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                localforage.getItem('documents').then(function (documents) {
+
+                    for (let i = 0; i < documents.length; i++) {
+
+                        if (documents[i].Номер == component.document.Номер) {
+
+                            documents[i].Строки = component.items;
+
+                        }
+
+                    }
+
+                    localforage.setItem('documents', documents);
+
+                });
+
+            },
             initItems: function () {
 
                 let component = this;
                 let page = component.$el;
 
-                let items = component.document.Строки;
+                localforage.getItem('documents').then(function (documents) {
 
-                component.items = items;
+                    let document = documents.find(function (document) {
 
-                component.$update(function () {
-
-                    page.find('.accordion-item').on('accordion:open', function () {
-
-                        $$(this).find('input').focus();
-
-                        $$(this).find('input')[0].select();
+                        return document.Номер == component.document.Номер;
 
                     });
 
+                    component.document = document;
+
+                    let items = component.document.Строки;
+
+                    component.items = items;
+
+                    component.$update();
+
                 });
+
+            },
+            barcodeHandler: function (fromSearch) {
+
+                let component = this;
+                let page = component.$el;
+
+                if (!fromSearch) {
+
+                    component.scanned = true;
+
+                }
+
+                let barcode = page.find('.barcode').val();
+
+                if (barcode.length == 12) {
+
+                    barcode = '0' + barcode;
+
+                }
+
+                let item = component.items.find(function (item) {
+
+                    if (item.Штрихкоды) {
+
+                        return item.Штрихкоды.indexOf(barcode) !== -1;
+
+                    } else {
+
+                        return item.Штрихкод == barcode;
+
+                    }
+
+                });
+
+                if (item) {
+
+                    console.log(item);
+
+                    let accordion = page.find('.accordion-item[data-id="' + item.Штрихкод + '"]');
+
+                    app.accordion.open(accordion);
+
+                } else {
+
+                    let item_in_base = app.params.base.find(function (item) {
+
+                        return item.Штрихкод == barcode;
+
+                    });
+
+                    if (item_in_base) {
+
+                        app.dialog.confirm('Штрихкод не найден в документе, но найден в базе, добавить его в документ?', '', function () {
+
+                            item_in_base.КоличествоСобрано = 0;
+
+                            item_in_base.ДобавленИзБазы = true;
+
+                            component.items.push(item_in_base);
+
+                            component.saveDocument();
+
+                            component.$update(function () {
+
+                                component.barcodeHandler();
+
+                            });
+
+                        });
+
+                    } else {
+
+                        app.toast.create({
+                            text: 'Штрихкод не найден!',
+                            closeTimeout: 2000,
+                            cssClass: 'bg-color-red',
+                            position: 'top'
+                        }).open();
+
+                    }
+
+                }
 
             }
         },
@@ -304,6 +613,96 @@ background: transparent;
                 let page = component.$el;
 
                 component.initItems();
+
+                page.find('.barcode').on('input', function () {
+
+                    if (component.barcodeTimeout) {
+
+                        return false;
+
+                    }
+
+                    component.barcodeTimeout = setTimeout(function () {
+
+                        component.barcodeHandler();
+
+                        clearTimeout(component.barcodeTimeout);
+
+                        component.barcodeTimeout = false;
+
+                    }, 30);
+
+                });
+
+                $$(window).off('keydown');
+
+                $$(window).on('keydown', function(event) {
+
+                    let key = event.keyCode;
+
+                    console.log(key);
+
+                    if (key == 114 || key == 0 || key == 91) {
+
+                        page.find('.barcode').val('');
+
+                        page.find('.barcode').focus();
+
+                    }
+
+                });
+
+                $$(window).off('accordion:beforeopen', '.page[data-name="document"] .accordion-item');
+
+                $$(window).on('accordion:beforeopen', '.page[data-name="document"] .accordion-item', function () {
+
+                    if (component.scanned) {
+
+                        $$(this).find('.input-plus-block').removeClass('display-none');
+
+                        $$(this).find('.input-plus-block').find('input').focus();
+
+                        $$(this).find('.input-plus-block').find('input')[0].select();
+
+                        component.scanned = false;
+
+                    } else {
+
+                        $$(this).find('.input-plus-block').addClass('display-none');
+
+                        $$(this).find('.input-block').find('input').focus();
+
+                        $$(this).find('.input-block').find('input')[0].select();
+
+                    }
+
+                });
+
+                $$(window).off('keypress', '.page[data-name="document"] .accordion-item input');
+
+                $$(window).on('keypress', '.page[data-name="document"] .accordion-item input', function (event) {
+
+                    if (event.key === 'Enter') {
+
+                        if ( $$(event.target).hasClass('input-plus') ) {
+
+                            console.log(888);
+
+                            let increment = Number( $$(this).val() );
+
+                            let value = Number( $$(this).parent().parent().find('input:not(.input-plus)').val() );
+
+                            let quantity = increment + value;
+
+                            $$(this).parent().parent().find('input:not(.input-plus)').val(quantity);
+
+                        }
+
+                        component.changeCount();
+
+                    }
+
+                });
 
             }
 

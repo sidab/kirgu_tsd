@@ -190,6 +190,12 @@
 
                 let barcode = page.find('.barcode').val();
 
+                if (barcode.length == 12) {
+
+                    barcode = '0' + barcode;
+
+                }
+
                 let item = app.params.base.find(function (item) {
 
                     return item.Штрихкод == barcode;
@@ -224,23 +230,19 @@
 
                 page.find('.barcode').on('input', function () {
 
-                    setTimeout(function() {
+                    if (component.barcodeTimeout) {
 
-                        let barcode = page.find('.barcode').val();
+                        return false;
 
-                        if (barcode.length > 11) {
+                    }
 
-                            if (barcode.length == 12) {
+                    component.barcodeTimeout = setTimeout(function () {
 
-                                barcode = '0' + barcode;
+                        component.barcodeHandler();
 
-                            }
+                        clearTimeout(component.barcodeTimeout);
 
-                            component.barcodeHandler(barcode);
-
-                        }
-
-                    }, 50);
+                    }, 30);
 
                 });
 
