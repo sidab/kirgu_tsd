@@ -425,11 +425,13 @@ position: relative;
                 let component = this;
                 let page = component.$el;
 
+                component.searching = true;
+
                 app.dialog.prompt('', 'Введите штрихкод', function (barcode) {
 
                     page.find('.barcode').val(barcode);
 
-                    component.barcodeHandler(true);
+                    component.barcodeHandler();
 
                 });
 
@@ -527,14 +529,20 @@ position: relative;
                 });
 
             },
-            barcodeHandler: function (fromSearch) {
+            barcodeHandler: function () {
 
                 let component = this;
                 let page = component.$el;
 
-                if (!fromSearch) {
+                if (!component.searching) {
 
                     component.scanned = true;
+
+                } else {
+
+                    component.searching = false;
+
+                    app.dialog.close();
 
                 }
 
