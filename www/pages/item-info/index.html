@@ -228,21 +228,23 @@
                 let component = this;
                 let page = component.$el;
 
+                component.barcodeTimeout = false;
+
                 page.find('.barcode').on('input', function () {
 
-                    if (component.barcodeTimeout) {
+                    if (!component.barcodeTimeout) {
 
-                        return false;
+                        component.barcodeTimeout = setTimeout(function () {
+
+                            component.barcodeHandler();
+
+                            clearTimeout(component.barcodeTimeout);
+
+                            component.barcodeTimeout = false;
+
+                        }, 100);
 
                     }
-
-                    component.barcodeTimeout = setTimeout(function () {
-
-                        component.barcodeHandler();
-
-                        clearTimeout(component.barcodeTimeout);
-
-                    }, 100);
 
                 });
 
