@@ -435,9 +435,9 @@ position: relative;
 
                 });
 
-                app.off('dialogClose');
+                app.off('dialogClosed');
 
-                app.on('dialogClose', function() {
+                app.on('dialogClosed', function() {
 
                     component.searching = false;
 
@@ -467,7 +467,22 @@ position: relative;
 
                 let accordion = page.find('.accordion-item[data-id="' + component.items[itemIndex].Штрихкод + '"]');
 
-                let quantity = Number(accordion.find('input:not(.input-plus)').val());
+                let quantity = accordion.find('input:not(.input-plus)').val();
+
+                if (quantity.length == 0 && quantity == '0') {
+
+                    app.toast.create({
+                        text: 'Неверное количество!',
+                        cssClass: 'bg-color-red',
+                        closeTimeout: 1000,
+                        position: 'top'
+                    }).open();
+
+                    return false;
+
+                }
+
+                quantity = Number(quantity);
 
                 component.items[itemIndex].КоличествоСобрано = quantity;
 
@@ -697,6 +712,8 @@ position: relative;
                     }
 
                 });
+
+                $$(window).off('accordion:opened', '.page[data-name="document"] .accordion-item');
 
                 $$(window).on('accordion:opened', '.page[data-name="document"] .accordion-item', function () {
 
