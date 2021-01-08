@@ -435,6 +435,14 @@ position: relative;
 
                 });
 
+                app.off('dialogClose');
+
+                app.on('dialogClose', function() {
+
+                    component.searching = false;
+
+                });
+
             },
             changeCount: function () {
 
@@ -480,7 +488,7 @@ position: relative;
 
                     app.accordion.close(accordion);
 
-                }, 1000);
+                }, 2000);
 
             },
             saveDocument: function () {
@@ -534,15 +542,15 @@ position: relative;
                 let component = this;
                 let page = component.$el;
 
-                if (!component.searching) {
-
-                    component.scanned = true;
-
-                } else {
+                if (component.searching) {
 
                     component.searching = false;
 
                     app.dialog.close();
+
+                } else {
+
+                    component.scanned = true;
 
                 }
 
@@ -642,7 +650,7 @@ position: relative;
 
                             component.barcodeTimeout = false;
 
-                        }, 100);
+                        }, 300);
 
                     }
 
@@ -678,8 +686,6 @@ position: relative;
 
                         $$(this).find('.input-plus-block').find('input')[0].select();
 
-                        component.scanned = false;
-
                     } else {
 
                         $$(this).find('.input-plus-block').addClass('display-none');
@@ -692,27 +698,51 @@ position: relative;
 
                 });
 
+                $$(window).on('accordion:opened', '.page[data-name="document"] .accordion-item', function () {
+
+                    if (component.scanned) {
+
+                        let offset = $$(this).offset();
+
+                        console.log(offset);
+
+                        page.find('.page-content').scrollTop(offset.top + 200);
+
+                        setTimeout(function () {
+
+                            component.scanned = false;
+
+                        }, 100);
+
+                    }
+
+                });
+
                 $$(window).off('keypress', '.page[data-name="document"] .accordion-item input');
 
                 $$(window).on('keypress', '.page[data-name="document"] .accordion-item input', function (event) {
 
-                    if (event.key === 'Enter') {
+                    if (!component.scanned) {
 
-                        if ( $$(event.target).hasClass('input-plus') ) {
+                        if (event.key === 'Enter') {
 
-                            console.log(888);
+                            if ($$(event.target).hasClass('input-plus')) {
 
-                            let increment = Number( $$(this).val() );
+                                console.log(888);
 
-                            let value = Number( $$(this).parent().parent().find('input:not(.input-plus)').val() );
+                                let increment = Number($$(this).val());
 
-                            let quantity = increment + value;
+                                let value = Number($$(this).parent().parent().find('input:not(.input-plus)').val());
 
-                            $$(this).parent().parent().find('input:not(.input-plus)').val(quantity);
+                                let quantity = increment + value;
+
+                                $$(this).parent().parent().find('input:not(.input-plus)').val(quantity);
+
+                            }
+
+                            component.changeCount();
 
                         }
-
-                        component.changeCount();
 
                     }
 
