@@ -425,21 +425,13 @@ position: relative;
                 let component = this;
                 let page = component.$el;
 
-                component.searching = true;
-
                 app.dialog.prompt('', 'Введите штрихкод', function (barcode) {
 
                     page.find('.barcode').val(barcode);
 
+                    component.hideInputPlus = true;
+
                     component.barcodeHandler();
-
-                });
-
-                app.off('dialogClosed');
-
-                app.on('dialogClosed', function() {
-
-                    component.searching = false;
 
                 });
 
@@ -557,17 +549,7 @@ position: relative;
                 let component = this;
                 let page = component.$el;
 
-                if (component.searching) {
-
-                    component.searching = false;
-
-                    app.dialog.close();
-
-                } else {
-
-                    component.scanned = true;
-
-                }
+                component.scanned = true;
 
                 let barcode = page.find('.barcode').val();
 
@@ -681,9 +663,21 @@ position: relative;
 
                     if (key == 114 || key == 0 || key == 91) {
 
-                        page.find('.barcode').val('');
+                        if ($$('.dialog.modal-in').length > 0) {
 
-                        page.find('.barcode').focus();
+                            setTimeout(function () {
+
+                                $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
+
+                            }, 300);
+
+                        } else {
+
+                            page.find('.barcode').val('');
+
+                            page.find('.barcode').focus();
+
+                        }
 
                     }
 
@@ -693,7 +687,7 @@ position: relative;
 
                 $$(window).on('accordion:beforeopen', '.page[data-name="document"] .accordion-item', function () {
 
-                    if (component.scanned) {
+                    if (component.scanned && !component.hideInputPlus) {
 
                         $$(this).find('.input-plus-block').removeClass('display-none');
 

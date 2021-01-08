@@ -4,7 +4,9 @@
     <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/document.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/document.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/item-info/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/item-info/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/pages/documents/document.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/document.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages/item-info/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/item-info/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +81,7 @@
       <workItem from="1609742550024" duration="104000" />
       <workItem from="1609742890174" duration="571000" />
       <workItem from="1609825225981" duration="7428000" />
-      <workItem from="1609912645705" duration="15308000" />
+      <workItem from="1609912645705" duration="16955000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1608534028711</created>
@@ -193,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610101378013</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fix">
+      <created>1610105709023</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1610105709023</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,10 +221,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1610101377769">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1610105708781">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610101377769" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610105708781" />
     <state width="1899" height="802" key="GridCell.Tab.0.bottom" timestamp="1610010121363">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
@@ -256,10 +265,10 @@
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1610101381170">
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1610105761409">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610101381170" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610105761409" />
     <state x="-1295" y="241" width="670" height="676" key="search.everywhere.popup" timestamp="1608622019538">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
