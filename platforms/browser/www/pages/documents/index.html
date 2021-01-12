@@ -123,11 +123,65 @@
 
                 console.log(document);
 
-                app.view.current.router.navigate('/documents/document', {
-                    context: {
-                        document: document
-                    }
-                });
+                if (app.params.user.адресныйСклад) {
+
+                    app.dialog.create({
+                        title: 'Выберите действие',
+                        buttons: [
+                            {
+                                text: 'Перемещение',
+                                bold: true,
+                                cssClass: 'text-align-center',
+                                onClick: function () {
+
+                                    app.view.current.router.navigate('/documents/document', {
+                                        context: {
+                                            document: document
+                                        }
+                                    });
+
+                                }
+                            },
+                            {
+                                text: 'Задать ячейки товарам',
+                                bold: true,
+                                cssClass: 'text-align-center',
+                                onClick: function () {
+
+                                    if (app.params.cells) {
+
+                                        app.view.current.router.navigate('/documents/cells', {
+                                            context: {
+                                                document: document
+                                            }
+                                        });
+
+                                    } else {
+
+                                        app.dialog.alert('Для работы с ячейками вам необходимо загрузить базу ячеек в настройках.', 'Ошибка');
+
+                                    }
+
+                                }
+                            },
+                            {
+                                text: 'Отмена',
+                                bold: true,
+                                color: 'gray',
+                            },
+                        ],
+                        verticalButtons: true,
+                    }).open();
+
+                } else {
+
+                    app.view.current.router.navigate('/documents/document', {
+                        context: {
+                            document: document
+                        }
+                    });
+
+                }
 
             },
             deleteDocument: function (doc_num){

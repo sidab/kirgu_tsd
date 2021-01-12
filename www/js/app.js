@@ -244,6 +244,23 @@ var app = new Framework7({
 
             });
 
+        },
+        initCells: function () {
+
+            app.dialog.preloader('Инициализация ячеек...');
+
+            localforage.getItem('cells').then(function(cells) {
+
+                if (cells !== undefined && cells !== null) {
+
+                    app.params.cells = cells;
+
+                }
+
+                app.dialog.close();
+
+            });
+
         }
     },
     on: {
@@ -285,6 +302,8 @@ $$(document).on('deviceready', function () {
     if (app.params.user) {
 
         app.methods.initBase();
+
+        app.methods.initCells();
 
         $$('.view-main').removeClass('display-none');
 

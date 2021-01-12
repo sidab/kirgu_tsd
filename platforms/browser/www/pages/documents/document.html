@@ -22,7 +22,7 @@
 
                 <div class="right">
 
-                    <a href="#" class="link">
+                    <a @click="sendToServerDialog" href="#" class="link">
 
                         <i class="icon material-icons text-color-teal">done</i>
 
@@ -34,13 +34,27 @@
 
                     </a>
 
-                    <a href="#" class="link">
+                    <a @click="sort" href="#" class="link sort">
 
                         <i class="icon material-icons">sort</i>
 
+                        <span class="label">
+
+                            {{#js_if "this.sortType == 'byName'"}}
+
+                                АБВ
+
+                            {{else}}
+
+                                123
+
+                            {{/js_if}}
+
+                        </span>
+
                     </a>
 
-                    <a href="#" class="link popover-open" data-popover=".popover-filter">
+                    <a href="#" class="link filter-open popover-open" data-popover=".popover-filter">
 
                         <i class="icon material-icons">compare_arrows</i>
 
@@ -60,7 +74,17 @@
 
                     <ul>
 
-                        <li class="item-content">
+                        <li data-type="all" class="item-content bg-color-red">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Все</div>
+
+                            </div>
+
+                        </li>
+
+                        <li data-type="onlyScan" class="item-content">
 
                             <div class="item-inner">
 
@@ -70,21 +94,31 @@
 
                         </li>
 
-                        <li class="item-content">
+                        <li data-type="onlyNoScan" class="item-content">
 
                             <div class="item-inner">
 
-                                <div class="item-title">Сканированные</div>
+                                <div class="item-title">Не сканированные</div>
 
                             </div>
 
                         </li>
 
-                        <li class="item-content">
+                        <li data-type="neSobrano" class="item-content">
 
                             <div class="item-inner">
 
-                                <div class="item-title">Сканированные</div>
+                                <div class="item-title">Не собрано</div>
+
+                            </div>
+
+                        </li>
+
+                        <li data-type="noInDocument" class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Нет в документе</div>
 
                             </div>
 
@@ -110,7 +144,7 @@
 
                         {{#each items}}
 
-                            <li class="accordion-item" data-id="{{Штрихкод}}">
+                            <li class="accordion-item item" data-id="{{Штрихкод}}">
 
                                 <a class="item-link item-content">
 
@@ -125,6 +159,18 @@
                                                 <span class="badge color-orange">Нет в документе</span>
 
                                             {{/if}}
+
+                                            {{#if Собрано}}
+
+                                                    <span class="badge color-teal">Собран</span>
+
+                                            {{/if}}
+
+                                            {{#js_if "this.Собрано == false"}}
+
+                                                <span class="badge color-red">Не собран</span>
+
+                                            {{/js_if}}
 
                                         </div>
 
@@ -351,12 +397,21 @@
                  font-size: 16px;
              }
 
+    {{this}} .list.accordion-list {
+                 --f7-list-item-title-font-size: 12px;
+                 --f7-badge-font-size: 9px;
+                 --f7-list-item-min-height: 30px;
+                 --f7-badge-padding: 5px 5px;
+                 --f7-badge-size: 15px;
+             }
+
     {{this}} .item-title {
         white-space: normal;
              }
     {{this}} .accordion-item-content {
                  background: #2d2d2d;
                  font-size: 11px;
+                 --f7-list-item-title-font-size: 11px;
              }
     {{this}} .list .row {
                  border-bottom: 1px solid #404040;
@@ -406,6 +461,12 @@ position: relative;
                  --f7-list-item-min-height: 30px;
              }
 
+    {{this}} .navbar .sort .label {
+                 font-size: 8px;
+                 position: absolute;
+                 right: 8px;
+                 bottom: -3px;
+             }
 </style>
 
 <script>
@@ -415,11 +476,178 @@ position: relative;
         data: function () {
 
             return {
-
+                sortType: 'byName'
             }
 
         },
         methods: {
+            sendToServerDialog: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                app.dialog.create({
+
+                    title: 'Выберите вариант',
+                    buttons: [
+                        {
+                            text: 'Добавить',
+                            bold: true,
+                            cssClass: 'text-align-center',
+
+                            onClick: function () {
+
+                                component.sendToServer('Добавление');
+
+                            }
+                        },
+                        {
+                            text: 'Заменить',
+                            bold: true,
+                            cssClass: 'text-align-center',
+                            onClick: function () {
+
+                                component.sendToServer('Замена');
+
+                            }
+                        },
+                        {
+                            text: 'Замена с очищением',
+                            bold: true,
+                            cssClass: 'text-align-center',
+                            color: 'red',
+                            onClick: function () {
+
+                                component.sendToServer('ЗаменаСОчищением');
+
+                            }
+                        },
+                        {
+                            text: 'Отмена',
+                            bold: true,
+                            color: 'gray',
+                        },
+                    ],
+                    verticalButtons: true,
+                }).open();
+
+            },
+            sendToServer: function (loadType) {
+
+                let component = this;
+                let page = component.$el;
+
+                app.dialog.confirm('Вы готовы передать документ в 1С?', 'Внимание', function () {
+
+                    localforage.getItem('documents').then(function (documents) {
+
+                        let document = documents.find(function (document) {
+
+                            return document.Номер == component.document.Номер;
+
+                        });
+
+                        let url = encodeURI(app.params.backend + '/transfer_doc_loadstr');
+
+                        let data = {
+                            kontragent: false,
+                            login: app.params.user.code,
+                            loadType: loadType,
+                            document: document
+                        };
+
+                        data = JSON.stringify(data);
+
+                        app.request({
+                            url: url,
+                            //async: false,
+                            method: 'POST',
+                            data: {
+                                data: data,
+                            },
+                            beforeSend: function () {
+
+                                app.dialog.preloader('Загрузка...');
+
+                            },
+                            success: function (response) {
+
+                                app.toast.create({
+                                    text: 'Ваш запрос принят!',
+                                    position: 'top',
+                                    cssClass: 'bg-color-teal'
+                                }).open();
+
+                                app.views.current.router.back('/main', {
+                                    force: true
+                                });
+
+                                if (response.Статус == 'Успешно') {
+
+                                    for (let i = 0; i < documents.length; i++) {
+
+                                        if (documents[i].Номер == document.Номер) {
+
+                                            for (let i = 0; i < documents[i].Строки.length; i++) {
+
+                                                if (documents[i].Строки[i].ДобавленИзБазы) {
+
+                                                    delete documents[i].Строки[i].ДобавленИзБазы;
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                    localforage.setItem('documents', documents);
+
+                                }
+
+                            },
+                            error: function () {
+
+                                app.toast.create({
+                                    text: 'Нет соединение с базой!',
+                                    position: 'top',
+                                    cssClass: 'bg-color-red'
+                                }).open();
+
+                            },
+                            complete: function () {
+
+                                app.dialog.close();
+
+                            }
+                        });
+
+                    });
+
+                });
+
+            },
+            sort: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                if (component.sortType == 'byName') {
+
+                    component.sortType = 'bySku';
+
+                } else {
+
+                    component.sortType = 'byName';
+
+                }
+
+                component.$update();
+
+                component.initItems();
+
+            },
             search: function () {
 
                 let component = this;
@@ -441,7 +669,7 @@ position: relative;
                 let component = this;
                 let page = component.$el;
 
-                let barcode = page.find('.barcode').val();
+                let barcode = page.find('.item.accordion-item-opened').data('id');
 
                 let itemIndex = component.items.findIndex(function (item) {
 
@@ -478,6 +706,20 @@ position: relative;
 
                 component.items[itemIndex].КоличествоСобрано = quantity;
 
+                if (component.items[itemIndex].КоличествоДокумент) {
+
+                    if (component.items[itemIndex].КоличествоДокумент == quantity) {
+
+                        component.items[itemIndex].Собрано = true;
+
+                    } else {
+
+                        component.items[itemIndex].Собрано = false;
+
+                    }
+
+                }
+
                 app.toast.create({
                     text: 'Сохранение...',
                     cssClass: 'bg-color-teal',
@@ -488,6 +730,8 @@ position: relative;
                 accordion.find('.input-plus-block').addClass('display-none');
 
                 accordion.find('.input-plus-block').find('input').val('1');
+
+                component.$update();
 
                 component.saveDocument();
 
@@ -520,10 +764,18 @@ position: relative;
                 });
 
             },
-            initItems: function () {
+            initItems: function (filter) {
 
                 let component = this;
                 let page = component.$el;
+
+                if (page.find('.item.accordion-item-opened').length > 0) {
+
+                    app.accordion.close(page.find('.item.accordion-item-opened'));
+
+                }
+
+                page.find('.page-content').scrollTop(0);
 
                 localforage.getItem('documents').then(function (documents) {
 
@@ -537,11 +789,131 @@ position: relative;
 
                     let items = component.document.Строки;
 
+                    items = items.sort(function (a, b) {
+
+                        let nameA = component.sortType === 'byName' ? a.Номенклатура : a.Артикул;
+
+                        let nameB = component.sortType === 'byName' ? b.Номенклатура : b.Артикул;
+
+                        if (nameA < nameB) {
+
+                            return -1;
+
+                        }
+
+                        if (nameA > nameB) {
+
+                            return 1;
+
+                        }
+
+                        return 0;
+
+                    });
+
+                    if (filter) {
+
+                        items = filter(items);
+
+                        app.toast.create({
+                            text: items.length,
+                            position: 'center',
+                            closeTimeout: 2000
+                        }).open();
+
+                    }
+
                     component.items = items;
 
                     component.$update();
 
                 });
+
+            },
+            filter: function (type) {
+
+                let component = this;
+                let page = component.$el;
+
+                component.popoverFilterTimeout = setTimeout(function () {
+
+                    app.popover.close('.popover-filter');
+
+                    clearTimeout(component.popoverFilterTimeout);
+
+                    component.popoverFilterTimeout = false;
+
+                }, 500);
+
+                let filter;
+
+                if (type == 'all') {
+
+                    filter = function (items) {
+
+                        return items;
+
+                    };
+
+                } else if (type == 'onlyScan') {
+
+                    filter = function (items) {
+
+                        return items.filter(function (item) {
+
+                            return item.КоличествоСобрано > 0;
+
+                        });
+
+                    }
+
+                } else if (type == 'onlyNoScan') {
+
+                    filter = function (items) {
+
+                        return items.filter(function (item) {
+
+                            return item.КоличествоСобрано == 0;
+
+                        });
+
+                    }
+
+                } else if (type == 'neSobrano') {
+
+                    filter = function (items) {
+
+                        return items.filter(function (item) {
+
+                            if (item.КоличествоДокумент) {
+
+                                if ( (item.КоличествоСобрано > 0) && (item.КоличествоДокумент !== item.КоличествоСобрано) && (!item.ДобавленИзБазы) ) {
+
+                                    return item;
+
+                                }
+
+                            }
+
+                        });
+
+                    }
+
+                } else if (type == 'noInDocument') {
+
+                    filter = function (items) {
+
+                        return items.filter(function (item) {
+
+                            return item.ДобавленИзБазы == true;
+
+                        });
+
+                    }
+
+                }
+
+                component.initItems(filter);
 
             },
             barcodeHandler: function () {
@@ -659,15 +1031,25 @@ position: relative;
 
                     let key = event.keyCode;
 
-                    console.log(key);
-
                     if (key == 114 || key == 0 || key == 91) {
 
                         if ($$('.dialog.modal-in').length > 0) {
 
                             setTimeout(function () {
 
-                                $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
+                                if ($$('.dialog.modal-in').find('input').val().length >= 12) {
+
+                                    $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
+
+                                } else {
+
+                                    let ke = new KeyboardEvent('keydown', {
+                                        bubbles: true, cancelable: true, keyCode: 91
+                                    });
+
+                                    document.body.dispatchEvent(ke);
+
+                                }
 
                             }, 300);
 
@@ -676,6 +1058,41 @@ position: relative;
                             page.find('.barcode').val('');
 
                             page.find('.barcode').focus();
+
+                        }
+
+                    }
+
+                    if (!component.popoverFilterTimeout) {
+
+                        if (event.code == 'ArrowUp') {
+
+                            page.find('.filter-open').click();
+
+                            if ($$('.popover-filter').find('li.bg-color-red').prev().length > 0) {
+
+                                $$('.popover-filter').find('li.bg-color-red').prev().click();
+
+                            } else {
+
+                                $$('.popover-filter').find('li:last-child').click();
+
+                            }
+                        }
+
+                        if (event.code == 'ArrowDown') {
+
+                            page.find('.filter-open').click();
+
+                            if ($$('.popover-filter').find('li.bg-color-red').next().length > 0) {
+
+                                $$('.popover-filter').find('li.bg-color-red').next().click();
+
+                            } else {
+
+                                $$('.popover-filter').find('li:first-child').click();
+
+                            }
 
                         }
 
@@ -711,13 +1128,11 @@ position: relative;
 
                 $$(window).on('accordion:opened', '.page[data-name="document"] .accordion-item', function () {
 
+                    let offset = $$(this).offset();
+
+                    page.find('.page-content').scrollTop(offset.top - 150);
+
                     if (component.scanned) {
-
-                        let offset = $$(this).offset();
-
-                        console.log(offset);
-
-                        page.find('.page-content').scrollTop(offset.top + 200);
 
                         setTimeout(function () {
 
@@ -756,6 +1171,20 @@ position: relative;
                         }
 
                     }
+
+                });
+
+                $$(window).on('click', '.popover-filter li');
+
+                $$(window).on('click', '.popover-filter li', function (event) {
+
+                    $$('.popover-filter').find('li').removeClass('bg-color-red');
+
+                    $$(this).addClass('bg-color-red');
+
+                    let type = $$(this).data('type');
+
+                    component.filter(type);
 
                 });
 

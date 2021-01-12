@@ -72,6 +72,12 @@
 
                 <a @click="chooseBase" class="col button button-fill button-raised color-teal margin-bottom">Загрузить базу</a>
 
+                {{#js_if "app.params.user.адресныйСклад"}}
+
+                    <a @click="loadCells" class="col button button-fill button-raised color-purple margin-bottom">Загрузить ячейки</a>
+
+                {{/js_if}}
+
                 <a @click="clearCache" class="col button button-fill button-raised color-gray margin-bottom">Очистить кэш</a>
 
                 <a @click="logout" class="col button button-fill button-raised color-red">Выход</a>
@@ -126,6 +132,42 @@
 
         },
         methods: {
+            loadCells: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let url = app.params.backend + '/warehouse_cells/' + app.params.user.code;
+
+                app.request({
+                    url: encodeURI(url),
+                    dataType: 'json',
+                    beforeCreate: function () {
+
+                        app.dialog.progress('Загрузка ячеек...');
+
+                    },
+                    success: function (response) {
+
+                        let cells = response[0].filter(function (cell) {
+
+                            return cell.ИТ_Штрихкод.length > 0;
+
+                        });
+
+                        app.params.cells = cells;
+
+                        localforage.setItem('cells', cells);
+
+                    },
+                    complete: function () {
+
+                        app.dialog.close();
+
+                    }
+                });
+
+            },
             chooseBase: function () {
 
                 let component = this;

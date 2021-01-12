@@ -16,6 +16,10 @@ routes = [
         componentUrl: 'pages/documents/document.html'
     },
     {
+        path: '/documents/cells',
+        componentUrl: 'pages/documents/cells.html'
+    },
+    {
         path: '/settings',
         componentUrl: 'pages/settings/index.html'
     },

@@ -1,0 +1,292 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title"></div>
+
+                <div class="right">
+
+                    <a href="#" class="link">
+
+                        <i class="icon material-icons text-color-teal">done</i>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <input type="text" class="barcode bg-color-gray">
+
+            <div class="margin">
+
+                <p>1. Отсканируйте штрихкод ячейки</p>
+
+                <p>2. Отсканируйте штрихкод товара</p>
+
+                <p>3. Укажите количество</p>
+
+                <p>4. Сохраните изменения</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style scoped>
+
+    {{this}} .barcode {
+        position: absolute;
+        opacity: 0;
+    }
+
+
+</style>
+
+<script>
+
+    return {
+
+        data: function () {
+
+            return {
+
+            }
+
+        },
+        methods: {
+            findCell: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let barcode = page.find('.barcode').val();
+
+                let cell = app.params.cells.find(function (cell) {
+
+                    return cell.ИТ_Штрихкод == barcode;
+
+                });
+
+                if (cell) {
+
+                    console.log(cell);
+
+                    component.cellFound = true;
+
+                    app.dialog.create({
+                        title: 'Ячейка ' + cell.Наименование,
+                        text: 'Теперь отсканируйте товар',
+                        buttons: [
+                            {
+                                text: 'Отмена',
+                                bold: true,
+                                color: 'gray',
+                            },
+                        ],
+                        verticalButtons: true,
+                        on: {
+                            close: function () {
+console.log(888)
+                                component.cellFound = false;
+
+                            }
+                        }
+                    }).open();
+
+                } else {
+
+                    app.toast.create({
+                        text: 'Ячейка не найдена!',
+                        closeTimeout: 2000,
+                        cssClass: 'bg-color-red',
+                        position: 'top'
+                    }).open();
+
+                }
+
+            },
+            findItem: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let barcode = page.find('.barcode').val();
+
+                let item = component.document.Строки.find(function (item) {
+
+                    if (item.Штрихкоды) {
+
+                        return item.Штрихкоды.indexOf(barcode) !== -1;
+
+                    } else {
+
+                        return item.Штрихкод == barcode;
+
+                    }
+
+                });
+
+                if (item) {
+
+                    console.log(item);
+
+                    app.dialog.close();
+
+                    component.cellFound = true;
+
+                    app.dialog.create({
+                        //title: 'Товар ' + item.Номенклатура,
+                        //text: 'Укажите количество',
+                        cssClass: 'item-set-cell-dialog',
+                        content:
+                            `
+                            <div class="item-name">` + item.Номенклатура + `</div>` + `
+
+                            <div class="row">
+
+                                <div class="col label">Количество:</div>
+
+                                <div class="col">
+
+                                    <div class="quantity">
+
+                                        <input type="number" value="0">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            `
+                        ,
+                        buttons: [
+                            {
+                                text: 'Отмена',
+                                bold: true,
+                                color: 'gray',
+                            },
+                        ],
+                        verticalButtons: true,
+                        on: {
+                            opened: function () {
+
+                                $$('.item-set-cell-dialog').find('input').focus();
+
+                                $$('.item-set-cell-dialog').find('input')[0].select();
+
+                            },
+                            close: function () {
+
+                                component.cellFound = false;
+
+                            }
+                        }
+                    }).open();
+
+                } else {
+
+                    app.toast.create({
+                        text: 'Товар не найден в документе!',
+                        closeTimeout: 2000,
+                        cssClass: 'bg-color-red',
+                        position: 'top'
+                    }).open();
+
+                }
+
+            },
+            barcodeHandler: function () {
+
+                let component = this;
+                let page = component.$el;
+
+                let barcode = page.find('.barcode').val();
+
+                if (component.cellFound) {
+
+                    component.findItem();
+
+                } else {
+
+                    component.findCell();
+
+                }
+
+            }
+        },
+        on: {
+
+            pageInit: function() {
+
+                let component = this;
+                let page = component.$el;
+
+                component.barcodeTimeout = false;
+
+                page.find('.barcode').on('input', function () {
+
+                    if (!component.barcodeTimeout) {
+
+                        component.barcodeTimeout = setTimeout(function () {
+
+                            component.barcodeHandler();
+
+                            clearTimeout(component.barcodeTimeout);
+
+                            component.barcodeTimeout = false;
+
+                        }, 300);
+
+                    }
+
+                });
+
+                $$(window).off('keydown');
+
+                $$(window).on('keydown', function(event) {
+
+                    let key = event.keyCode;
+
+                    if (key == 114 || key == 0 || key == 91) {
+
+                        page.find('.barcode').val('');
+
+                        page.find('.barcode').focus();
+
+                    }
+
+                });
+
+            }
+
+        }
+
+    }
+
+</script>
