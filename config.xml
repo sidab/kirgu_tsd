@@ -53,6 +53,7 @@
     <plugin name="cordova-plugin-ionic-keyboard" />
     <plugin name="phonegap-plugin-barcodescanner" spec="8.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="6.0.0" />
+    <plugin name="cordova-plugin-vibration" />
     <plugin name="cordova-plugin-camera" spec="4.1.0">
         <param name="CAMERA_USAGE_DESCRIPTION" value="Нам необходим доступ к вашей камере для использования приложения и сканирования штрих кодов." />
         <param name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Нам необходим доступ к вашей галереи для использования приложения и сканирования штрих кодов." />
