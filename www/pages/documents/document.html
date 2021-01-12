@@ -144,9 +144,9 @@
 
                         {{#each items}}
 
-                            <li class="accordion-item item" data-id="{{Штрихкод}}">
+                            <li class="accordion-item item {{#if ДобавленИзБазы}}swipeout{{/if}}" data-id="{{Штрихкод}}">
 
-                                <a class="item-link item-content">
+                                <a class="item-link item-content {{#if ДобавленИзБазы}}swipeout-content{{/if}}">
 
                                     <div class="item-inner">
 
@@ -364,6 +364,16 @@
 
                                 </div>
 
+                                {{#if ДобавленИзБазы}}
+
+                                    <div class="swipeout-actions-right">
+
+                                        <a  @click="deleteItem('{{Штрихкод}}')" href="#" class="color-red swipeout-close button-remove">Удалить</a>
+
+                                    </div>
+
+                                {{/if}}
+
                             </li>
 
                         {{/each}}
@@ -467,6 +477,10 @@ position: relative;
                  right: 8px;
                  bottom: -3px;
              }
+
+    {{this}} .swipeout-actions-right {
+        z-index: 99;
+             }
 </style>
 
 <script>
@@ -481,6 +495,37 @@ position: relative;
 
         },
         methods: {
+            deleteItem: function (barcode) {
+
+                let component = this;
+                let page = component.$el;
+
+                component.items = component.items.filter(function (item) {
+
+                    if (item.Штрихкоды) {
+
+                        return item.Штрихкоды.indexOf(barcode) == -1;
+
+                    } else {
+
+                        return item.Штрихкод !== barcode;
+
+                    }
+
+                });
+
+                app.toast.create({
+                    text: 'Вы удалили товар из документа',
+                    cssClass: 'bg-color-orange',
+                    closeTimeout: 2000,
+                    position: 'top'
+                }).open();
+
+                component.$update();
+
+                component.saveDocument();
+
+            },
             sendToServerDialog: function () {
 
                 let component = this;
@@ -759,7 +804,11 @@ position: relative;
 
                     }
 
-                    localforage.setItem('documents', documents);
+                    localforage.setItem('documents', documents).then(function () {
+
+                        navigator.vibrate(100);
+
+                    });
 
                 });
 

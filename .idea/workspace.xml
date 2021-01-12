@@ -2,20 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/www/pages/documents/cells.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/browser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/document.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/document.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/settings/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/settings/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/browser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/fetch.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/fetch.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/pages/documents/document.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/document.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/pages/documents/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/pages/settings/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/settings/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +85,7 @@
       <workItem from="1609742550024" duration="104000" />
       <workItem from="1609742890174" duration="571000" />
       <workItem from="1609825225981" duration="7428000" />
-      <workItem from="1609912645705" duration="40215000" />
+      <workItem from="1609912645705" duration="41106000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1608534028711</created>
@@ -218,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610107833506</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix">
+      <created>1610438456994</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1610438456994</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,10 +239,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1610107833227">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1610438456775">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610107833227" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610438456775" />
     <state width="1899" height="802" key="GridCell.Tab.0.bottom" timestamp="1610354653622">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
@@ -281,10 +283,10 @@
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1610107836743">
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1610438459245">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610107836743" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1610438459245" />
     <state width="600" height="428" key="javadoc.popup" timestamp="1610353644604">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>

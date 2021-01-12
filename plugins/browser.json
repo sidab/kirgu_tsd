@@ -24,6 +24,9 @@
     },
     "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.kirgu_tsd.ru"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "com.kirgu_tsd.ru"
     }
   },
   "dependent_plugins": {}
