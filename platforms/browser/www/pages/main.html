@@ -4,8 +4,6 @@
 
         <div class="page-content">
 
-            <div class="block-title block-title-medium">Действия</div>
-
             <div class="list media-list links-list {{#js_if "app.params.base.length == 0"}}disabled{{/js_if}}">
 
                 <ul>
@@ -30,9 +28,39 @@
 
                     </li>
 
+                </ul>
+
+            </div>
+
+            <div class="block-title">Документы</div>
+
+            <div class="list media-list links-list {{#js_if "app.params.base.length == 0"}}disabled{{/js_if}}">
+
+                <ul>
+
                     <li>
 
-                        <a href="/documents" class="item-content">
+                        <a href="#" @click="openDocuments('moving_goods')" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">swap_horiz</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Перемещение</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="#" @click="openDocuments('prihodny_order')" class="item-content">
 
                             <div class="item-media">
 
@@ -42,7 +70,27 @@
 
                             <div class="item-inner">
 
-                                <div class="item-title">Документы</div>
+                                <div class="item-title">Приходный ордер</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="#" @click="openDocuments('postupleniye_ot_postavshika')" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">note_add</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Поступление от поставщика</div>
 
                             </div>
 
@@ -110,7 +158,17 @@
 
         },
         methods: {
+            openDocuments: function (type) {
 
+                let component = this;
+
+                component.$router.navigate('/documents', {
+                    context: {
+                        doc_type: type
+                    }
+                });
+
+            }
         },
         on: {
 

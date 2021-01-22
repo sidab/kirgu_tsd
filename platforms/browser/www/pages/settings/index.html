@@ -72,7 +72,7 @@
 
                 <a @click="chooseBase" class="col button button-fill button-raised color-teal margin-bottom">Загрузить базу</a>
 
-                {{#js_if "app.params.user.адресныйСклад"}}
+                {{#js_if "app.params.user.address_warehouse"}}
 
                     <a @click="loadCells" class="col button button-fill button-raised color-purple margin-bottom">Загрузить ячейки</a>
 
@@ -151,11 +151,13 @@
 
                         let cells = response[0].filter(function (cell) {
 
-                            return cell.ИТ_Штрихкод.length > 0;
+                            return cell.Штрихкод.length > 0;
 
                         });
 
                         app.params.cells = cells;
+
+                        app.dialog.alert('Вы успешно загрузили ячейки!');
 
                         localforage.setItem('cells', cells);
 
@@ -192,7 +194,7 @@
                             cssClass: 'text-align-center',
                             onClick: function () {
 
-                                let url = app.params.backend + '/all_goods_new/' + app.params.user.code;
+                                let url = app.params.backend + '/all_goods_kirgu/' + app.params.user.code;
 
                                 component.loadBase('allBase', url);
 

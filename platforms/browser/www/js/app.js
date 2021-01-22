@@ -11,6 +11,7 @@ var app = new Framework7({
     itemsInPart: 20000,
     base: [],
     backend:'http://192.168.200.110/proxy.php?url=http://192.168.215.10/murad/hs/tsd',
+    //backend:'http://192.168.200.110/proxy.php?url=http://192.168.215.8/tdd/hs/exchange_sklad_app',
     dialog: {
         buttonOk: 'Ок',
         buttonCancel: 'Отмена'

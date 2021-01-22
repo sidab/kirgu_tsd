@@ -12,8 +12,16 @@ routes = [
         componentUrl: 'pages/documents/index.html'
     },
     {
-        path: '/documents/document',
-        componentUrl: 'pages/documents/document.html'
+        path: '/documents/peremeshenie',
+        componentUrl: 'pages/documents/peremeshenie.html'
+    },
+    {
+        path: '/documents/prihodniy_order',
+        componentUrl: 'pages/documents/prihodniy_order.html'
+    },
+    {
+        path: '/documents/postuplenie_ot_postavshika',
+        componentUrl: 'pages/documents/postuplenie_ot_postavshika.html'
     },
     {
         path: '/documents/cells',

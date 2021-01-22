@@ -18,7 +18,7 @@
 
                 </div>
 
-                <div class="title">Документы</div>
+                <div class="title">{{title}}</div>
 
                 <div class="right">
 
@@ -105,7 +105,25 @@
         data: function () {
 
             return {
+                title: function () {
 
+                    let component = this;
+
+                    if (component.doc_type == 'moving_goods') {
+
+                        return 'Перемещение';
+
+                    } else if (component.doc_type == 'prihodny_order') {
+
+                        return 'Приходный ордер';
+
+                    } else if (component.doc_type == 'postupleniye_ot_postavshika') {
+
+                        return 'Поступление от поставщика';
+
+                    }
+
+                }
             }
 
         },
@@ -123,18 +141,32 @@
 
                 console.log(document);
 
-                if (app.params.user.адресныйСклад) {
+                let route;
+
+                if (document.ТипДокумента == 'Оприходование') {
+
+                    route = '/documents/prihodniy_order';
+
+                } else if (document.ТипДокумента == 'Перемещение') {
+
+                    route = '/documents/peremeshenie';
+
+                }
+
+                if (app.params.user.address_warehouse && document.ТипДокумента !== 'Перемещение') {
 
                     app.dialog.create({
                         title: 'Выберите действие',
                         buttons: [
                             {
-                                text: 'Перемещение',
+                                text: 'Сканирование',
                                 bold: true,
                                 cssClass: 'text-align-center',
                                 onClick: function () {
 
-                                    app.view.current.router.navigate('/documents/document', {
+                                    console.log(route);
+
+                                    app.view.current.router.navigate(route, {
                                         context: {
                                             document: document
                                         }
@@ -143,7 +175,7 @@
                                 }
                             },
                             {
-                                text: 'Задать ячейки товарам',
+                                text: 'Размещение по ячейкам',
                                 bold: true,
                                 cssClass: 'text-align-center',
                                 onClick: function () {
@@ -175,7 +207,7 @@
 
                 } else {
 
-                    app.view.current.router.navigate('/documents/document', {
+                    app.view.current.router.navigate(route, {
                         context: {
                             document: document
                         }
@@ -215,7 +247,11 @@
 
                     if (value !== undefined && value !== null) {
 
-                        component.documents = value;
+                        component.documents = value.filter(function (document) {
+
+                            return document.type == component.doc_type;
+
+                        });
 
                     } else {
 
@@ -266,7 +302,7 @@
                 let component = this;
                 let page = component.$el;
 
-                let url = app.params.backend + '/' + 'transfer_doc_str_all' + '/' + app.params.user.code + '/' + doc_num + '/';
+                let url = app.params.backend + '/' + component.doc_type + '/' + app.params.user.code + '/' + doc_num + '/';
 
                 app.request({
                     url: encodeURI(url),
@@ -283,6 +319,8 @@
                         console.log(document);
 
                         if (document.Статус == 'Успешно') {
+
+                            document.type = component.doc_type;
 
                             component.documents.push(document);
 

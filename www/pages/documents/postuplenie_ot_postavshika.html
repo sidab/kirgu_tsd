@@ -138,249 +138,249 @@
 
             {{#if items}}
 
-                <div class="list accordion-list">
+            <div class="list accordion-list">
 
-                    <ul>
+                <ul>
 
-                        {{#each items}}
+                    {{#each items}}
 
-                            <li class="accordion-item item {{#if ДобавленИзБазы}}swipeout{{/if}}" data-id="{{Штрихкод}}">
+                    <li class="accordion-item item {{#if ДобавленИзБазы}}swipeout{{/if}}" data-id="{{Штрихкод}}">
 
-                                <a class="item-link item-content {{#if ДобавленИзБазы}}swipeout-content{{/if}}">
+                        <a class="item-link item-content {{#if ДобавленИзБазы}}swipeout-content{{/if}}">
 
-                                    <div class="item-inner">
+                            <div class="item-inner">
 
-                                        <div class="item-title">{{Номенклатура}}</div>
+                                <div class="item-title">{{Номенклатура}}</div>
 
-                                        <div class="item-after">
+                                <div class="item-after">
 
-                                            {{#if ДобавленИзБазы}}
+                                    {{#if ДобавленИзБазы}}
 
-                                                <span class="badge color-orange">Нет в документе</span>
+                                    <span class="badge color-orange">Нет в документе</span>
 
-                                            {{/if}}
+                                    {{/if}}
 
-                                            {{#if Собрано}}
+                                    {{#if Собрано}}
 
-                                                    <span class="badge color-teal">Собран</span>
+                                    <span class="badge color-teal">Собран</span>
 
-                                            {{/if}}
+                                    {{/if}}
 
-                                            {{#js_if "this.Собрано == false"}}
+                                    {{#js_if "this.Собрано == false"}}
 
-                                                <span class="badge color-red">Не собран</span>
+                                    <span class="badge color-red">Не собран</span>
 
-                                            {{/js_if}}
+                                    {{/js_if}}
 
-                                        </div>
+                                </div>
 
-                                    </div>
+                            </div>
 
-                                </a>
+                        </a>
 
-                                <div class="accordion-item-content">
+                        <div class="accordion-item-content">
 
-                                    <div class="list no-hairlines-between">
+                            <div class="list no-hairlines-between">
 
-                                        <ul>
+                                <ul>
 
-                                            <div class="row no-gap">
+                                    <div class="row no-gap">
 
-                                                <li class="col" style="border-right: 1px solid #3b3b3b;">
+                                        <li class="col" style="border-right: 1px solid #3b3b3b;">
 
-                                                    <div class="item-content">
+                                            <div class="item-content">
 
-                                                        <div class="item-inner">
+                                                <div class="item-inner">
 
-                                                            <div class="item-title">Артикул</div>
-                                                            <div class="item-after item-price">{{Артикул}}</div>
+                                                    <div class="item-title">Артикул</div>
+                                                    <div class="item-after item-price">{{Артикул}}</div>
 
-                                                        </div>
-
-                                                    </div>
-
-                                                </li>
-
-                                                <li class="col">
-
-                                                    <div class="item-content">
-
-                                                        <div class="item-inner">
-
-                                                            <div class="item-title">Розничная цена</div>
-
-                                                            <div class="item-after item-price">
-
-                                                                {{#if ЦенаРозничная}}
-
-                                                                    {{ЦенаРозничная}}
-
-                                                                {{else}}
-
-                                                                    {{РозничнаяЦена}}
-
-                                                                {{/if}}
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </li>
+                                                </div>
 
                                             </div>
 
-                                            <div class="row no-gap">
+                                        </li>
 
-                                                <li class="col" style="border-right: 1px solid #3b3b3b;">
+                                        <li class="col">
 
-                                                    <div class="item-content">
+                                            <div class="item-content">
 
-                                                        <div class="item-inner">
+                                                <div class="item-inner">
 
-                                                            <div class="item-title">Количество остаток</div>
+                                                    <div class="item-title">Розничная цена</div>
 
-                                                            <div class="item-after item-price">
+                                                    <div class="item-after item-price">
 
-                                                                {{#if КоличествоОстаток}}
+                                                        {{#if ЦенаРозничная}}
 
-                                                                    {{КоличествоОстаток}}
+                                                        {{ЦенаРозничная}}
 
-                                                                {{else}}
+                                                        {{else}}
 
-                                                                    {{КоличествоНаСкладе}}
+                                                        {{РозничнаяЦена}}
 
-                                                                {{/if}}
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </li>
-
-                                                <li class="col">
-
-                                                    <div class="item-content">
-
-                                                        <div class="item-inner">
-
-                                                            <div class="item-title">Количество в документе</div>
-
-                                                            <div class="item-after item-price">{{КоличествоДокумент}}</div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </li>
-
-                                            </div>
-
-                                            <div class="row no-gap">
-
-                                                {{#js_if "this.ХарактеристикаНоменклатуры.length > 1"}}
-
-                                                    <li class="col accordion-item accordion-item-opened" style="border-right: 1px solid #3b3b3b;">
-
-                                                        <a href="#" class="item-content item-link">
-
-                                                            <div class="item-inner">
-
-                                                                <div class="item-title">Характеристика</div>
-
-                                                            </div>
-
-                                                        </a>
-
-                                                        <div class="accordion-item-content">
-
-                                                            <div class="block">
-
-                                                                <p>{{ХарактеристикаНоменклатуры}}</p>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </li>
-
-                                                {{/js_if}}
-
-                                                <li class="col">
-
-                                                    <div class="item-content">
-
-                                                        <div class="item-inner">
-
-                                                            <div class="item-title">Штрихкод</div>
-                                                            <div class="item-after item-price">{{Штрихкод}}</div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </li>
-
-                                            </div>
-
-                                            <li>
-
-                                                <div class="item-content">
-
-                                                    <div class="item-inner">
-
-                                                        <div class="item-title">Количество сканировано</div>
-
-                                                        <div class="item-after input-quantity-block">
-
-                                                            <div class="input-block margin-right">
-
-                                                                <input type="number" name="count" data-id="{{УИД_Строки}}" class="item-count text-align-center padding-horizontal" value="{{#js_if "this.КоличествоСобрано == 0"}}1{{else}}{{КоличествоСобрано}}{{/js_if}}"/>
-
-                                                            </div>
-
-                                                            <div class="input-plus-block display-none">
-
-                                                                <span class="plus">+</span>
-
-                                                                <input type="number" name="count" data-id="{{УИД_Строки}}" class="border-color-teal item-count input-plus text-align-center padding-horizontal" value="1"/>
-
-                                                            </div>
-
-                                                        </div>
+                                                        {{/if}}
 
                                                     </div>
 
                                                 </div>
 
-                                            </li>
+                                            </div>
 
-                                        </ul>
-
-                                    </div>
-
-                                </div>
-
-                                {{#if ДобавленИзБазы}}
-
-                                    <div class="swipeout-actions-right">
-
-                                        <a  @click="deleteItem('{{Штрихкод}}')" href="#" class="color-red swipeout-close button-remove">Удалить</a>
+                                        </li>
 
                                     </div>
 
-                                {{/if}}
+                                    <div class="row no-gap">
 
-                            </li>
+                                        <li class="col" style="border-right: 1px solid #3b3b3b;">
 
-                        {{/each}}
+                                            <div class="item-content">
 
-                    </ul>
+                                                <div class="item-inner">
 
-                </div>
+                                                    <div class="item-title">Количество остаток</div>
+
+                                                    <div class="item-after item-price">
+
+                                                        {{#if КоличествоОстаток}}
+
+                                                        {{КоличествоОстаток}}
+
+                                                        {{else}}
+
+                                                        {{КоличествоНаСкладе}}
+
+                                                        {{/if}}
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </li>
+
+                                        <li class="col">
+
+                                            <div class="item-content">
+
+                                                <div class="item-inner">
+
+                                                    <div class="item-title">Количество в документе</div>
+
+                                                    <div class="item-after item-price">{{КоличествоДокумент}}</div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </li>
+
+                                    </div>
+
+                                    <div class="row no-gap">
+
+                                        {{#js_if "this.ХарактеристикаНоменклатуры.length > 1"}}
+
+                                        <li class="col accordion-item accordion-item-opened" style="border-right: 1px solid #3b3b3b;">
+
+                                            <a href="#" class="item-content item-link">
+
+                                                <div class="item-inner">
+
+                                                    <div class="item-title">Характеристика</div>
+
+                                                </div>
+
+                                            </a>
+
+                                            <div class="accordion-item-content">
+
+                                                <div class="block">
+
+                                                    <p>{{ХарактеристикаНоменклатуры}}</p>
+
+                                                </div>
+
+                                            </div>
+
+                                        </li>
+
+                                        {{/js_if}}
+
+                                        <li class="col">
+
+                                            <div class="item-content">
+
+                                                <div class="item-inner">
+
+                                                    <div class="item-title">Штрихкод</div>
+                                                    <div class="item-after item-price">{{Штрихкод}}</div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </li>
+
+                                    </div>
+
+                                    <li>
+
+                                        <div class="item-content">
+
+                                            <div class="item-inner">
+
+                                                <div class="item-title">Количество сканировано</div>
+
+                                                <div class="item-after input-quantity-block">
+
+                                                    <div class="input-block margin-right">
+
+                                                        <input type="number" name="count" data-id="{{УИД_Строки}}" class="item-count text-align-center padding-horizontal" value="{{#js_if "this.КоличествоСобрано == 0"}}1{{else}}{{КоличествоСобрано}}{{/js_if}}"/>
+
+                                                    </div>
+
+                                                    <div class="input-plus-block display-none">
+
+                                                        <span class="plus">+</span>
+
+                                                        <input type="number" name="count" data-id="{{УИД_Строки}}" class="border-color-teal item-count input-plus text-align-center padding-horizontal" value="1"/>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                        {{#if ДобавленИзБазы}}
+
+                        <div class="swipeout-actions-right">
+
+                            <a  @click="deleteItem('{{Штрихкод}}')" href="#" class="color-red swipeout-close button-remove">Удалить</a>
+
+                        </div>
+
+                        {{/if}}
+
+                    </li>
+
+                    {{/each}}
+
+                </ul>
+
+            </div>
 
             {{/if}}
 
@@ -417,7 +417,7 @@
              }
 
     {{this}} .item-title {
-        white-space: normal;
+                 white-space: normal;
              }
     {{this}} .accordion-item-content {
                  background: #2d2d2d;
@@ -428,35 +428,35 @@
                  border-bottom: 1px solid #404040;
              }
     {{this}} .accordion-item-content .accordion-item-content {
-    background: #464646;
-    }
+                 background: #464646;
+             }
     {{this}} .accordion-item-content ul {
-background: transparent;
+                 background: transparent;
              }
 
     {{this}} .input-plus-block {
-        position: relative;
+                 position: relative;
              }
 
     {{this}} .input-plus-block input {
-        border: 2px solid;
+                 border: 2px solid;
              }
 
     {{this}} .input-quantity-block {
-position: relative;
+                 position: relative;
              }
     {{this}} .input-quantity-block input {
                  width: 80px;
                  border-radius: 4px;
-        background: #eee;
-        color: #000;
-        font-weight: bold;
-        height: 30px;
+                 background: #eee;
+                 color: #000;
+                 font-weight: bold;
+                 height: 30px;
              }
 
     {{this}} .input-quantity-block input::selection {
-        background: #d6d6d6;
-    }
+                 background: #d6d6d6;
+             }
 
     {{this}} .input-quantity-block input:focus {
                  color: #000;
@@ -480,7 +480,7 @@ position: relative;
              }
 
     {{this}} .swipeout-actions-right {
-        z-index: 99;
+                 z-index: 99;
              }
 </style>
 
@@ -589,7 +589,7 @@ position: relative;
 
                         let document = documents.find(function (document) {
 
-                            return document.Номер == component.document.Номер;
+                            return peremeshenie.Номер == component.document.Номер;
 
                         });
 
@@ -599,7 +599,7 @@ position: relative;
                             kontragent: false,
                             login: app.params.user.code,
                             loadType: loadType,
-                            document: document
+                            document: peremeshenie
                         };
 
                         data = JSON.stringify(data);
@@ -632,7 +632,7 @@ position: relative;
 
                                     for (let i = 0; i < documents.length; i++) {
 
-                                        if (documents[i].Номер == document.Номер) {
+                                        if (documents[i].Номер == peremeshenie.Номер) {
 
                                             for (let i = 0; i < documents[i].Строки.length; i++) {
 
@@ -831,11 +831,11 @@ position: relative;
 
                     let document = documents.find(function (document) {
 
-                        return document.Номер == component.document.Номер;
+                        return peremeshenie.Номер == component.document.Номер;
 
                     });
 
-                    component.document = document;
+                    component.document = peremeshenie;
 
                     let items = component.document.Строки;
 
