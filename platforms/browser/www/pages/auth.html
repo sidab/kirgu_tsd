@@ -1,0 +1,140 @@
+<template>
+
+    <div class="page">
+
+        <div class="toolbar toolbar-bottom no-hairline no-shadow">
+
+            <button @click="checkFields" class="col button button-large button-fill">Продолжить</button>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="list no-hairlines">
+
+                <ul>
+
+                    <li>
+
+                        <div class="item-content item-input item-input-outline">
+
+                            <div class="item-inner">
+
+                                <div class="item-title item-floating-label">Логин</div>
+
+                                <div class="item-input-wrap">
+
+                                    <input type="number" class="login" placeholder="У000123" value="" autofocus/>
+
+                                    <span class="input-clear-button"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li>
+
+                        <div class="item-content item-input item-input-outline">
+
+                            <div class="item-inner">
+
+                                <div class="item-title item-floating-label">Пароль</div>
+
+                                <div class="item-input-wrap">
+
+                                    <input type="password" class="password" value="" placeholder="12345"/>
+
+                                    <span class="input-clear-button"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="block block-strong">
+
+                <p>Введите свой логин и нажмите кнопку <b>Продолжить</b>.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style>
+
+    .toolbar .button {
+        --f7-button-border-radius: 0px;
+    }
+
+</style>
+
+<script>
+
+    export default (props, { $on, $f7, $el, $update }) => {
+
+        const validateFields = () => {
+
+            let login = $el.value.find('.login').val();
+            let password = $el.value.find('.password').val();
+
+            if (login.length < 1) {
+
+                app.toast.create({
+                    text: 'Слишком короткий логин!',
+                    position: 'top',
+                    cssClass: 'bg-color-red'
+                }).open();
+
+                return false;
+
+            }
+
+            if (password.length < 1) {
+
+                app.toast.create({
+                    text: 'Введите пароль!',
+                    position: 'top',
+                    cssClass: 'bg-color-red'
+                }).open();
+
+                return false;
+
+            }
+
+            app.user.auth(login, password);
+
+        }
+
+        $on('pageInit', function () {
+
+            $el.value.find('input').on('keypress', function (event) {
+
+                if(event.key === 'Enter') {
+
+                    validateFields();
+
+                }
+
+            });
+
+        });
+
+        return $render;
+
+    }
+
+</script>

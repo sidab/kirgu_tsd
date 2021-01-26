@@ -22,33 +22,31 @@
 
                 <div class="right">
 
-                    <a @click="sendToServerDialog" href="#" class="link">
+                    <a @click="${sendToServerDialog}" href="#" class="link">
 
                         <i class="icon material-icons text-color-teal">done</i>
 
                     </a>
 
-                    <a @click="search" href="#" class="link">
+                    <a @click="${search}" href="#" class="link">
 
                         <i class="icon material-icons">find_in_page</i>
 
                     </a>
 
-                    <a @click="sort" href="#" class="link sort">
+                    <a @click="${sort}" href="#" class="link sort">
 
                         <i class="icon material-icons">sort</i>
 
                         <span class="label">
 
-                            {{#js_if "this.sortType == 'byName'"}}
-
+                            ${sortType == 'byName' && $h`
                                 АБВ
+                            `}
 
-                            {{else}}
-
+                            ${sortType == 'bySku' && $h`
                                 123
-
-                            {{/js_if}}
+                            `}
 
                         </span>
 
@@ -66,111 +64,111 @@
 
         </div>
 
-        <div class="popover popover-filter">
+        <div class="page-content">
 
-            <div class="popover-inner">
+            <div class="popover popover-filter">
 
-                <div class="list">
+                <div class="popover-inner">
 
-                    <ul>
+                    <div class="list">
 
-                        <li data-type="all" class="item-content bg-color-red">
+                        <ul>
 
-                            <div class="item-inner">
+                            <li data-type="all" class="item-content bg-color-red">
 
-                                <div class="item-title">Все</div>
+                                <div class="item-inner">
 
-                            </div>
+                                    <div class="item-title">Все</div>
 
-                        </li>
+                                </div>
 
-                        <li data-type="onlyScan" class="item-content">
+                            </li>
 
-                            <div class="item-inner">
+                            <li data-type="onlyScan" class="item-content">
 
-                                <div class="item-title">Сканированные</div>
+                                <div class="item-inner">
 
-                            </div>
+                                    <div class="item-title">Сканированные</div>
 
-                        </li>
+                                </div>
 
-                        <li data-type="onlyNoScan" class="item-content">
+                            </li>
 
-                            <div class="item-inner">
+                            <li data-type="onlyNoScan" class="item-content">
 
-                                <div class="item-title">Не сканированные</div>
+                                <div class="item-inner">
 
-                            </div>
+                                    <div class="item-title">Не сканированные</div>
 
-                        </li>
+                                </div>
 
-                        <li data-type="neSobrano" class="item-content">
+                            </li>
 
-                            <div class="item-inner">
+                            <li data-type="neSobrano" class="item-content">
 
-                                <div class="item-title">Не собрано</div>
+                                <div class="item-inner">
 
-                            </div>
+                                    <div class="item-title">Не собрано</div>
 
-                        </li>
+                                </div>
 
-                        <li data-type="noInDocument" class="item-content">
+                            </li>
 
-                            <div class="item-inner">
+                            <li data-type="noInDocument" class="item-content">
 
-                                <div class="item-title">Нет в документе</div>
+                                <div class="item-inner">
 
-                            </div>
+                                    <div class="item-title">Нет в документе</div>
 
-                        </li>
+                                </div>
 
-                    </ul>
+                            </li>
+
+                        </ul>
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+            <input type="text" class="barcode bg-color-gray"/>
 
-        <div class="page-content">
+            ${document && items && $h`
 
-            <input type="text" class="barcode bg-color-gray">
-
-            {{#if items}}
-
-            <div class="list accordion-list">
+            <div class="list accordion-list items">
 
                 <ul>
 
-                    {{#each items}}
+                    ${items.map((item) => $h`
 
-                    <li class="accordion-item item {{#if ДобавленИзБазы}}swipeout{{/if}}" data-id="{{Штрихкод}}">
+                    <li class="accordion-item item" data-id="${item.Штрихкод}">
 
-                        <a class="item-link item-content {{#if ДобавленИзБазы}}swipeout-content{{/if}}">
+                        <a class="item-link item-content">
 
                             <div class="item-inner">
 
-                                <div class="item-title">{{Номенклатура}}</div>
+                                <div class="item-title">${item.Номенклатура}</div>
 
                                 <div class="item-after">
 
-                                    {{#if ДобавленИзБазы}}
+                                    ${item.ДобавленИзБазы && $h`
 
                                     <span class="badge color-orange">Нет в документе</span>
 
-                                    {{/if}}
+                                    `}
 
-                                    {{#if Собрано}}
+                                    ${item.Собрано && $h`
 
                                     <span class="badge color-teal">Собран</span>
 
-                                    {{/if}}
+                                    `}
 
-                                    {{#js_if "this.Собрано == false"}}
+                                    ${!item.Собрано && $h`
 
                                     <span class="badge color-red">Не собран</span>
 
-                                    {{/js_if}}
+                                    `}
 
                                 </div>
 
@@ -193,7 +191,7 @@
                                                 <div class="item-inner">
 
                                                     <div class="item-title">Артикул</div>
-                                                    <div class="item-after item-price">{{Артикул}}</div>
+                                                    <div class="item-after item-price">${item.Артикул}</div>
 
                                                 </div>
 
@@ -211,15 +209,17 @@
 
                                                     <div class="item-after item-price">
 
-                                                        {{#if ЦенаРозничная}}
+                                                        ${item.ЦенаРозничная && $h`
 
-                                                        {{ЦенаРозничная}}
+                                                        ${item.ЦенаРозничная}
 
-                                                        {{else}}
+                                                        `}
 
-                                                        {{РозничнаяЦена}}
+                                                        ${item.РозничнаяЦена && $h`
 
-                                                        {{/if}}
+                                                        ${item.РозничнаяЦена}
+
+                                                        `}
 
                                                     </div>
 
@@ -243,15 +243,17 @@
 
                                                     <div class="item-after item-price">
 
-                                                        {{#if КоличествоОстаток}}
+                                                        ${item.КоличествоОстаток && $h`
 
-                                                        {{КоличествоОстаток}}
+                                                        ${item.КоличествоОстаток}
 
-                                                        {{else}}
+                                                        `}
 
-                                                        {{КоличествоНаСкладе}}
+                                                        ${item.КоличествоНаСкладе && $h`
 
-                                                        {{/if}}
+                                                        ${item.КоличествоНаСкладе}
+
+                                                        `}
 
                                                     </div>
 
@@ -269,7 +271,7 @@
 
                                                     <div class="item-title">Количество в документе</div>
 
-                                                    <div class="item-after item-price">{{КоличествоДокумент}}</div>
+                                                    <div class="item-after item-price">${item.КоличествоДокумент}</div>
 
                                                 </div>
 
@@ -281,7 +283,7 @@
 
                                     <div class="row no-gap">
 
-                                        {{#js_if "this.ХарактеристикаНоменклатуры.length > 1"}}
+                                        ${item.ХарактеристикаНоменклатуры.length > 0 && $h`
 
                                         <li class="col accordion-item accordion-item-opened" style="border-right: 1px solid #3b3b3b;">
 
@@ -299,7 +301,7 @@
 
                                                 <div class="block">
 
-                                                    <p>{{ХарактеристикаНоменклатуры}}</p>
+                                                    <p>${item.ХарактеристикаНоменклатуры}</p>
 
                                                 </div>
 
@@ -307,7 +309,7 @@
 
                                         </li>
 
-                                        {{/js_if}}
+                                        `}
 
                                         <li class="col">
 
@@ -316,7 +318,7 @@
                                                 <div class="item-inner">
 
                                                     <div class="item-title">Штрихкод</div>
-                                                    <div class="item-after item-price">{{Штрихкод}}</div>
+                                                    <div class="item-after item-price">${item.Штрихкод}</div>
 
                                                 </div>
 
@@ -338,7 +340,7 @@
 
                                                     <div class="input-block margin-right">
 
-                                                        <input type="number" name="count" data-id="{{УИД_Строки}}" class="item-count text-align-center padding-horizontal" value="{{#js_if "this.КоличествоСобрано == 0"}}1{{else}}{{КоличествоСобрано}}{{/js_if}}"/>
+                                                        <input type="number" name="count" data-id="${item.УИД_Строки}" class="item-count text-align-center padding-horizontal" value="${item.КоличествоСобрано}"/>
 
                                                     </div>
 
@@ -346,7 +348,7 @@
 
                                                         <span class="plus">+</span>
 
-                                                        <input type="number" name="count" data-id="{{УИД_Строки}}" class="border-color-teal item-count input-plus text-align-center padding-horizontal" value="1"/>
+                                                        <input type="number" name="count" data-id="${item.УИД_Строки}" class="border-color-teal item-count input-plus text-align-center padding-horizontal" value="1"/>
 
                                                     </div>
 
@@ -364,25 +366,15 @@
 
                         </div>
 
-                        {{#if ДобавленИзБазы}}
-
-                        <div class="swipeout-actions-right">
-
-                            <a  @click="deleteItem('{{Штрихкод}}')" href="#" class="color-red swipeout-close button-remove">Удалить</a>
-
-                        </div>
-
-                        {{/if}}
-
                     </li>
 
-                    {{/each}}
+                    `)}
 
                 </ul>
 
             </div>
 
-            {{/if}}
+            `}
 
         </div>
 
@@ -390,857 +382,809 @@
 
 </template>
 
-<style scoped>
+<style>
 
-    {{this}} .barcode {
+    .barcode {
         position: absolute;
         opacity: 0;
     }
 
-    {{this}} .plus {
-                 position: absolute;
-                 top: 2px;
-                 z-index: 999;
-                 left: 15px;
-                 color: #000;
-                 font-weight: bold;
-                 font-size: 16px;
-             }
+    .items {
+        --f7-list-item-title-font-size: 12px;
+        --f7-badge-font-size: 9px;
+        --f7-list-item-min-height: 30px;
+        --f7-badge-padding: 5px 5px;
+        --f7-badge-size: 15px;
+        padding-bottom: 200px;
+    }
 
-    {{this}} .list.accordion-list {
-                 --f7-list-item-title-font-size: 12px;
-                 --f7-badge-font-size: 9px;
-                 --f7-list-item-min-height: 30px;
-                 --f7-badge-padding: 5px 5px;
-                 --f7-badge-size: 15px;
-                 padding-bottom: 200px;
-             }
+    .items .list {
+        background: #2d2d2d;
+        --f7-list-item-title-font-size: 10px;
+        --f7-list-item-after-font-size: 10px;
+        --f7-list-item-min-height: 30px;
+        --f7-list-item-title-white-space: normal;
+    }
 
-    {{this}} .item-title {
-                 white-space: normal;
-             }
-    {{this}} .accordion-item-content {
-                 background: #2d2d2d;
-                 font-size: 11px;
-                 --f7-list-item-title-font-size: 11px;
-             }
-    {{this}} .list .row {
-                 border-bottom: 1px solid #404040;
-             }
-    {{this}} .accordion-item-content .accordion-item-content {
-                 background: #464646;
-             }
-    {{this}} .accordion-item-content ul {
-                 background: transparent;
-             }
+    .items .item-title {
+        white-space: normal;
+    }
 
-    {{this}} .input-plus-block {
-                 position: relative;
-             }
+    .items .list .row {
+        border-bottom: 1px solid #404040;
+    }
 
-    {{this}} .input-plus-block input {
-                 border: 2px solid;
-             }
+    .items .accordion-item-content .accordion-item-content {
+        background: #464646;
+    }
 
-    {{this}} .input-quantity-block {
-                 position: relative;
-             }
-    {{this}} .input-quantity-block input {
-                 width: 80px;
-                 border-radius: 4px;
-                 background: #eee;
-                 color: #000;
-                 font-weight: bold;
-                 height: 30px;
-             }
+    .items .accordion-item-content ul {
+        background: transparent;
+    }
 
-    {{this}} .input-quantity-block input::selection {
-                 background: #d6d6d6;
-             }
+    .items .swipeout-actions-right {
+        z-index: 99;
+    }
 
-    {{this}} .input-quantity-block input:focus {
-                 color: #000;
-             }
+    .items .accordion-item-content .accordion-item-content {
+        font-size: 11px
+    }
 
-    {{this}} .button-save i {
-                 font-size: 14px;
-             }
+    .items .input-plus-block {
+        position: relative;
+    }
 
-    {{this}} .accordion-item-content .list {
-                 --f7-list-item-title-font-size: 11px;
-                 --f7-list-item-after-font-size: 11px;
-                 --f7-list-item-min-height: 30px;
-             }
+    .items .input-plus-block input {
+        border: 2px solid;
+    }
 
-    {{this}} .navbar .sort .label {
-                 font-size: 8px;
-                 position: absolute;
-                 right: 8px;
-                 bottom: -3px;
-             }
+    .items .input-quantity-block {
+        position: relative;
+    }
 
-    {{this}} .swipeout-actions-right {
-                 z-index: 99;
-             }
+    .items .input-quantity-block input {
+        width: 80px;
+        border-radius: 4px;
+        background: #eee;
+        color: #000;
+        font-weight: bold;
+        height: 30px;
+    }
+
+    .items .input-quantity-block input::selection {
+        background: #d6d6d6;
+    }
+
+    .items .input-quantity-block input:focus {
+        color: #000;
+    }
+
+    .items .list .item-after:not(.input-quantity-block) {
+        max-width: 50%;
+        white-space: normal;
+        word-break: break-all;
+    }
+
+    .items .badge {
+        margin-left: 5px;
+    }
+
+
+    .plus {
+        position: absolute;
+        top: 2px;
+        z-index: 999;
+        left: 15px;
+        color: #000;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .navbar .sort .label {
+        font-size: 8px;
+        position: absolute;
+        right: 8px;
+        bottom: -3px;
+    }
+
+
 </style>
 
 <script>
 
-    return {
+    export default (props, { $on, $, $f7, $f7route, $f7router, $el, $update }) => {
 
-        data: function () {
+        const doc_num = $f7route.params.doc_num;
 
-            return {
-                sortType: 'byName'
-            }
+        let document = null;
 
-        },
-        methods: {
-            deleteItem: function (barcode) {
+        let items = null;
 
-                let component = this;
-                let page = component.$el;
+        let barcodeTimeout = false;
 
-                component.items = component.items.filter(function (item) {
+        let barcodeEl = null;
 
-                    if (item.Штрихкоды) {
+        let scanned = false;
 
-                        return item.Штрихкоды.indexOf(barcode) == -1;
+        let hideInputPlus = false;
 
-                    } else {
+        let sortType = 'byName';
 
-                        return item.Штрихкод !== barcode;
+        let popoverFilterTimeout = null;
 
-                    }
+        const initDocument = () => {
 
-                });
+            document = app.documents.data.find(function (document) {
+
+                return document.Номер == doc_num;
+
+            });
+
+            initItems();
+
+        }
+
+        const initItems = (filter) => {
+
+            items = document.Строки.sort(function (a, b) {
+
+                let nameA = sortType === 'byName' ? a.Номенклатура : a.Артикул;
+
+                let nameB = sortType === 'byName' ? b.Номенклатура : b.Артикул;
+
+                if (nameA < nameB) {
+
+                    return -1;
+
+                }
+
+                if (nameA > nameB) {
+
+                    return 1;
+
+                }
+
+                return 0;
+
+            });
+
+            if (filter) {
+
+                items = filter(document.Строки);
 
                 app.toast.create({
-                    text: 'Вы удалили товар из документа',
-                    cssClass: 'bg-color-orange',
-                    closeTimeout: 2000,
-                    position: 'top'
+                    text: items.length,
+                    position: 'center',
+                    closeTimeout: 2000
                 }).open();
 
-                component.$update();
+            }
 
-                component.saveDocument();
+            $update();
 
-            },
-            sendToServerDialog: function () {
+        }
 
-                let component = this;
-                let page = component.$el;
+        const openAccordion = (barcode) => {
 
-                app.dialog.create({
+            let accordion = $el.value.find('.accordion-item[data-id="' + barcode + '"]');
 
-                    title: 'Выберите вариант',
-                    buttons: [
-                        {
-                            text: 'Добавить',
-                            bold: true,
-                            cssClass: 'text-align-center',
+            app.accordion.open(accordion);
 
-                            onClick: function () {
+        }
 
-                                component.sendToServer('Добавление');
+        const barcodeHandler = () => {
 
-                            }
-                        },
-                        {
-                            text: 'Заменить',
-                            bold: true,
-                            cssClass: 'text-align-center',
-                            onClick: function () {
+            scanned = true;
 
-                                component.sendToServer('Замена');
+            let barcode = barcodeEl.val();
 
-                            }
-                        },
-                        {
-                            text: 'Замена с очищением',
-                            bold: true,
-                            cssClass: 'text-align-center',
-                            color: 'red',
-                            onClick: function () {
+            if (barcode.length == 12) {
 
-                                component.sendToServer('ЗаменаСОчищением');
+                barcode = '0' + barcode;
 
-                            }
-                        },
-                        {
-                            text: 'Отмена',
-                            bold: true,
-                            color: 'gray',
-                        },
-                    ],
-                    verticalButtons: true,
-                }).open();
+            }
 
-            },
-            sendToServer: function (loadType) {
+            let item;
 
-                let component = this;
-                let page = component.$el;
+            item = document.Строки.find(function (item) {
 
-                app.dialog.confirm('Вы готовы передать документ в 1С?', 'Внимание', function () {
+                if (item.Штрихкоды) {
 
-                    localforage.getItem('documents').then(function (documents) {
-
-                        let document = documents.find(function (document) {
-
-                            return peremeshenie.Номер == component.document.Номер;
-
-                        });
-
-                        let url = encodeURI(app.params.backend + '/transfer_doc_loadstr');
-
-                        let data = {
-                            kontragent: false,
-                            login: app.params.user.code,
-                            loadType: loadType,
-                            document: peremeshenie
-                        };
-
-                        data = JSON.stringify(data);
-
-                        app.request({
-                            url: url,
-                            //async: false,
-                            method: 'POST',
-                            data: {
-                                data: data,
-                            },
-                            beforeSend: function () {
-
-                                app.dialog.preloader('Загрузка...');
-
-                            },
-                            success: function (response) {
-
-                                app.toast.create({
-                                    text: 'Ваш запрос принят!',
-                                    position: 'top',
-                                    cssClass: 'bg-color-teal'
-                                }).open();
-
-                                app.views.current.router.back('/main', {
-                                    force: true
-                                });
-
-                                if (response.Статус == 'Успешно') {
-
-                                    for (let i = 0; i < documents.length; i++) {
-
-                                        if (documents[i].Номер == peremeshenie.Номер) {
-
-                                            for (let i = 0; i < documents[i].Строки.length; i++) {
-
-                                                if (documents[i].Строки[i].ДобавленИзБазы) {
-
-                                                    delete documents[i].Строки[i].ДобавленИзБазы;
-
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }
-
-                                    localforage.setItem('documents', documents);
-
-                                }
-
-                            },
-                            error: function () {
-
-                                app.toast.create({
-                                    text: 'Нет соединение с базой!',
-                                    position: 'top',
-                                    cssClass: 'bg-color-red'
-                                }).open();
-
-                            },
-                            complete: function () {
-
-                                app.dialog.close();
-
-                            }
-                        });
-
-                    });
-
-                });
-
-            },
-            sort: function () {
-
-                let component = this;
-                let page = component.$el;
-
-                if (component.sortType == 'byName') {
-
-                    component.sortType = 'bySku';
+                    return item.Штрихкоды.indexOf(barcode) !== -1;
 
                 } else {
 
-                    component.sortType = 'byName';
+                    return item.Штрихкод == barcode;
 
                 }
 
-                component.$update();
+            });
 
-                component.initItems();
+            if (item) {
 
-            },
-            search: function () {
+                openAccordion(item.Штрихкод);
 
-                let component = this;
-                let page = component.$el;
+            } else {
 
-                app.dialog.prompt('', 'Введите штрихкод', function (barcode) {
+                item = app.items.data.find(function (item) {
 
-                    page.find('.barcode').val(barcode);
-
-                    component.hideInputPlus = true;
-
-                    component.barcodeHandler();
-
-                });
-
-            },
-            changeCount: function () {
-
-                let component = this;
-                let page = component.$el;
-
-                let barcode = page.find('.item.accordion-item-opened').data('id');
-
-                let itemIndex = component.items.findIndex(function (item) {
-
-                    if (item.Штрихкоды) {
-
-                        return item.Штрихкоды.indexOf(barcode) !== -1;
-
-                    } else {
-
-                        return item.Штрихкод == barcode;
-
-                    }
-
-                });
-
-                let accordion = page.find('.accordion-item[data-id="' + component.items[itemIndex].Штрихкод + '"]');
-
-                let quantity = accordion.find('input:not(.input-plus)').val();
-
-                if (quantity.length == 0 && quantity == '0') {
-
-                    app.toast.create({
-                        text: 'Неверное количество!',
-                        cssClass: 'bg-color-red',
-                        closeTimeout: 1000,
-                        position: 'top'
-                    }).open();
-
-                    return false;
-
-                }
-
-                quantity = Number(quantity);
-
-                component.items[itemIndex].КоличествоСобрано = quantity;
-
-                if (component.items[itemIndex].КоличествоДокумент) {
-
-                    if (component.items[itemIndex].КоличествоДокумент == quantity) {
-
-                        component.items[itemIndex].Собрано = true;
-
-                    } else {
-
-                        component.items[itemIndex].Собрано = false;
-
-                    }
-
-                }
-
-                app.toast.create({
-                    text: 'Сохранение...',
-                    cssClass: 'bg-color-teal',
-                    closeTimeout: 1000,
-                    position: 'top'
-                }).open();
-
-                accordion.find('.input-plus-block').addClass('display-none');
-
-                accordion.find('.input-plus-block').find('input').val('1');
-
-                component.$update();
-
-                component.saveDocument();
-
-                setTimeout(function () {
-
-                    app.accordion.close(accordion);
-
-                }, 2000);
-
-            },
-            saveDocument: function () {
-
-                let component = this;
-                let page = component.$el;
-
-                localforage.getItem('documents').then(function (documents) {
-
-                    for (let i = 0; i < documents.length; i++) {
-
-                        if (documents[i].Номер == component.document.Номер) {
-
-                            documents[i].Строки = component.items;
-
-                        }
-
-                    }
-
-                    localforage.setItem('documents', documents).then(function () {
-
-                        navigator.vibrate(100);
-
-                    });
-
-                });
-
-            },
-            initItems: function (filter) {
-
-                let component = this;
-                let page = component.$el;
-
-                if (page.find('.item.accordion-item-opened').length > 0) {
-
-                    app.accordion.close(page.find('.item.accordion-item-opened'));
-
-                }
-
-                page.find('.page-content').scrollTop(0);
-
-                localforage.getItem('documents').then(function (documents) {
-
-                    let document = documents.find(function (document) {
-
-                        return peremeshenie.Номер == component.document.Номер;
-
-                    });
-
-                    component.document = peremeshenie;
-
-                    let items = component.document.Строки;
-
-                    items = items.sort(function (a, b) {
-
-                        let nameA = component.sortType === 'byName' ? a.Номенклатура : a.Артикул;
-
-                        let nameB = component.sortType === 'byName' ? b.Номенклатура : b.Артикул;
-
-                        if (nameA < nameB) {
-
-                            return -1;
-
-                        }
-
-                        if (nameA > nameB) {
-
-                            return 1;
-
-                        }
-
-                        return 0;
-
-                    });
-
-                    if (filter) {
-
-                        items = filter(items);
-
-                        app.toast.create({
-                            text: items.length,
-                            position: 'center',
-                            closeTimeout: 2000
-                        }).open();
-
-                    }
-
-                    component.items = items;
-
-                    component.$update();
-
-                });
-
-            },
-            filter: function (type) {
-
-                let component = this;
-                let page = component.$el;
-
-                component.popoverFilterTimeout = setTimeout(function () {
-
-                    app.popover.close('.popover-filter');
-
-                    clearTimeout(component.popoverFilterTimeout);
-
-                    component.popoverFilterTimeout = false;
-
-                }, 500);
-
-                let filter;
-
-                if (type == 'all') {
-
-                    filter = function (items) {
-
-                        return items;
-
-                    };
-
-                } else if (type == 'onlyScan') {
-
-                    filter = function (items) {
-
-                        return items.filter(function (item) {
-
-                            return item.КоличествоСобрано > 0;
-
-                        });
-
-                    }
-
-                } else if (type == 'onlyNoScan') {
-
-                    filter = function (items) {
-
-                        return items.filter(function (item) {
-
-                            return item.КоличествоСобрано == 0;
-
-                        });
-
-                    }
-
-                } else if (type == 'neSobrano') {
-
-                    filter = function (items) {
-
-                        return items.filter(function (item) {
-
-                            if (item.КоличествоДокумент) {
-
-                                if ( (item.КоличествоСобрано > 0) && (item.КоличествоДокумент !== item.КоличествоСобрано) && (!item.ДобавленИзБазы) ) {
-
-                                    return item;
-
-                                }
-
-                            }
-
-                        });
-
-                    }
-
-                } else if (type == 'noInDocument') {
-
-                    filter = function (items) {
-
-                        return items.filter(function (item) {
-
-                            return item.ДобавленИзБазы == true;
-
-                        });
-
-                    }
-
-                }
-
-                component.initItems(filter);
-
-            },
-            barcodeHandler: function () {
-
-                let component = this;
-                let page = component.$el;
-
-                component.scanned = true;
-
-                let barcode = page.find('.barcode').val();
-
-                if (barcode.length == 12) {
-
-                    barcode = '0' + barcode;
-
-                }
-
-                let item = component.items.find(function (item) {
-
-                    if (item.Штрихкоды) {
-
-                        return item.Штрихкоды.indexOf(barcode) !== -1;
-
-                    } else {
-
-                        return item.Штрихкод == barcode;
-
-                    }
+                    return item.Штрихкод == barcode;
 
                 });
 
                 if (item) {
 
-                    console.log(item);
+                    app.dialog.confirm('Штрихкод не найден в документе, но найден в базе, добавить его в документ?', '', function () {
 
-                    let accordion = page.find('.accordion-item[data-id="' + item.Штрихкод + '"]');
+                        item.КоличествоСобрано = 0;
 
-                    app.accordion.open(accordion);
+                        item.ДобавленИзБазы = true;
 
-                } else {
+                        document.Строки.push(item);
 
-                    let item_in_base = app.params.base.find(function (item) {
+                        saveDocument(function () {
 
-                        return item.Штрихкод == barcode;
-
-                    });
-
-                    if (item_in_base) {
-
-                        app.dialog.confirm('Штрихкод не найден в документе, но найден в базе, добавить его в документ?', '', function () {
-
-                            item_in_base.КоличествоСобрано = 0;
-
-                            item_in_base.ДобавленИзБазы = true;
-
-                            component.items.push(item_in_base);
-
-                            component.saveDocument();
-
-                            component.$update(function () {
-
-                                component.barcodeHandler();
-
-                            });
+                            openAccordion(item.Штрихкод);
 
                         });
 
+                    });
+
+                } else {
+
+                    app.toast.create({
+                        text: 'Штрихкод не найден!',
+                        closeTimeout: 2000,
+                        cssClass: 'bg-color-red',
+                        position: 'top'
+                    }).open();
+
+                }
+
+            }
+
+        };
+
+        const saveDocument = (callback) => {
+
+            app.documents.data.map(function (doc) {
+
+                if (doc.Номер == doc_num) {
+
+                    doc = document;
+
+                }
+
+            });
+
+            app.documents.save(function () {
+
+                $update(function () {
+
+                    if (callback) {
+
+                        callback();
+
+                    }
+
+                });
+
+            });
+
+        }
+
+        const barcodeOnInputHandler = () => {
+
+            if (!barcodeTimeout) {
+
+                barcodeTimeout = setTimeout(function () {
+
+                    barcodeHandler();
+
+                    clearTimeout(barcodeTimeout);
+
+                    barcodeTimeout = false;
+
+                }, 300);
+
+            }
+
+        }
+
+        const keydownHandler = (event) => {
+
+            let key = event.keyCode;
+
+            if (key == 114 || key == 0 || key == 91) {
+
+                if ($('.dialog.modal-in').length > 0) {
+
+                    setTimeout(function () {
+
+                        if ($('.dialog.modal-in').find('input').val().length >= 12) {
+
+                            $('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
+
+                        } else {
+
+                            let ke = new KeyboardEvent('keydown', {
+                                bubbles: true, cancelable: true, keyCode: 91
+                            });
+
+                            document.body.dispatchEvent(ke);
+
+                        }
+
+                    }, 300);
+
+                } else {
+
+                    barcodeEl.val('');
+
+                    barcodeEl.focus();
+
+                }
+
+            }
+
+            if (!popoverFilterTimeout) {
+
+                let popoverFilterEl = $('.popover-filter');
+
+                let popoverFilterOpenEl = $el.value.find('.filter-open');
+
+                if (event.code == 'ArrowUp') {
+
+                    popoverFilterOpenEl.click();
+
+                    if (popoverFilterEl.find('li.bg-color-red').prev().length > 0) {
+
+                        popoverFilterEl.find('li.bg-color-red').prev().click();
+
                     } else {
 
-                        app.toast.create({
-                            text: 'Штрихкод не найден!',
-                            closeTimeout: 2000,
-                            cssClass: 'bg-color-red',
-                            position: 'top'
-                        }).open();
+                        popoverFilterEl.find('li:last-child').click();
+
+                    }
+                }
+
+                if (event.code == 'ArrowDown') {
+
+                    popoverFilterOpenEl.click();
+
+                    if (popoverFilterEl.find('li.bg-color-red').next().length > 0) {
+
+                        popoverFilterEl.find('li.bg-color-red').next().click();
+
+                    } else {
+
+                        popoverFilterEl.find('li:first-child').click();
 
                     }
 
                 }
 
             }
-        },
-        on: {
 
-            pageInit: function() {
+        };
 
-                let component = this;
-                let page = component.$el;
+        const itemBeforeOpenHandler = (el) => {
 
-                component.initItems();
+            let inputBlockEl = el.find('.input-block');
 
-                component.barcodeTimeout = false;
+            let inputPlusBlockEl = el.find('.input-plus-block');
 
-                page.find('.barcode').on('input', function () {
+            if (scanned && !hideInputPlus) {
 
-                    if (!component.barcodeTimeout) {
+                inputPlusBlockEl.removeClass('display-none');
 
-                        component.barcodeTimeout = setTimeout(function () {
+                inputPlusBlockEl.find('input').focus();
 
-                            component.barcodeHandler();
+                inputPlusBlockEl.find('input')[0].select();
 
-                            clearTimeout(component.barcodeTimeout);
+            } else {
 
-                            component.barcodeTimeout = false;
+                inputPlusBlockEl.addClass('display-none');
 
-                        }, 300);
+                inputBlockEl.find('input').focus();
 
-                    }
-
-                });
-
-                $$(window).off('keydown');
-
-                $$(window).on('keydown', function(event) {
-
-                    let key = event.keyCode;
-
-                    if (key == 114 || key == 0 || key == 91) {
-
-                        if ($$('.dialog.modal-in').length > 0) {
-
-                            setTimeout(function () {
-
-                                if ($$('.dialog.modal-in').find('input').val().length >= 12) {
-
-                                    $$('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
-
-                                } else {
-
-                                    let ke = new KeyboardEvent('keydown', {
-                                        bubbles: true, cancelable: true, keyCode: 91
-                                    });
-
-                                    document.body.dispatchEvent(ke);
-
-                                }
-
-                            }, 300);
-
-                        } else {
-
-                            page.find('.barcode').val('');
-
-                            page.find('.barcode').focus();
-
-                        }
-
-                    }
-
-                    if (!component.popoverFilterTimeout) {
-
-                        if (event.code == 'ArrowUp') {
-
-                            page.find('.filter-open').click();
-
-                            if ($$('.popover-filter').find('li.bg-color-red').prev().length > 0) {
-
-                                $$('.popover-filter').find('li.bg-color-red').prev().click();
-
-                            } else {
-
-                                $$('.popover-filter').find('li:last-child').click();
-
-                            }
-                        }
-
-                        if (event.code == 'ArrowDown') {
-
-                            page.find('.filter-open').click();
-
-                            if ($$('.popover-filter').find('li.bg-color-red').next().length > 0) {
-
-                                $$('.popover-filter').find('li.bg-color-red').next().click();
-
-                            } else {
-
-                                $$('.popover-filter').find('li:first-child').click();
-
-                            }
-
-                        }
-
-                    }
-
-                });
-
-                $$(window).off('accordion:beforeopen', '.page[data-name="document"] .accordion-item');
-
-                $$(window).on('accordion:beforeopen', '.page[data-name="document"] .accordion-item', function () {
-
-                    if (component.scanned && !component.hideInputPlus) {
-
-                        $$(this).find('.input-plus-block').removeClass('display-none');
-
-                        $$(this).find('.input-plus-block').find('input').focus();
-
-                        $$(this).find('.input-plus-block').find('input')[0].select();
-
-                    } else {
-
-                        $$(this).find('.input-plus-block').addClass('display-none');
-
-                        $$(this).find('.input-block').find('input').focus();
-
-                        $$(this).find('.input-block').find('input')[0].select();
-
-                    }
-
-                });
-
-                $$(window).off('accordion:opened', '.page[data-name="document"] .accordion-item');
-
-                $$(window).on('accordion:opened', '.page[data-name="document"] .accordion-item', function () {
-
-                    let offset = $$(this).offset();
-
-                    page.find('.page-content').scrollTop(offset.top - 150);
-
-                    if (component.scanned) {
-
-                        setTimeout(function () {
-
-                            component.scanned = false;
-
-                        }, 100);
-
-                    }
-
-                });
-
-                $$(window).off('keypress', '.page[data-name="document"] .accordion-item input');
-
-                $$(window).on('keypress', '.page[data-name="document"] .accordion-item input', function (event) {
-
-                    if (!component.scanned) {
-
-                        if (event.key === 'Enter') {
-
-                            if ($$(event.target).hasClass('input-plus')) {
-
-                                console.log(888);
-
-                                let increment = Number($$(this).val());
-
-                                let value = Number($$(this).parent().parent().find('input:not(.input-plus)').val());
-
-                                let quantity = increment + value;
-
-                                $$(this).parent().parent().find('input:not(.input-plus)').val(quantity);
-
-                            }
-
-                            component.changeCount();
-
-                        }
-
-                    }
-
-                });
-
-                $$(window).on('click', '.popover-filter li');
-
-                $$(window).on('click', '.popover-filter li', function (event) {
-
-                    $$('.popover-filter').find('li').removeClass('bg-color-red');
-
-                    $$(this).addClass('bg-color-red');
-
-                    let type = $$(this).data('type');
-
-                    component.filter(type);
-
-                });
+                inputBlockEl.find('input')[0].select();
 
             }
 
         }
+
+        const itemOpenedHandler = (el) => {
+
+            let offset = el.offset();
+
+            $el.value.find('.page-content').scrollTop(offset.top - 150);
+
+            if (scanned) {
+
+                setTimeout(function () {
+
+                    scanned = false;
+
+                }, 100);
+
+            }
+
+        }
+
+        const removeItem = (barcode) => {
+
+            document.Строки = document.Строки.filter(function (item) {
+
+                return item.Штрихкод !== barcode;
+
+            });
+
+            saveDocument(function () {
+
+                app.toast.create({
+                    text: 'Товар удален из документа',
+                    closeTimeout: 2000,
+                    cssClass: 'bg-color-gray',
+                    position: 'top'
+                }).open();
+
+            });
+
+        }
+
+        const inputKeypressEvent = (el, event) => {
+
+            let itemEl = el.parents('.item');
+
+            if (!scanned) {
+
+                if (event.key === 'Enter') {
+
+                    if ( $(event.target).hasClass('input-plus') ) {
+
+                        let increment = Number( el.val() );
+
+                        let value = Number(itemEl.find('input:not(.input-plus)').val());
+
+                        let quantity = increment + value;
+
+                        itemEl.find('input:not(.input-plus)').val(quantity);
+
+                    }
+
+                    document.Строки.map(function (item) {
+
+                        if (item.Штрихкод == itemEl.data('id')) {
+
+                            item.КоличествоСобрано = itemEl.find('input:not(.input-plus)').val();
+
+                            if (item.КоличествоДокумент) {
+
+                                if (item.КоличествоДокумент == item.КоличествоСобрано) {
+
+                                    item.Собрано = true;
+
+                                } else {
+
+                                    item.Собрано = false;
+
+                                }
+
+                            }
+
+                            if (item.КоличествоСобрано == 0 && item.ДобавленИзБазы) {
+
+                                removeItem(item.Штрихкод);
+
+                            }
+
+                        }
+
+                    });
+
+                    saveDocument(function () {
+
+                        navigator.vibrate(100);
+
+                        setTimeout(function () {
+
+                            app.accordion.close(itemEl);
+
+                        }, 500);
+
+                    });
+
+                }
+
+            }
+
+        }
+
+        const search = () => {
+
+            app.dialog.prompt('', 'Введите штрихкод', function (barcode) {
+
+                barcodeEl.val(barcode);
+
+                hideInputPlus = true;
+
+                barcodeHandler();
+
+            });
+
+        };
+
+        const sort = () => {
+
+            if (sortType == 'byName') {
+
+                sortType = 'bySku';
+
+            } else {
+
+                sortType = 'byName';
+
+            }
+
+            initItems();
+
+        }
+
+        const filter = (type) => {
+
+            popoverFilterTimeout = setTimeout(function () {
+
+                app.popover.close('.popover-filter');
+
+                clearTimeout(popoverFilterTimeout);
+
+                popoverFilterTimeout = false;
+
+            }, 500);
+
+            let filter;
+
+            if (type == 'all') {
+
+                filter = function (items) {
+
+                    return items;
+
+                };
+
+            } else if (type == 'onlyScan') {
+
+                filter = function (items) {
+
+                    return items.filter(function (item) {
+
+                        return item.КоличествоСобрано > 0;
+
+                    });
+
+                }
+
+            } else if (type == 'onlyNoScan') {
+
+                filter = function (items) {
+
+                    return items.filter(function (item) {
+
+                        return item.КоличествоСобрано == 0;
+
+                    });
+
+                }
+
+            } else if (type == 'neSobrano') {
+
+                filter = function (items) {
+
+                    return items.filter(function (item) {
+
+                        if (item.КоличествоДокумент) {
+
+                            if ( (item.КоличествоСобрано > 0) && (item.КоличествоДокумент !== item.КоличествоСобрано) && (!item.ДобавленИзБазы) ) {
+
+                                return item;
+
+                            }
+
+                        }
+
+                    });
+
+                }
+
+            } else if (type == 'noInDocument') {
+
+                filter = function (items) {
+
+                    return items.filter(function (item) {
+
+                        return item.ДобавленИзБазы == true;
+
+                    });
+
+                }
+
+            }
+
+            initItems(filter);
+
+        }
+
+        const sendToServerDialog = () => {
+
+            app.dialog.create({
+                title: 'Выберите вариант',
+                buttons: [
+                    {
+                        text: 'Добавить',
+                        bold: true,
+                        cssClass: 'text-color-red',
+                        onClick: function () {
+
+                            sendToServer('Добавление');
+
+                        }
+                    },
+                    {
+                        text: 'Заменить',
+                        bold: true,
+                        cssClass: 'text-color-red',
+                        onClick: function () {
+
+                            sendToServer('Замена');
+
+                        }
+                    },
+                    {
+                        text: 'Замена с очищением',
+                        bold: true,
+                        cssClass: 'text-color-red',
+                        onClick: function () {
+
+                            sendToServer('ЗаменаСОчищением');
+
+                        }
+                    },
+                    {
+                        text: 'Отмена',
+                        bold: true,
+                        color: 'gray',
+                    },
+                ],
+                verticalButtons: true,
+            }).open();
+
+        }
+
+        const sendToServer = (loadType) => {
+
+            app.dialog.confirm('Вы готовы передать документ в 1С?', 'Внимание', function () {
+
+                let url = app.params.backend + '/moving_goods_loadstr';
+
+                let data = {
+                    kontragent: false,
+                    login: app.user.data.code,
+                    loadType: loadType,
+                    document: document
+                };
+
+                data = JSON.stringify(data);
+
+                app.request({
+                    url: url,
+                    //async: false,
+                    method: 'POST',
+                    data: {
+                        data: data
+                    },
+                    beforeSend: function () {
+
+                        app.dialog.preloader('Загрузка...');
+
+                    },
+                    success: function (response) {
+
+                        app.toast.create({
+                            text: 'Ваш запрос принят!',
+                            position: 'top',
+                            cssClass: 'bg-color-teal',
+                            closeTimeout: 2000
+                        }).open();
+
+                        $f7router.back('/main', {
+                            force: true
+                        });
+
+                    },
+                    error: function () {
+
+                        app.toast.create({
+                            text: 'Нет соединение с базой!',
+                            position: 'top',
+                            cssClass: 'bg-color-red'
+                        }).open();
+
+                    },
+                    complete: function () {
+
+                        app.dialog.close();
+
+                    }
+                });
+
+            });
+
+        }
+
+        $on('pageInit', function () {
+
+            barcodeEl = $el.value.find('.barcode');
+
+            initDocument();
+
+            barcodeEl.on('input', function () {
+
+                barcodeOnInputHandler();
+
+            });
+
+            $(window).off('keydown');
+
+            $(window).on('keydown', function(event) {
+
+                keydownHandler(event);
+
+            });
+
+            $(window).off('accordion:beforeopen', '.page[data-name="document"] .accordion-item');
+
+            $(window).on('accordion:beforeopen', '.page[data-name="document"] .accordion-item', function (event) {
+
+                itemBeforeOpenHandler( $(this) );
+
+            });
+
+            $(window).off('accordion:opened', '.page[data-name="document"] .accordion-item');
+
+            $(window).on('accordion:opened', '.page[data-name="document"] .accordion-item', function () {
+
+                itemOpenedHandler( $(this) );
+
+            });
+
+            $(window).off('keypress', '.page[data-name="document"] .accordion-item input');
+
+            $(window).on('keypress', '.page[data-name="document"] .accordion-item input', function (event) {
+
+                inputKeypressEvent( $(this), event );
+
+            });
+
+            $(window).on('click', '.popover-filter li');
+
+            $(window).on('click', '.popover-filter li', function (event) {
+
+                let popoverFilterEl = $('.popover-filter');
+
+                popoverFilterEl.find('li').removeClass('bg-color-red');
+
+                $(this).addClass('bg-color-red');
+
+                let type = $(this).data('type');
+
+                filter(type);
+
+            });
+
+        });
+
+        return $render;
 
     }
 

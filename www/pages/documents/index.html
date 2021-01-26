@@ -18,11 +18,49 @@
 
                 </div>
 
-                <div class="title">{{title}}</div>
+                <div class="title">
+
+                    ${doc_type == 'peremeshenie' && $h`
+
+                        Перемещение
+
+                    `}
+
+                    ${doc_type == 'prikhodniy_order' && $h`
+
+                        Приходный ордер
+
+                    `}
+
+                    ${doc_type == 'raskhodniy_order' && $h`
+
+                        Расходный ордер
+
+                    `}
+
+                    ${doc_type == 'postuplenie_ot_postavshika' && $h`
+
+                        Поступление от поставщика
+
+                    `}
+
+                    ${doc_type == 'razmeshenie_po_yacheykam' && $h`
+
+                        Размещение по ячейкам
+
+                    `}
+
+                    ${doc_type == 'otbor_po_yacheykam' && $h`
+
+                        Отбор по ячейкам
+
+                    `}
+
+                </div>
 
                 <div class="right">
 
-                    <a @click="addDocument" href="#" class="link {{#unless documents}}disabled{{/unless}}">
+                    <a @click="${addDocument}" href="#" class="link">
 
                         <i class="icon material-icons">add</i>
 
@@ -36,57 +74,47 @@
 
         <div class="page-content">
 
-            {{#if documents}}
+            ${documents.length > 0 && $h`
 
-                {{#js_if "this.documents.length > 0"}}
+                <div class="list">
 
-                    <div class="list">
+                    <ul>
 
-                        <ul>
+                        ${documents.map((document) => $h`
 
-                            {{#each documents}}
+                            <li class="swipeout">
 
-                                <li class="swipeout">
+                                <a @click="${() => openDocument(document.Номер)}" class="item-content item-link swipeout-content">
 
-                                    <a @click="openDocument('{{Номер}}')" class="item-content item-link swipeout-content">
+                                    <div class="item-inner">
 
-                                        <div class="item-inner">
-
-                                            <div class="item-title">{{Номер}}</div>
-
-                                        </div>
-
-                                    </a>
-
-                                    <div class="swipeout-actions-right">
-
-                                        <a  @click="deleteDocument('{{Номер}}')" href="#" class="color-red swipeout-close button-remove">Удалить</a>
+                                        <div class="item-title">${document.Номер}</div>
 
                                     </div>
 
-                                </li>
+                                </a>
 
-                            {{/each}}
+                                <div class="swipeout-actions-right">
 
-                        </ul>
+                                    <a @click="${() => removeDocument(document.Номер)}" href="#" class="color-red swipeout-close button-remove">Удалить</a>
 
-                    </div>
+                                </div>
 
-                {{else}}
+                            </li>
 
-                    <div class="margin">У вас нет добавленных документов.</div>
+                        `)}
 
-                {{/js_if}}
-
-            {{else}}
-
-                <div class="margin text-align-center">
-
-                    <div class="preloader"></div>
+                    </ul>
 
                 </div>
 
-            {{/if}}
+            `}
+
+            ${documents.length <= 0 && $h`
+
+                <div class="margin">У вас нет добавленных документов.</div>
+
+            `}
 
         </div>
 
@@ -94,274 +122,94 @@
 
 </template>
 
-<style scoped>
+<style>
+
 
 </style>
 
 <script>
 
-    return {
+    export default (props, { $on, $f7, $f7route, $f7router, $el, $update }) => {
 
-        data: function () {
+        const doc_type = $f7route.params.type;
 
-            return {
-                title: function () {
+        let documents = [];
 
-                    let component = this;
+        const initDocuments = () => {
 
-                    if (component.doc_type == 'moving_goods') {
+            documents = app.documents.data.filter(function (document) {
 
-                        return 'Перемещение';
+                return document.doc_type == doc_type;
 
-                    } else if (component.doc_type == 'prihodny_order') {
+            });
 
-                        return 'Приходный ордер';
+            $update();
 
-                    } else if (component.doc_type == 'postupleniye_ot_postavshika') {
+        }
 
-                        return 'Поступление от поставщика';
+        const openDocument = (doc_num) => {
 
-                    }
+            $f7router.navigate('/documents/' + doc_type + '/' + doc_num);
 
-                }
-            }
+        }
 
-        },
-        methods: {
-            openDocument: function (doc_num){
+        const removeDocument = (doc_num) => {
 
-                let component = this;
-                let page = component.$el;
+            app.dialog.confirm('Вы уверены?', 'Внимание', function () {
 
-                let document = component.documents.find(function (document) {
+                app.documents.remove(doc_num, function () {
 
-                    return document.Номер == doc_num;
+                    initDocuments();
 
                 });
 
-                console.log(document);
+            });
 
-                let route;
+        }
 
-                if (document.ТипДокумента == 'Оприходование') {
+        const addDocument = () => {
 
-                    route = '/documents/prihodniy_order';
+            app.dialog.prompt('', 'Введите номер документа...', function (value) {
 
-                } else if (document.ТипДокумента == 'Перемещение') {
+                if (value.length == 0) {
 
-                    route = '/documents/peremeshenie';
+                    app.dialog.alert('Похоже вы ничего не ввели...', 'Упс :(');
+
+                    return false;
 
                 }
 
-                if (app.params.user.address_warehouse && document.ТипДокумента !== 'Перемещение') {
+                let document = app.documents.data.find(function (document) {
 
-                    app.dialog.create({
-                        title: 'Выберите действие',
-                        buttons: [
-                            {
-                                text: 'Сканирование',
-                                bold: true,
-                                cssClass: 'text-align-center',
-                                onClick: function () {
+                    return document.Номер == value;
 
-                                    console.log(route);
+                });
 
-                                    app.view.current.router.navigate(route, {
-                                        context: {
-                                            document: document
-                                        }
-                                    });
+                if (document) {
 
-                                }
-                            },
-                            {
-                                text: 'Размещение по ячейкам',
-                                bold: true,
-                                cssClass: 'text-align-center',
-                                onClick: function () {
-
-                                    if (app.params.cells) {
-
-                                        app.view.current.router.navigate('/documents/cells', {
-                                            context: {
-                                                document: document
-                                            }
-                                        });
-
-                                    } else {
-
-                                        app.dialog.alert('Для работы с ячейками вам необходимо загрузить базу ячеек в настройках.', 'Ошибка');
-
-                                    }
-
-                                }
-                            },
-                            {
-                                text: 'Отмена',
-                                bold: true,
-                                color: 'gray',
-                            },
-                        ],
-                        verticalButtons: true,
-                    }).open();
+                    app.dialog.alert('', 'Документ уже добавлен!');
 
                 } else {
 
-                    app.view.current.router.navigate(route, {
-                        context: {
-                            document: document
-                        }
+                    app.documents.find(doc_type, value, function () {
+
+                        initDocuments();
+
                     });
 
                 }
 
-            },
-            deleteDocument: function (doc_num){
+            });
 
-                let component = this;
-                let page = component.$el;
-
-                app.dialog.confirm('Вы уверенны, что хотите удалить ' + doc_num + '?', 'Внимание', function () {
-
-                    let documents = component.documents.filter(function (document) {
-
-                        return document.Номер !== doc_num;
-
-                    });
-
-                    localforage.setItem('documents', documents, function () {
-
-                        component.initDocuments();
-
-                    });
-
-                });
-
-            },
-            initDocuments: function () {
-
-                let component = this;
-                let page = component.$el;
-
-                localforage.getItem('documents').then(function(value) {
-
-                    if (value !== undefined && value !== null) {
-
-                        component.documents = value.filter(function (document) {
-
-                            return document.type == component.doc_type;
-
-                        });
-
-                    } else {
-
-                        component.documents = [];
-                    }
-
-                    component.$update();
-
-                });
-
-            },
-            addDocument: function () {
-
-                let component = this;
-                let page = component.$el;
-
-                app.dialog.prompt('', 'Введите номер документа...', function (value) {
-
-                    if (value.length == 0) {
-
-                        app.dialog.alert('Похоже вы ничего не ввели...', 'Упс :(');
-
-                        return false;
-
-                    }
-
-                    let document = component.documents.find(function (document) {
-
-                        return document.Номер == value;
-
-                    });
-
-                    if (document) {
-
-                        app.dialog.alert('', 'Документ уже добавлен!');
-
-                    } else {
-
-                        component.searchDocument(value);
-
-                    }
-
-                });
-
-            },
-            searchDocument: function (doc_num) {
-
-                let component = this;
-                let page = component.$el;
-
-                let url = app.params.backend + '/' + component.doc_type + '/' + app.params.user.code + '/' + doc_num + '/';
-
-                app.request({
-                    url: encodeURI(url),
-                    dataType: 'json',
-                    beforeSend: function () {
-
-                        app.preloader.show();
-
-                    },
-                    success: function (response) {
-
-                        let document = response[0];
-
-                        console.log(document);
-
-                        if (document.Статус == 'Успешно') {
-
-                            document.type = component.doc_type;
-
-                            component.documents.push(document);
-
-                            localforage.setItem('documents', component.documents, function() {
-
-                                component.initDocuments();
-
-                            });
-
-                        } else {
-
-                            app.toast.create({
-                                text: document.ОписаниеОшибки,
-                                position: 'top',
-                                cssClass: 'bg-color-red',
-                                closeTimeout: 5000
-                            }).open();
-
-                        }
-
-                    },
-                    complete: function () {
-
-                        app.preloader.hide();
-
-                    }
-                });
-
-            }
-        },
-        on: {
-
-            pageInit: function() {
-
-                let component = this;
-                let page = component.$el;
-
-                component.initDocuments();
-
-            }
         }
+
+        $on('pageInit', function () {
+
+            initDocuments();
+
+        });
+
+        return $render;
 
     }
 

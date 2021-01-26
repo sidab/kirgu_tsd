@@ -1,0 +1,359 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Информация о товаре</div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <input type="text" class="barcode bg-color-gray" />
+
+            ${item && $h`
+
+                <div class="block-title">${item.Номенклатура}</div>
+
+                <div class="list">
+
+                    <ul>
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Артикул</div>
+
+                                    <div class="item-after">${item.Артикул}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Розничная цена</div>
+
+                                    <div class="item-after">${item.РозничнаяЦена}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        <li>
+
+                            <div class="item-content">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Количество</div>
+
+                                    <div class="item-after">${item.КоличествоНаСкладе}</div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        <li class="accordion-item accordion-item-opened">
+
+                            <a href="#" class="item-content item-link">
+
+                                <div class="item-inner">
+
+                                    <div class="item-title">Характеристика</div>
+
+                                </div>
+
+                            </a>
+
+                            <div class="accordion-item-content">
+
+                                <div class="block">
+
+                                    <p>${item.ХарактеристикаНоменклатуры}</p>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+                        ${ (item.ТоварВЯчейках && item.ТоварВЯчейках.length > 0) && $h`
+
+                            <li class="accordion-item accordion-item-opened">
+
+                                <a href="#" class="item-content item-link">
+
+                                    <div class="item-inner">
+
+                                        <div class="item-title">Ячейки</div>
+
+                                    </div>
+
+                                </a>
+
+                                <div class="accordion-item-content">
+
+                                    ${item.ТоварВЯчейках.map((cell) => $h`
+
+                                        <div class="cell margin padding-left row">
+
+                                            <div class="cell-name col">${cell.Ячейка}</div>
+
+                                            <div class="cell-quantity col">
+
+                                                <input type="number" data-id="${cell.Штрихкод}" value="${cell.Остаток}" disabled/>
+
+                                            </div>
+
+                                        </div>
+
+                                    `)}
+
+                                </div>
+
+                            </li>
+
+                        `}
+
+                    </ul>
+
+                </div>
+
+            `}
+
+            ${!item && $h`
+
+                <div class="margin">
+
+                    Для поиска товара отсканируйте штрихкод.
+
+                    <div class="scanner-img"></div>
+
+                </div>
+
+            `}
+
+        </div>
+
+    </div>
+
+</template>
+
+<style>
+
+    .barcode {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .block-title {
+        white-space: normal;
+    }
+
+    .list .item-title {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .list .item-after {
+        max-width: 45%;
+        white-space: normal;
+        text-align: right;
+        word-wrap: break-word;
+    }
+
+    .scanner-img {
+         background-position: center;
+         background-repeat: no-repeat;
+         background-size: contain;
+         background-image: url('img/scanner-1.png');
+         width: 100%;
+         height: 50vh
+    }
+
+    .accordion-item-content {
+        background: rgb(255 0 0 / 10%);
+    }
+
+    .cell {
+        height: 30px;
+        background: #000;
+        border: 1px solid #ff3b30;
+        border-radius: 4px;
+        line-height: 30px;
+    }
+
+    .cell .cell-name {
+        font-size: 14px;
+    }
+
+    .cell .cell-quantity {
+
+    }
+
+    .cell .cell-quantity input {
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+        height: 30px;
+        text-align: center;
+        background: #a7a7a7;
+        color: #121212;
+        font-weight: bold;
+    }
+
+</style>
+
+<script>
+
+    export default (props, { $on, $, $f7, $f7route, $f7router, $el, $update }) => {
+
+        let item = null;
+
+        let barcodeTimeout = false;
+
+        let barcodeEl = null;
+
+        const barcodeOnInputHandler = () => {
+
+            if (!barcodeTimeout) {
+
+                barcodeTimeout = setTimeout(function () {
+
+                    barcodeHandler();
+
+                    clearTimeout(barcodeTimeout);
+
+                    barcodeTimeout = false;
+
+                }, 300);
+
+            }
+
+        }
+
+        const barcodeHandler = () => {
+
+            let barcode = barcodeEl.val();
+
+            if (barcode.length == 12) {
+
+                barcode = '0' + barcode;
+
+            }
+
+            item = app.items.data.find(function (item) {
+
+                if (item.Штрихкоды) {
+
+                    return item.Штрихкоды.indexOf(barcode) !== -1;
+
+                } else {
+
+                    return item.Штрихкод == barcode;
+
+                }
+
+            });
+
+            console.log(item);
+
+            if (!item) {
+
+                item = false;
+
+                app.toast.create({
+                    text: 'Штрихкод не найден!',
+                    closeTimeout: 2000,
+                    cssClass: 'bg-color-red',
+                    position: 'top'
+                }).open();
+
+            }
+
+            $update();
+
+        };
+
+        const keydownHandler = (event) => {
+
+            let key = event.keyCode;
+
+            if (key == 114 || key == 0 || key == 91) {
+
+                    barcodeEl.val('');
+
+                    barcodeEl.focus();
+
+            }
+
+        };
+
+        $on('pageInit', function () {
+
+            if (app.items.data.length == 0) {
+
+                app.dialog.alert('Для работы вам необходимо загрузить базу товаров в настройках.', function () {
+
+                    $f7router.back();
+
+                });
+
+                return false;
+
+            }
+
+            barcodeEl = $el.value.find('.barcode');
+
+            barcodeEl.on('input', function () {
+
+                barcodeOnInputHandler();
+
+            });
+
+            $(window).off('keydown');
+
+            $(window).on('keydown', function(event) {
+
+                keydownHandler(event);
+
+            });
+
+        });
+
+        return $render;
+
+    }
+
+</script>

@@ -4,7 +4,7 @@
 
         <div class="page-content">
 
-            <div class="list media-list links-list {{#js_if "app.params.base.length == 0"}}disabled{{/js_if}}">
+            <div class="list media-list links-list">
 
                 <ul>
 
@@ -34,13 +34,13 @@
 
             <div class="block-title">Документы</div>
 
-            <div class="list media-list links-list {{#js_if "app.params.base.length == 0"}}disabled{{/js_if}}">
+            <div class="list media-list links-list">
 
                 <ul>
 
                     <li>
 
-                        <a href="#" @click="openDocuments('moving_goods')" class="item-content">
+                        <a href="/documents/peremeshenie" class="item-content">
 
                             <div class="item-media">
 
@@ -60,7 +60,7 @@
 
                     <li>
 
-                        <a href="#" @click="openDocuments('prihodny_order')" class="item-content">
+                        <a href="/documents/prikhodniy_order" class="item-content">
 
                             <div class="item-media">
 
@@ -80,7 +80,27 @@
 
                     <li>
 
-                        <a href="#" @click="openDocuments('postupleniye_ot_postavshika')" class="item-content">
+                        <a href="/documents/raskhodniy_order" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">description</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Расходный ордер</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/documents/postuplenie_ot_postavshika" class="item-content">
 
                             <div class="item-media">
 
@@ -98,15 +118,49 @@
 
                     </li>
 
+                    <li>
+
+                        <a href="/documents/razmeshenie_po_yacheykam" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">unarchive</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Размещение по ячейкам</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/documents/otbor_po_yacheykam" class="item-content">
+
+                            <div class="item-media">
+
+                                <i class="icon material-icons text-color-primary">archive</i>
+
+                            </div>
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Отбор по ячейкам</div>
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
                 </ul>
 
             </div>
-
-            {{#js_if "app.params.base.length == 0"}}
-
-                <div class="margin">Для работы необходимо загрузить базу, для этого перейдите в настройки.</div>
-
-            {{/js_if}}
 
             <div class="list media-list links-list">
 
@@ -142,48 +196,34 @@
 
 </template>
 
-<style scoped>
+<style>
+
 
 </style>
 
 <script>
 
-    return {
+    export default (props, { $on, $f7, $el, $update }) => {
 
-        data: function () {
 
-            return {
+        $on('pageInit', function () {
 
-            }
+            if (!sessionStorage.updateBaseAlert) {
 
-        },
-        methods: {
-            openDocuments: function (type) {
+                app.toast.create({
+                    text: 'Рекомендуем обновить базу товаров и ячеек.',
+                    closeTimeout: 3000,
+                    cssClass: 'bg-color-gray',
+                    position: 'top'
+                }).open();
 
-                let component = this;
-
-                component.$router.navigate('/documents', {
-                    context: {
-                        doc_type: type
-                    }
-                });
-
-            }
-        },
-        on: {
-
-            pageInit: function() {
-
-            },
-            pageReinit: function () {
-
-                let component = this;
-
-                component.$update();
+                sessionStorage.updateBaseAlert = true;
 
             }
 
-        }
+        });
+
+        return $render;
 
     }
 

@@ -1,38 +1,46 @@
 routes = [
     {
         path: '/auth',
-        componentUrl: 'pages/auth/index.html'
+        componentUrl: 'pages/auth.html'
     },
     {
         path: '/main',
         componentUrl: 'pages/main.html'
     },
     {
-        path: '/documents',
+        path: '/settings',
+        componentUrl: 'pages/settings.html'
+    },
+    {
+        path: '/documents/:type',
         componentUrl: 'pages/documents/index.html'
     },
     {
-        path: '/documents/peremeshenie',
+        path: '/documents/peremeshenie/:doc_num',
         componentUrl: 'pages/documents/peremeshenie.html'
     },
     {
-        path: '/documents/prihodniy_order',
-        componentUrl: 'pages/documents/prihodniy_order.html'
+        path: '/documents/prikhodniy_order/:doc_num',
+        componentUrl: 'pages/documents/prikhodniy_order.html'
     },
     {
-        path: '/documents/postuplenie_ot_postavshika',
+        path: '/documents/postuplenie_ot_postavshika/:doc_num',
         componentUrl: 'pages/documents/postuplenie_ot_postavshika.html'
     },
     {
-        path: '/documents/cells',
-        componentUrl: 'pages/documents/cells.html'
+        path: '/documents/razmeshenie_po_yacheykam/:doc_num',
+        componentUrl: 'pages/documents/razmeshenie_po_yacheykam.html'
     },
     {
-        path: '/settings',
-        componentUrl: 'pages/settings/index.html'
+        path: '/documents/otbor_po_yacheykam/:doc_num',
+        componentUrl: 'pages/documents/otbor_po_yacheykam.html'
+    },
+    {
+        path: '/documents/raskhodniy_order/:doc_num',
+        componentUrl: 'pages/documents/raskhodniy_order.html'
     },
     {
         path: '/item-info',
-        componentUrl: 'pages/item-info/index.html'
+        componentUrl: 'pages/item-info.html'
     }
 ];

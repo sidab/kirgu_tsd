@@ -1,0 +1,707 @@
+<template>
+
+    <div class="page" data-name="document">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title"></div>
+
+                <div class="right">
+
+                    <a @click="${sendToServerDialog}" href="#" class="link">
+
+                        <i class="icon material-icons text-color-teal">done</i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <input type="text" class="barcode bg-color-gray"/>
+
+            ${document && items && $h`
+
+            <div class="list accordion-list items">
+
+                <ul>
+
+                    ${items.map((item) => $h`
+
+                    <li class="accordion-item item" data-id="${item.Штрихкод}">
+
+                        <a class="item-link item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">${item.Номенклатура}</div>
+
+                                <div class="item-after">
+
+                                    ${item.Отобранно && $h`
+
+                                        <span class="badge color-teal">Отобранно</span>
+
+                                    `}
+
+                                    ${!item.Отобранно && $h`
+
+                                        <span class="badge color-red">Не отобранно</span>
+
+                                    `}
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                        <div class="accordion-item-content">
+
+                            ${ (item.Ячейки && item.Ячейки.length > 0) && $h`
+
+                            <div class="quantity margin">Количество: ${item.Количество}</div>
+
+                            ${item.Ячейки.map((cell) => $h`
+
+                            <div class="cell margin padding-left row">
+
+                                <div class="cell-name col">${cell.Наименование}</div>
+
+                                <div class="cell-quantity col">
+
+                                    <input type="number" data-id="${cell.Штрихкод}" value="${cell.Количество}" />
+
+                                </div>
+
+                            </div>
+
+                            `)}
+
+                            `}
+
+                            ${ (!item.Ячейки || item.Ячейки.length == 0) && $h`
+
+                            <div class="margin">Для данного товара не заданы ячейки.</div>
+
+                            `}
+
+                        </div>
+
+                    </li>
+
+                    `)}
+
+                </ul>
+
+            </div>
+
+            `}
+
+        </div>
+
+    </div>
+
+</template>
+
+<style>
+
+    .barcode {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .items {
+        --f7-list-item-title-font-size: 12px;
+        --f7-badge-font-size: 9px;
+        --f7-list-item-min-height: 30px;
+        --f7-badge-padding: 5px 5px;
+        --f7-badge-size: 15px;
+        padding-bottom: 200px;
+    }
+
+    .items .item-title {
+        white-space: normal;
+    }
+
+    .items .badge {
+        margin-left: 5px;
+    }
+
+    .items .accordion-item-content {
+        background: #2d2d2d;
+    }
+
+    .items .cell {
+        height: 30px;
+        background: #000;
+        border: 1px solid #ff3b30;
+        border-radius: 4px;
+        line-height: 30px;
+    }
+
+    .items .cell .cell-name {
+        font-size: 14px;
+    }
+
+    .items .cell .cell-quantity {
+
+    }
+
+    .items .cell .cell-quantity input {
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+        height: 30px;
+        text-align: center;
+        background: #a7a7a7;
+        color: #121212;
+        font-weight: bold;
+    }
+
+</style>
+
+<script>
+
+    export default (props, { $on, $, $f7, $f7route, $f7router, $el, $update }) => {
+
+        const doc_num = $f7route.params.doc_num;
+
+        let document = null;
+
+        let items = null;
+
+        let barcodeTimeout = false;
+
+        let barcodeEl = null;
+
+        let sortType = 'byName';
+
+        const initDocument = () => {
+
+            document = app.documents.data.find(function (document) {
+
+                return document.Номер == doc_num;
+
+            });
+
+            console.log(document);
+
+            initItems();
+
+        }
+
+        const initItems = (filter) => {
+
+            items = document.Строки.sort(function (a, b) {
+
+                let nameA = sortType === 'byName' ? a.Номенклатура : a.Артикул;
+
+                let nameB = sortType === 'byName' ? b.Номенклатура : b.Артикул;
+
+                if (nameA < nameB) {
+
+                    return -1;
+
+                }
+
+                if (nameA > nameB) {
+
+                    return 1;
+
+                }
+
+                return 0;
+
+            });
+
+            if (filter) {
+
+                items = filter(document.Строки);
+
+                app.toast.create({
+                    text: items.length,
+                    position: 'center',
+                    closeTimeout: 2000
+                }).open();
+
+            }
+
+            $update();
+
+        }
+
+        const barcodeOnInputHandler = () => {
+
+            if (!barcodeTimeout) {
+
+                barcodeTimeout = setTimeout(function () {
+
+                    barcodeHandler();
+
+                    clearTimeout(barcodeTimeout);
+
+                    barcodeTimeout = false;
+
+                }, 300);
+
+            }
+
+        }
+
+        const keydownHandler = (event) => {
+
+            let key = event.keyCode;
+
+            if (key == 114 || key == 0 || key == 91) {
+
+                if ($('.dialog.modal-in').length > 0) {
+
+                    setTimeout(function () {
+
+                        if ($('.dialog.modal-in').find('input').val().length >= 12) {
+
+                            $('.dialog.modal-in').find('.dialog-buttons').find('.dialog-button:last-child').click();
+
+                        } else {
+
+                            let ke = new KeyboardEvent('keydown', {
+                                bubbles: true, cancelable: true, keyCode: 91
+                            });
+
+                            document.body.dispatchEvent(ke);
+
+                        }
+
+                    }, 300);
+
+                } else {
+
+                    barcodeEl.val('');
+
+                    barcodeEl.focus();
+
+                }
+
+            }
+
+        };
+
+        const itemBeforeOpenHandler = (el) => {
+
+        }
+
+        const itemOpenedHandler = (el) => {
+
+            let offset = el.offset();
+
+            $el.value.find('.page-content').scrollTop(offset.top - 150);
+
+        }
+
+        const removeCell = (itemBarcode, cellBarcode) => {
+
+            document.Строки = document.Строки.map(function (item) {
+
+                if (item.Штрихкод == itemBarcode) {
+
+                    item.Ячейки = item.Ячейки.filter(function (cell) {
+
+                        return cell.Штрихкод !== cellBarcode;
+
+                    });
+
+                }
+
+                return item;
+
+            });
+
+            saveDocument(function () {
+
+                app.toast.create({
+                    text: 'Ячейка удалена.',
+                    closeTimeout: 2000,
+                    cssClass: 'bg-color-gray',
+                    position: 'top'
+                }).open();
+
+            });
+
+        }
+
+        const inputKeypressEvent = (el, event) => {
+
+            let itemEl = el.parents('.item');
+
+            if (event.key === 'Enter') {
+
+                document.Строки.map(function (item) {
+
+                    if (item.Штрихкод == itemEl.data('id')) {
+
+                        let cell = item.Ячейки.find(function (cell) {
+
+                            return cell.Штрихкод == el.data('id');
+
+                        });
+
+                        let quantity = Number(el.val());
+
+                        if (quantity == 0) {
+
+                            removeCell(itemEl.data('id'), cell.Штрихкод);
+
+                        } else {
+
+                            cell.Количество = quantity;
+
+                        }
+
+                        let cellQuantitySum = 0;
+
+                        item.Ячейки.map(function ($cell) {
+
+                            cellQuantitySum = $cell.Количество + cellQuantitySum;
+
+                        });
+
+                        if (cellQuantitySum == item.Количество) {
+
+                            item.Отобранно = true;
+
+                        } else {
+
+                            item.Отобранно = false;
+
+                        }
+
+                    }
+
+                    return item;
+
+                });
+
+                saveDocument(function () {
+
+                    navigator.vibrate(100);
+
+                    setTimeout(function () {
+
+                        app.accordion.close(itemEl);
+
+                    }, 500);
+
+                });
+
+            }
+
+        }
+
+        const openAccordion = (barcode) => {
+
+            let accordion = $el.value.find('.accordion-item[data-id="' + barcode + '"]');
+
+            app.accordion.open(accordion);
+
+        }
+
+        const saveDocument = (callback) => {
+
+            app.documents.data.map(function (doc) {
+
+                if (doc.Номер == doc_num) {
+
+                    doc = document;
+
+                }
+
+            });
+
+            app.documents.save(function () {
+
+                $update(function () {
+
+                    if (callback) {
+
+                        callback();
+
+                    }
+
+                });
+
+            });
+
+        }
+
+        const barcodeHandler = () => {
+
+            let barcode = barcodeEl.val();
+
+            if (barcode.length == 12) {
+
+                barcode = '0' + barcode;
+
+            }
+
+            let item = document.Строки.find(function (item) {
+
+                if (item.Штрихкоды) {
+
+                    return item.Штрихкоды.indexOf(barcode) !== -1;
+
+                } else {
+
+                    return item.Штрихкод == barcode;
+
+                }
+
+            });
+
+            if (item) {
+
+                openAccordion(item.Штрихкод);
+
+            } else {
+
+                let itemEl = $el.value.find('.accordion-item-opened');
+
+                if (itemEl.length == 0) {
+
+                    app.toast.create({
+                        text: 'Штрихкод не найден!',
+                        closeTimeout: 2000,
+                        cssClass: 'bg-color-red',
+                        position: 'top'
+                    }).open();
+
+                    return false;
+
+                }
+
+                item = document.Строки.find(function (item) {
+
+                    if (item.Штрихкоды) {
+
+                        return item.Штрихкоды.indexOf(itemEl.data('id')) !== -1;
+
+                    } else {
+
+                        return item.Штрихкод == itemEl.data('id');
+
+                    }
+
+                });
+
+                let cell = app.cells.data.find(function (cell) {
+
+                    return cell.Штрихкод == barcode;
+
+                });
+
+                if (cell) {
+
+                    document.Строки = document.Строки.map(function ($item) {
+
+                        if ($item.Штрихкод == item.Штрихкод) {
+
+                            if (!$item.Ячейки) {
+
+                                $item.Ячейки = [];
+
+                            }
+
+                            let cellExist = $item.Ячейки.find(function ($cell) {
+
+                                return $cell.Штрихкод == cell.Штрихкод;
+
+                            });
+
+                            if (!cellExist) {
+
+                                cell.Количество = 0;
+
+                                $item.Ячейки.push(cell);
+
+                            }
+
+                        }
+
+                        return $item;
+
+                    });
+
+                    saveDocument(function () {
+
+                        if (cell) {
+
+                            $el.value.find('input[data-id="' + cell.Штрихкод + '"]').focus();
+
+                            $el.value.find('input[data-id="' + cell.Штрихкод + '"]')[0].select();
+
+                        }
+
+                    });
+
+                } else {
+
+                    app.toast.create({
+                        text: 'Штрихкод не найден!',
+                        closeTimeout: 2000,
+                        cssClass: 'bg-color-red',
+                        position: 'top'
+                    }).open();
+
+                }
+
+            }
+
+        };
+
+        const sendToServerDialog = () => {
+
+            app.dialog.confirm('Вы уверены что хотите передать данные в 1С?', function () {
+
+                sendToServer();
+
+            });
+
+        }
+
+        const sendToServer = () => {
+
+            let url = app.params.backend + '/moving_goods_loadstr';
+
+            let data = {
+                kontragent: false,
+                login: app.user.data.code,
+                document: document
+            };
+
+            data = JSON.stringify(data);
+
+            app.request({
+                url: url,
+                //async: false,
+                method: 'POST',
+                data: {
+                    data: data
+                },
+                beforeSend: function () {
+
+                    app.dialog.preloader('Загрузка...');
+
+                },
+                success: function (response) {
+
+                    app.toast.create({
+                        text: 'Ваш запрос принят!',
+                        position: 'top',
+                        cssClass: 'bg-color-teal',
+                        closeTimeout: 2000
+                    }).open();
+
+                    $f7router.back('/main', {
+                        force: true
+                    });
+
+                },
+                error: function () {
+
+                    app.toast.create({
+                        text: 'Нет соединение с базой!',
+                        position: 'top',
+                        cssClass: 'bg-color-red'
+                    }).open();
+
+                },
+                complete: function () {
+
+                    app.dialog.close();
+
+                }
+            });
+
+        }
+
+        $on('pageInit', function () {
+
+            if (app.cells.data.length == 0) {
+
+                app.dialog.alert('Для работы с ячейками вам необходимо загрузить базу ячеек в настройках.', function () {
+
+                    $f7router.back();
+
+                });
+
+                return false;
+
+            }
+
+            barcodeEl = $el.value.find('.barcode');
+
+            initDocument();
+
+            barcodeEl.on('input', function () {
+
+                barcodeOnInputHandler();
+
+            });
+
+            $(window).off('keydown');
+
+            $(window).on('keydown', function(event) {
+
+                keydownHandler(event);
+
+            });
+
+            $(window).off('accordion:beforeopen', '.page[data-name="document"] .accordion-item');
+
+            $(window).on('accordion:beforeopen', '.page[data-name="document"] .accordion-item', function (event) {
+
+                itemBeforeOpenHandler( $(this) );
+
+            });
+
+            $(window).off('accordion:opened', '.page[data-name="document"] .accordion-item');
+
+            $(window).on('accordion:opened', '.page[data-name="document"] .accordion-item', function () {
+
+                itemOpenedHandler( $(this) );
+
+            });
+
+            $(window).off('keypress', '.page[data-name="document"] .accordion-item input');
+
+            $(window).on('keypress', '.page[data-name="document"] .accordion-item input', function (event) {
+
+                inputKeypressEvent( $(this), event );
+
+            });
+
+        });
+
+        return $render;
+
+    }
+
+</script>

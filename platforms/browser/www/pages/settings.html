@@ -1,0 +1,186 @@
+<template>
+
+    <div class="page">
+
+        <div class="navbar">
+
+            <div class="navbar-bg"></div>
+
+            <div class="navbar-inner">
+
+                <div class="left">
+
+                    <a href="#" class="link back">
+
+                        <i class="icon icon-back"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="title">Настройки</div>
+
+            </div>
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="block-title block-title-medium">Сотрудник</div>
+
+            <div class="list">
+
+                <ul>
+
+                    <li>
+
+                        <div class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">ФИО</div>
+
+                                <div class="item-after">${app.user.data.name}</div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                    <li>
+
+                        <div class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Логин</div>
+
+                                <div class="item-after">${app.user.data.code}</div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="block-title">Загрузка</div>
+
+            <div class="block block-strong">
+
+                <a @click="${chooseBase}" class="col button button-fill button-raised color-teal margin-bottom">Загрузить базу</a>
+
+                <a @click="${loadCells}" class="col button button-fill button-raised color-purple margin-bottom">Загрузить ячейки</a>
+
+            </div>
+
+            <div class="block-title">Дополнительно</div>
+
+            <div class="block block-strong">
+
+                <a @click="${clearCache}" class="col button button-fill button-raised color-gray margin-bottom">Очистить кэш</a>
+
+                <a @click="${logout}" class="col button button-fill button-raised color-red">Выход</a>
+
+            </div>
+
+            <div class="block-title  block-title-medium">О приложении</div>
+
+            <div class="list">
+
+                <ul>
+
+                    <li>
+
+                        <div class="item-content">
+
+                            <div class="item-inner">
+
+                                <div class="item-title">Версия</div>
+
+                                <div class="item-after">${app.version}</div>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<style>
+
+
+</style>
+
+<script>
+
+    export default (props, { $on, $f7, $el, $update }) => {
+
+        const logout = () => {
+
+            app.dialog.confirm('Вы уверены что хотите выйти?', 'Внимание', function () {
+
+                app.preloader.show();
+
+                app.user.logout();
+
+            });
+
+        }
+
+        const clearCache = () => {
+
+            app.dialog.confirm('Вы уверены?', 'Внимание', function () {
+
+                app.preloader.show();
+
+                localforage.clear().then(function () {
+
+                    app.preloader.hide();
+
+                });
+
+            });
+
+        }
+
+        const chooseBase = () => {
+
+            app.items.chooseBase();
+
+        }
+
+        const loadCells = () => {
+
+            app.dialog.confirm('Вы уверены?', 'Внимание', function () {
+
+                app.cells.load();
+
+            });
+
+        }
+
+
+        $on('pageInit', function () {
+
+
+        });
+
+        return $render;
+
+    }
+
+</script>
