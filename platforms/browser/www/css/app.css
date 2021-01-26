@@ -9,20 +9,4 @@
     outline: 2px solid var(--f7-color-red);
 }
 
-.item-set-cell-dialog .item-name {
-margin-bottom: 30px;
-}
 
-.item-set-cell-dialog .label {
-    line-height: 35px;
-}
-
-.item-set-cell-dialog .quantity input {
-    text-align: center;
-    width: 100%;
-    background: #fff;
-    border-radius: 4px;
-    padding: 10px;
-    color: #000;
-    font-weight: bold;
-}
