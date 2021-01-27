@@ -89,20 +89,36 @@ items = {
 
                 if (app.items.type == 'Остатки отдела') {
 
-                    url = app.params.backend + '/all_goods/' + app.user.data.code;
+                    url = 'http://192.168.200.110/tsd/items.php?login=' + app.user.data.code + '&type=otdel';
+
+                    //url = app.params.backend + '/all_goods/' + app.user.data.code;
 
                 } else if (app.items.type == 'Полная база') {
 
-                    url = app.params.backend + '/all_goods_kirgu/' + app.user.data.code;
+                    url = 'http://192.168.200.110/tsd/items.php?login=' + app.user.data.code + '&type=full';
+
+                    //url = app.params.backend + '/all_goods_kirgu/' + app.user.data.code;
 
                 }
 
                 app.request({
                     url: encodeURI(url),
                     dataType: 'json',
-                    beforeCreate: function () {
+                    beforeSend: function (xhr) {
 
                         app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+
+                        xhr.addEventListener('progress', function (progressInfo) {
+
+                            let total = Number(xhr.getResponseHeader('size'));
+
+                            let progress = (progressInfo.loaded / total) * 100;
+
+                            app.items.dialogProgress.setProgress(progress);
+
+                            app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+
+                        }, false);
 
                     },
                     success: function (response) {

@@ -80,6 +80,22 @@
 
                                     <div class="quantity margin">Количество: ${item.Количество}</div>
 
+                                    ${item.ТоварВЯчейках.map((cell) => $h`
+
+                                        <div class="cell margin padding-left row disabled">
+
+                                            <div class="cell-name col">${cell.Ячейка}</div>
+
+                                            <div class="cell-quantity col">
+
+                                                <input type="number" data-id="${cell.Штрихкод}" value="${cell.Остаток}" />
+
+                                            </div>
+
+                                        </div>
+
+                                    `)}
+
                                     ${item.Ячейки.map((cell) => $h`
 
                                         <div class="cell margin padding-left row">
