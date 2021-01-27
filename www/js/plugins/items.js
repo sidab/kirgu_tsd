@@ -103,7 +103,6 @@ items = {
 
                 app.request({
                     url: encodeURI(url),
-                    dataType: 'json',
                     beforeSend: function (xhr) {
 
                         app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
@@ -133,7 +132,7 @@ items = {
                     },
                     success: function (response) {
 
-                        let items = response[0];
+                        let items = JSON.parse(response)[0];
 
                         app.items.data = items;
 

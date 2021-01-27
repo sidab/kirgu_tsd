@@ -103,27 +103,36 @@ items = {
 
                 app.request({
                     url: encodeURI(url),
-                    dataType: 'json',
                     beforeSend: function (xhr) {
 
                         app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
 
                         xhr.addEventListener('progress', function (progressInfo) {
 
+                            app.toast.create({
+                                text: xhr.getResponseHeader('size'),
+                                position: 'top',
+                                closeTimeout: 2000
+                            }).open();
+
                             let total = Number(xhr.getResponseHeader('size'));
 
                             let progress = (progressInfo.loaded / total) * 100;
 
-                            app.items.dialogProgress.setProgress(progress);
+                            if (progress > 0) {
 
-                            app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+                                app.items.dialogProgress.setProgress(progress);
+
+                                app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+
+                            }
 
                         }, false);
 
                     },
                     success: function (response) {
 
-                        let items = response[0];
+                        let items = JSON.parse(response)[0];
 
                         app.items.data = items;
 
@@ -204,7 +213,7 @@ items = {
 
     },
     params: {
-        itemsInPart: 20000
+        itemsInPart: 10000
     },
     instance: {
 
