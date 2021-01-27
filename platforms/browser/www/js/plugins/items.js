@@ -103,6 +103,7 @@ items = {
 
                 app.request({
                     url: encodeURI(url),
+                    dataType: 'json',
                     beforeSend: function (xhr) {
 
                         app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
@@ -124,17 +125,13 @@ items = {
                     },
                     success: function (response) {
 
-                        app.items.data = JSON.parse(response)[0];
+                        app.items.data = response[0];
 
                         app.items.dialogProgress.setTitle('Сохранение данных...');
 
                         app.items.dialogProgress.setText('0% из 100%');
 
-                        setTimeout(function () {
-
-                            app.items.save(0);
-
-                        }, 1000);
+                        app.items.save(0);
 
                     },
                     error: function () {
@@ -155,33 +152,31 @@ items = {
 
                 let saveItems = app.items.data.slice(i * app.params.itemsInPart, i * app.params.itemsInPart + app.params.itemsInPart);
 
-                setTimeout(function () {
+                localforage.setItem(saveKey, saveItems).then(function () {
 
-                    localforage.setItem(saveKey, saveItems).then(function (value) {
+                    delete saveItems;
 
-                        let progress = ( (i / parts) * 100) - 1;
+                    let progress = ( (i / parts) * 100) - 1;
 
-                        if (progress > 0) {
+                    if (progress > 0) {
 
-                            app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+                        app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
 
-                        }
+                    }
 
-                        if (i < parts) {
+                    if (i < parts) {
 
-                            app.items.save(i + 1);
+                        app.items.save(i + 1);
 
-                        } else {
+                    } else {
 
-                            app.items.dialogProgress.close();
+                        app.items.dialogProgress.close();
 
-                            app.dialog.alert('Вы успешно загрузили базу!');
+                        app.dialog.alert('Вы успешно загрузили базу!');
 
-                        }
+                    }
 
-                    });
-
-                }, 1000);
+                });
 
             },
             get: function (i) {
