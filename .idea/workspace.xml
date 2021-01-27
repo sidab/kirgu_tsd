@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/plugins/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/plugins/items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/auth.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/auth.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/otbor_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/otbor_po_yacheykam.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/razmeshenie_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/razmeshenie_po_yacheykam.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/plugins/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/plugins/items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/pages/documents/otbor_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/otbor_po_yacheykam.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/pages/documents/razmeshenie_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/razmeshenie_po_yacheykam.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +79,7 @@
       <workItem from="1609825225981" duration="7428000" />
       <workItem from="1609912645705" duration="44926000" />
       <workItem from="1610949579669" duration="62177000" />
-      <workItem from="1611666410805" duration="4572000" />
+      <workItem from="1611666410805" duration="4903000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1608534028711</created>
@@ -265,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611667401853</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix">
+      <created>1611734305476</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1611734305476</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,10 +282,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1611667401651">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1611734305231">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611667401651" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611734305231" />
     <state width="1899" height="436" key="GridCell.Tab.0.bottom" timestamp="1611666542794">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
@@ -328,10 +326,10 @@
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1611667411116">
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1611734313828">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611667411116" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611734313828" />
     <state x="-1253" y="295" width="586" height="490" key="find.popup" timestamp="1611044942614">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
