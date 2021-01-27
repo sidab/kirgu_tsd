@@ -109,12 +109,6 @@ items = {
 
                         xhr.addEventListener('progress', function (progressInfo) {
 
-                            app.toast.create({
-                                text: xhr.getResponseHeader('Content-Type'),
-                                position: 'top',
-                                closeTimeout: 2000
-                            }).open();
-
                             let total = Number(xhr.getResponseHeader('Content-Type'));
 
                             let progress = (progressInfo.loaded / total) * 100;
