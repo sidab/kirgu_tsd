@@ -114,9 +114,13 @@ items = {
 
                             let progress = (progressInfo.loaded / total) * 100;
 
-                            app.items.dialogProgress.setProgress(progress);
+                            if (progress > 0) {
 
-                            app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+                                app.items.dialogProgress.setProgress(progress);
+
+                                app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+
+                            }
 
                         }, false);
 
@@ -204,7 +208,7 @@ items = {
 
     },
     params: {
-        itemsInPart: 20000
+        itemsInPart: 10000
     },
     instance: {
 
