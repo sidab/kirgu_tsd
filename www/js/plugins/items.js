@@ -157,7 +157,9 @@ items = {
 
                 setTimeout(function () {
 
-                    localforage.setItem(saveKey, saveItems).then(function (value) {
+                    localforage.setItem(saveKey, saveItems).then(function () {
+
+                        delete saveItems;
 
                         let progress = ( (i / parts) * 100) - 1;
 
