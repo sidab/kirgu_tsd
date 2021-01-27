@@ -127,11 +127,15 @@ items = {
 
                         app.items.data = response[0];
 
-                        app.items.dialogProgress.setTitle('Сохранение данных...');
+                        setTimeout(function () {
 
-                        app.items.dialogProgress.setText('0% из 100%');
+                            app.items.dialogProgress.setTitle('Сохранение данных...');
 
-                        app.items.save(0);
+                            app.items.dialogProgress.setText('0% из 100%');
+
+                            app.items.save(0);
+
+                        });
 
                     },
                     error: function () {
@@ -146,7 +150,7 @@ items = {
             },
             save: function (i) {
 
-                let parts = app.items.data.length / app.params.itemsInPart - 1;
+                let parts = (app.items.data.length / app.params.itemsInPart) - 1;
 
                 let saveKey = 'items-' + i;
 
@@ -212,7 +216,7 @@ items = {
 
     },
     params: {
-        itemsInPart: 5000
+        itemsInPart: 40000
     },
     instance: {
 
