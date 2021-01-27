@@ -127,9 +127,13 @@ items = {
 
                         app.items.data = response[0];
 
-                        app.items.dialogProgress.setTitle('Сохранение данных...');
+                        setTimeout(function () {
 
-                        app.items.dialogProgress.setText('0% из 100%');
+                            app.items.dialogProgress.setTitle('Сохранение данных...');
+
+                            app.items.dialogProgress.setText('0% из 100%');
+
+                        }, 1000);
 
                         app.items.save(0);
 
