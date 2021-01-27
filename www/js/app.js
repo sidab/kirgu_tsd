@@ -68,7 +68,8 @@ $(document).on('deviceready', function () {
             console.log(xhr);
 
         },
-        error: function () {
+        error: function (xhr, status, message) {
+
 
         }
     });
