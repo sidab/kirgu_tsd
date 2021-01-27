@@ -115,8 +115,6 @@ items = {
 
                             if (progress > 0) {
 
-                                app.items.dialogProgress.setProgress(progress);
-
                                 app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
 
                             }
@@ -126,15 +124,17 @@ items = {
                     },
                     success: function (response) {
 
-                        let items = JSON.parse(response)[0];
-
-                        app.items.data = items;
+                        app.items.data = JSON.parse(response)[0];
 
                         app.items.dialogProgress.setTitle('Сохранение данных...');
 
-                        app.items.dialogProgress.setText('');
+                        app.items.dialogProgress.setText('0% из 100%');
 
-                        app.items.save(0);
+                        setTimeout(function () {
+
+                            app.items.save(0);
+
+                        }, 1000);
 
                     },
                     error: function () {
@@ -149,19 +149,23 @@ items = {
             },
             save: function (i) {
 
+                let parts = app.items.data.length / app.params.itemsInPart - 1;
+
+                let saveKey = 'items-' + i;
+
+                let saveItems = app.items.data.slice(i * app.params.itemsInPart, i * app.params.itemsInPart + app.params.itemsInPart);
+
                 setTimeout(function () {
 
-                    let items = app.items.data;
-
-                    let itemsCount = items.length;
-
-                    let parts = itemsCount / app.params.itemsInPart - 1;
-
-                    let saveKey = 'items-' + i;
-
-                    let saveItems = items.slice(i * app.params.itemsInPart, i * app.params.itemsInPart + app.params.itemsInPart);
-
                     localforage.setItem(saveKey, saveItems).then(function (value) {
+
+                        let progress = ( (i / parts) * 100) - 1;
+
+                        if (progress > 0) {
+
+                            app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+
+                        }
 
                         if (i < parts) {
 
@@ -177,7 +181,7 @@ items = {
 
                     });
 
-                }, 100);
+                }, 1000);
 
             },
             get: function (i) {
@@ -213,7 +217,7 @@ items = {
 
     },
     params: {
-        itemsInPart: 10000
+        itemsInPart: 5000
     },
     instance: {
 
