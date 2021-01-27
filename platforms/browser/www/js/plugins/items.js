@@ -109,12 +109,6 @@ items = {
 
                         xhr.addEventListener('progress', function (progressInfo) {
 
-                            app.toast.create({
-                                text: xhr.getResponseHeader('Content-Type'),
-                                position: 'top',
-                                closeTimeout: 2000
-                            }).open();
-
                             let total = Number(xhr.getResponseHeader('Content-Type'));
 
                             let progress = (progressInfo.loaded / total) * 100;
@@ -138,6 +132,8 @@ items = {
 
                         app.items.dialogProgress.setTitle('Сохранение данных...');
 
+                        app.items.dialogProgress.setText('');
+
                         app.items.save(0);
 
                     },
@@ -153,31 +149,35 @@ items = {
             },
             save: function (i) {
 
-                let items = app.items.data;
+                setTimeout(function () {
 
-                let itemsCount = items.length;
+                    let items = app.items.data;
 
-                let parts = itemsCount / app.params.itemsInPart - 1;
+                    let itemsCount = items.length;
 
-                let saveKey = 'items-' + i;
+                    let parts = itemsCount / app.params.itemsInPart - 1;
 
-                let saveItems = items.slice(i * app.params.itemsInPart, i * app.params.itemsInPart + app.params.itemsInPart);
+                    let saveKey = 'items-' + i;
 
-                localforage.setItem(saveKey, saveItems).then(function (value) {
+                    let saveItems = items.slice(i * app.params.itemsInPart, i * app.params.itemsInPart + app.params.itemsInPart);
 
-                    if (i < parts) {
+                    localforage.setItem(saveKey, saveItems).then(function (value) {
 
-                        app.items.save(i + 1);
+                        if (i < parts) {
 
-                    } else {
+                            app.items.save(i + 1);
 
-                        app.items.dialogProgress.close();
+                        } else {
 
-                        app.dialog.alert('Вы успешно загрузили базу!');
+                            app.items.dialogProgress.close();
 
-                    }
+                            app.dialog.alert('Вы успешно загрузили базу!');
 
-                });
+                        }
+
+                    });
+
+                }, 100);
 
             },
             get: function (i) {
