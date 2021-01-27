@@ -115,7 +115,11 @@ $(document).on('deviceready', function () {
 
             $('.view-main').removeClass('display-none');
 
-            navigator.splashscreen.hide();
+            setTimeout(function () {
+
+                navigator.splashscreen.hide();
+
+            }, 1000);
 
         });
 
@@ -128,7 +132,11 @@ $(document).on('deviceready', function () {
 
         $('.view-auth').removeClass('display-none');
 
-        navigator.splashscreen.hide();
+        setTimeout(function () {
+
+            navigator.splashscreen.hide();
+
+        }, 1000);
 
     }
 
