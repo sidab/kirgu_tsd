@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/plugins/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/plugins/items.js" afterDir="false" />
-    </list>
+    <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +78,7 @@
       <workItem from="1609912645705" duration="44926000" />
       <workItem from="1610949579669" duration="62177000" />
       <workItem from="1611666410805" duration="5333000" />
-      <workItem from="1611735759341" duration="973000" />
+      <workItem from="1611735759341" duration="1227000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1608534028711</created>
@@ -286,7 +283,28 @@
       <option name="project" value="LOCAL" />
       <updated>1611736391664</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix">
+      <created>1611738652874</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1611738652874</updated>
+    </task>
+    <task id="LOCAL-00031" summary="fix">
+      <created>1611738722294</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1611738722294</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fix">
+      <created>1611738817475</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1611738817475</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,10 +323,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1611736391427">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1611738817203">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611736391427" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611738817203" />
     <state width="1899" height="436" key="GridCell.Tab.0.bottom" timestamp="1611735640598">
       <screen x="-1920" y="23" width="1920" height="970" />
     </state>
@@ -349,10 +367,10 @@
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1611736396825">
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1611738821093">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611736396825" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1611738821093" />
     <state x="-1253" y="295" width="586" height="490" key="find.popup" timestamp="1611044942614">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
