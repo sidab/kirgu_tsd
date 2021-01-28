@@ -106,7 +106,7 @@ items = {
                     dataType: 'json',
                     beforeSend: function (xhr) {
 
-                        app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+                        /*app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
 
                         xhr.addEventListener('progress', function (progressInfo) {
 
@@ -120,7 +120,7 @@ items = {
 
                             }
 
-                        }, false);
+                        }, false);*/
 
                     },
                     success: function (response) {
