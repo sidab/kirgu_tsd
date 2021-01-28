@@ -125,14 +125,17 @@ items = {
                     },
                     success: function (response) {
 
-                        all_goods = response;
-                        //app.items.data = response;
+                        setTimeout(function () {
 
-                        app.items.dialogProgress.setTitle('Сохранение данных...');
+                            app.items.data = response;
 
-                        app.items.dialogProgress.setText('0% из 100%');
+                            app.items.dialogProgress.setTitle('Сохранение данных...');
 
-                        app.items.save(0);
+                            app.items.dialogProgress.setText('0% из 100%');
+
+                        }, 10000);
+
+                        //app.items.save(0);
 
                     },
                     error: function () {
