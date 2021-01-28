@@ -129,9 +129,11 @@ items = {
 
                             app.items.data = response;
 
-                            app.items.dialogProgress.setTitle('Сохранение данных...');
+                            app.items.dialogProgress.close();
 
-                            app.items.dialogProgress.setText('0% из 100%');
+                            //app.items.dialogProgress.setTitle('Сохранение данных...');
+
+                            //app.items.dialogProgress.setText('0% из 100%');
 
                         }, 10000);
 
