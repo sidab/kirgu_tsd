@@ -132,7 +132,7 @@ items = {
 
                         app.items.dialogProgress.setText('0% из 100%');
 
-                        app.items.save(0);
+                        //app.items.save(0);
 
                     },
                     error: function () {
