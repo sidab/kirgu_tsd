@@ -125,7 +125,8 @@ items = {
                     },
                     success: function (response) {
 
-                        app.items.data = response;
+                        all_goods = response;
+                        //app.items.data = response;
 
                         app.items.dialogProgress.setTitle('Сохранение данных...');
 
