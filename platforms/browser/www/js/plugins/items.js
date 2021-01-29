@@ -175,7 +175,7 @@ items = {
 
                 request.onreadystatechange = function () {
 
-                    if (request.readyState === 4) {
+                    if (request.readyState === 4 && request.status == 200) {
 
                         app.items.data = JSON.parse(request.responseText);
 
