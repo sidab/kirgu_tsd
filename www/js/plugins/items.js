@@ -104,7 +104,6 @@ items = {
                 app.request({
                     url: encodeURI(url),
                     dataType: 'json',
-                    async: false,
                     beforeSend: function (xhr) {
 
                         app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
