@@ -131,9 +131,8 @@ items = {
 
                         app.items.dialogProgress.setText('0% из 100%');
 
-                        app.dialog.confirm('Вы уверены?', function () {
-                            app.items.save(0);
-                        });
+                        app.items.save(0);
+
                     },
                     error: function () {
 
@@ -213,7 +212,7 @@ items = {
 
     },
     params: {
-        itemsInPart: 40000
+        itemsInPart: 20000
     },
     instance: {
 
