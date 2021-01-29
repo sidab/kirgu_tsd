@@ -77,7 +77,7 @@ items = {
             },
             load: function () {
 
-                if (app.items.data) {
+                if (app.items.data.length > 0) {
 
                     app.items.delete(0);
 
@@ -104,6 +104,7 @@ items = {
                 app.request({
                     url: encodeURI(url),
                     dataType: 'json',
+                    async: false,
                     beforeSend: function (xhr) {
 
                         app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
@@ -131,8 +132,9 @@ items = {
 
                         app.items.dialogProgress.setText('0% из 100%');
 
-                        app.items.save(0);
-
+                        app.dialog.confirm('Вы уверены?', function () {
+                            app.items.save(0);
+                        });
                     },
                     error: function () {
 
