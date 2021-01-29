@@ -59,4 +59,5 @@
         <param name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Нам необходим доступ к вашей галереи для использования приложения и сканирования штрих кодов." />
         <param name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" value="Нам необходим доступ к вашей галереи для использования приложения и сканирования штрих кодов." />
     </plugin>
+    <plugin name="cordova-plugin-crosswalk-webview-arm" />
 </widget>

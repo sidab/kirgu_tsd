@@ -106,7 +106,7 @@ items = {
                     dataType: 'json',
                     beforeSend: function (xhr) {
 
-                        /*app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+                        app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
 
                         xhr.addEventListener('progress', function (progressInfo) {
 
@@ -120,24 +120,18 @@ items = {
 
                             }
 
-                        }, false);*/
+                        }, false);
 
                     },
                     success: function (response) {
 
-                        setTimeout(function () {
+                        app.items.data = response;
 
-                            app.items.data = response;
+                        app.items.dialogProgress.setTitle('Сохранение данных...');
 
-                            app.items.dialogProgress.close();
+                        app.items.dialogProgress.setText('0% из 100%');
 
-                            //app.items.dialogProgress.setTitle('Сохранение данных...');
-
-                            //app.items.dialogProgress.setText('0% из 100%');
-
-                        }, 10000);
-
-                        //app.items.save(0);
+                        app.items.save(0);
 
                     },
                     error: function () {
