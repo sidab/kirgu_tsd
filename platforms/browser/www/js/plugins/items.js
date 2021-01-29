@@ -145,7 +145,7 @@ items = {
                     }
                 });*/
 
-                app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+                /*app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
 
                 app.request.json(url).then((response) => {
 
@@ -165,7 +165,31 @@ items = {
 
                     alert(error.message);
 
-                });
+                });*/
+
+                app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+
+                let request = new XMLHttpRequest();
+
+                request.open('GET', url);
+
+                request.onreadystatechange = function () {
+
+                    if (request.readyState === 4) {
+
+                        app.items.data = JSON.parse(request.responseText);
+
+                        app.items.dialogProgress.setTitle('Сохранение данных...');
+
+                        app.items.dialogProgress.setText('0% из 100%');
+
+                        app.items.save(0);
+
+                    }
+
+                };
+
+                request.send();
 
             },
             save: function (i) {
