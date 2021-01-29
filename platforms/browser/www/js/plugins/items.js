@@ -101,7 +101,7 @@ items = {
 
                 }
 
-                app.request({
+                /*app.request({
                     url: encodeURI(url),
                     dataType: 'json',
                     async: false,
@@ -143,6 +143,28 @@ items = {
                         app.dialog.alert('При загрузке возникла ошибка.', 'Ошибка!');
 
                     }
+                });*/
+
+                app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+
+                app.request.json(url).then((response) => {
+
+                    app.items.data = response.data;
+
+                    app.items.dialogProgress.setTitle('Сохранение данных...');
+
+                    app.items.dialogProgress.setText('0% из 100%');
+
+                    app.items.save(0);
+
+                }).catch(function (error) {
+
+                    alert(error.xhr);
+
+                    alert(error.status);
+
+                    alert(error.message);
+
                 });
 
             },

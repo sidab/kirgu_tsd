@@ -53,7 +53,7 @@ $(document).on('deviceready', function () {
     app.init();
 
     app.request.setup({
-        crossDomain: true,
+        //crossDomain: true,
         beforeSend: function (xhr) {
 
             if (app.params.backend === 'http://192.168.215.10/murad/hs/tsd') {
