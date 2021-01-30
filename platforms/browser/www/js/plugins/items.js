@@ -38,7 +38,7 @@ items = {
 
                                 app.items.type = 'Полная база';
 
-                                app.items.load();
+                                app.items.load(1);
 
                             }
                         },
@@ -62,7 +62,7 @@ items = {
 
                     app.items.data = false;
 
-                    app.items.load(app.items.type);
+                    app.items.load(1);
 
                     return false;
 
@@ -75,9 +75,9 @@ items = {
                 });
 
             },
-            load: function () {
+            load: function (pageNum) {
 
-                if (app.items.data.length > 0) {
+                if (pageNum < 2 && app.items.data.length > 0) {
 
                     app.items.delete(0);
 
@@ -89,13 +89,13 @@ items = {
 
                 if (app.items.type == 'Остатки отдела') {
 
-                    url = 'http://192.168.200.110/tsd/items.php?login=' + app.user.data.code + '&type=otdel';
+                    url = app.params.backend + '/all_goods/' + app.user.data.code;
 
                     //url = app.params.backend + '/all_goods/' + app.user.data.code;
 
                 } else if (app.items.type == 'Полная база') {
 
-                    url = 'http://192.168.200.110/tsd/items.php?login=' + app.user.data.code + '&type=full';
+                    url = app.params.backend + '/all_goods_kirgu/' + app.user.data.code + '/' + pageNum;
 
                     //url = app.params.backend + '/all_goods_kirgu/' + app.user.data.code;
 
@@ -106,39 +106,79 @@ items = {
                     dataType: 'json',
                     beforeSend: function (xhr) {
 
-                        app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
+                        if (pageNum < 2) {
 
-                        xhr.addEventListener('progress', function (progressInfo) {
+                            app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
 
-                            let total = Number(xhr.getResponseHeader('Content-Type'));
-
-                            let progress = (progressInfo.loaded / total) * 100;
-
-                            if (progress > 0) {
-
-                                app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
-
-                            }
-
-                        }, false);
+                        }
 
                     },
-                    success: function (response) {
+                    success: function (response, status, xhr) {
 
-                        app.items.data = response;
+                        if (pageNum < 2) {
 
-                        app.items.dialogProgress.setTitle('Сохранение данных...');
+                            let itemsCount = Number(xhr.getResponseHeader('Content-Type'));
 
-                        app.items.dialogProgress.setText('0% из 100%');
+                            app.items.onePartSize = encodeURI( JSON.stringify(response) ).split(/%..|./).length - 1;
 
-                        app.items.save(0);
+                            app.items.totalSize = (app.items.onePartSize / 20000) * itemsCount;
+
+                        }
+
+                        let total = app.items.totalSize;
+
+                        let loaded = app.items.onePartSize * pageNum;
+
+                        let progress = (loaded / total) * 100;
+
+                        if (progress > 0) {
+
+                            app.items.dialogProgress.setText(progress.toFixed(0) + '% из 100%');
+
+                        }
+
+                        if (app.items.data.length > 0) {
+
+                            app.items.data = app.items.data.concat(response);
+
+                        } else {
+
+                            app.items.data = response;
+
+                        }
+
+                        if (response.length >= 20000) {
+
+                            app.items.load(pageNum + 1);
+
+                        } else {
+
+                            app.items.dialogProgress.setTitle('Сохранение данных...');
+
+                            app.items.dialogProgress.setText('0% из 100%');
+
+                            app.items.save(0);
+
+                        }
 
                     },
                     error: function () {
 
-                        app.items.dialogProgress.close();
+                        if (pageNum> 1) {
 
-                        app.dialog.alert('При загрузке возникла ошибка.', 'Ошибка!');
+                            app.items.dialogProgress.setTitle('Сохранение данных...');
+
+                            app.items.dialogProgress.setText('0% из 100%');
+
+                            app.items.save(0);
+
+                        } else {
+
+                            app.items.dialogProgress.close();
+
+                            app.dialog.alert('При загрузке возникла ошибка.', 'Ошибка!');
+
+                        }
 
                     }
                 });
