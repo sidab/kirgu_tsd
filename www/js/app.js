@@ -12,7 +12,7 @@ app = new Framework7({
     version: 1.0,
     init: false,
     routes: routes,
-    backend:'http://192.168.200.110/proxy.php?url=http://192.168.215.10/murad/hs/tsd',
+    backend:'http://192.168.200.110/proxy.php?url=http://192.168.215.9/sad/hs/tsd',
     //backend:'http://176.120.211.250/proxy.php?url=http://192.168.215.10/murad/hs/tsd',
     //backend:'http://192.168.215.10/murad/hs/tsd',
     view: {

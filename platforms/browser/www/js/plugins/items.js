@@ -77,7 +77,7 @@ items = {
             },
             load: function (pageNum) {
 
-                if (pageNum < 2 && app.items.data.length > 0) {
+                if (pageNum === 1 && app.items.data.length > 0) {
 
                     app.items.delete(0);
 
@@ -101,12 +101,13 @@ items = {
 
                 }
 
-                app.request({
+                let request = app.request({
                     url: encodeURI(url),
                     dataType: 'json',
+                    cache: false,
                     beforeSend: function (xhr) {
 
-                        if (pageNum < 2) {
+                        if (!pageNum || pageNum === 1) {
 
                             app.items.dialogProgress = app.dialog.progress('Загрузка базы...');
 
@@ -115,7 +116,9 @@ items = {
                     },
                     success: function (response, status, xhr) {
 
-                        if (pageNum < 2) {
+                        request = null;
+
+                        if (pageNum === 1) {
 
                             let itemsCount = Number(xhr.getResponseHeader('Content-Type'));
 
@@ -139,15 +142,15 @@ items = {
 
                         if (app.items.data.length > 0) {
 
-                            app.items.data = app.items.data.concat(response);
+                            //app.items.data = app.items.data.concat(response);
 
                         } else {
 
-                            app.items.data = response;
+                            //app.items.data = response;
 
                         }
 
-                        if (response.length >= 20000) {
+                        if (response.length === 20000) {
 
                             app.items.load(pageNum + 1);
 
@@ -164,7 +167,7 @@ items = {
                     },
                     error: function () {
 
-                        if (pageNum> 1) {
+                        if (pageNum > 1) {
 
                             app.items.dialogProgress.setTitle('Сохранение данных...');
 
