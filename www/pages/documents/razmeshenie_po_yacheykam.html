@@ -502,25 +502,19 @@
 
                 if (item) {
 
-                    app.dialog.confirm('Штрихкод не найден в документе, но найден в базе, добавить его в документ?', '', function () {
+                    item.КоличествоСобрано = 0;
 
-                        item.КоличествоСобрано = 0;
+                    item.ДобавленИзБазы = true;
 
-                        item.ДобавленИзБазы = true;
+                    document.Строки.push(item);
 
-                        document.Строки.push(item);
+                    saveDocument(function () {
 
-                        saveDocument(function () {
-
-                            openAccordion(item.Штрихкод);
-
-                        });
+                        openAccordion(item.Штрихкод);
 
                     });
 
                 }
-
-                return false;
 
             }
 

@@ -492,6 +492,32 @@
 
             });
 
+            if (!item) {
+
+                item = app.items.data.find(function (item) {
+
+                    return item.Штрихкод == barcode;
+
+                });
+
+                if (item) {
+
+                    item.КоличествоСобрано = 0;
+
+                    item.ДобавленИзБазы = true;
+
+                    document.Строки.push(item);
+
+                    saveDocument(function () {
+
+                        openAccordion(item.Штрихкод);
+
+                    });
+
+                }
+
+            }
+
             if (item) {
 
                 openAccordion(item.Штрихкод);

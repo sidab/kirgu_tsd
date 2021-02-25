@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/js/plugins/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/js/plugins/items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/js/plugins/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/js/plugins/items.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/otbor_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/otbor_po_yacheykam.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/razmeshenie_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/razmeshenie_po_yacheykam.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages/documents/otbor_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/otbor_po_yacheykam.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/pages/documents/razmeshenie_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/razmeshenie_po_yacheykam.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,14 +87,7 @@
       <workItem from="1611735759341" duration="10997000" />
       <workItem from="1611927579740" duration="4423000" />
       <workItem from="1612006919186" duration="986000" />
-      <workItem from="1614153833296" duration="3489000" />
-    </task>
-    <task id="LOCAL-00011" summary="fix">
-      <created>1610022275559</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1610022275559</updated>
+      <workItem from="1614153833296" duration="3753000" />
     </task>
     <task id="LOCAL-00012" summary="fix">
       <created>1610022365857</created>
@@ -431,7 +425,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614174122629</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="fix">
+      <created>1614235733533</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1614235733533</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -450,10 +451,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1614174122329">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1614235733268">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614174122329" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614235733268" />
     <state width="1899" height="436" key="GridCell.Tab.0.bottom" timestamp="1614233588843">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
@@ -498,10 +499,10 @@
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1614174126527">
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1614235737061">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614174126527" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614235737061" />
     <state x="-1253" y="295" width="586" height="490" key="find.popup" timestamp="1612422030050">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
