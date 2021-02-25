@@ -142,11 +142,11 @@ items = {
 
                         if (app.items.data.length > 0) {
 
-                            //app.items.data = app.items.data.concat(response);
+                            app.items.data = app.items.data.concat(response);
 
                         } else {
 
-                            //app.items.data = response;
+                            app.items.data = response;
 
                         }
 
