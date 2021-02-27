@@ -508,6 +508,8 @@
 
                     document.Строки.push(item);
 
+                    $update();
+
                     saveDocument(function () {
 
                         openAccordion(item.Штрихкод);
@@ -517,6 +519,8 @@
                 }
 
             }
+
+            $update();
 
             if (item) {
 
@@ -590,6 +594,8 @@
                        return $item;
 
                    });
+
+                    $update();
 
                    saveDocument(function () {
 
