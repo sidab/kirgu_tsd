@@ -3,8 +3,36 @@
   <component name="ChangeListManager">
     <list default="true" id="064e3c60-e3bb-4ea1-b209-a4de5edd508e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/pages/documents/razmeshenie_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/pages/documents/razmeshenie_po_yacheykam.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/pages/documents/razmeshenie_po_yacheykam.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages/documents/razmeshenie_po_yacheykam.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.appveyor.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.eslintrc.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.github/ISSUE_TEMPLATE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.github/ISSUE_TEMPLATE/BUG_REPORT.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.github/ISSUE_TEMPLATE/SUPPORT_QUESTION.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.ratignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/NOTICE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/RELEASENOTES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/plugin.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/browser/Vibration.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/ios/CDVVibration.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/ios/CDVVibration.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/windows/Vibration/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/windows/Vibration/Vibration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/windows/Vibration/Vibration.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/src/windows/VibrationProxy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/tests/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/tests/plugin.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/tests/tests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/types/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cordova-plugin-vibration/www/vibration.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,14 +113,9 @@
       <workItem from="1611735759341" duration="10997000" />
       <workItem from="1611927579740" duration="4423000" />
       <workItem from="1612006919186" duration="986000" />
-      <workItem from="1614153833296" duration="7175000" />
-    </task>
-    <task id="LOCAL-00016" summary="fix">
-      <created>1610101378013</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1610101378013</updated>
+      <workItem from="1614153833296" duration="8427000" />
+      <workItem from="1615464800094" duration="1714000" />
+      <workItem from="1615558754353" duration="1046000" />
     </task>
     <task id="LOCAL-00017" summary="fix">
       <created>1610105709023</created>
@@ -430,7 +453,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615443618513</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="fix">
+      <created>1615446010196</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1615446010197</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -449,59 +479,59 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="104" y="62" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.800/-1920.23.1920.1057@0.0.1280.800" timestamp="1608530426144" />
-    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1615443618225">
+    <state x="-1376" y="122" key="CommitChangelistDialog2" timestamp="1615446009803">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614406267427" />
+    <state x="-1376" y="122" key="CommitChangelistDialog2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615446009803" />
     <state x="-1376" y="122" key="CommitChangelistDialog2/0.23.1280.777/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615443618225" />
-    <state width="1899" height="436" key="GridCell.Tab.0.bottom" timestamp="1615443604717">
-      <screen x="-1920" y="0" width="1920" height="1080" />
+    <state width="1899" height="436" key="GridCell.Tab.0.bottom" timestamp="1615458996859">
+      <screen x="-1920" y="23" width="1920" height="970" />
     </state>
-    <state width="1899" height="436" key="GridCell.Tab.0.bottom/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614322208628" />
+    <state width="1899" height="436" key="GridCell.Tab.0.bottom/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615451298426" />
     <state width="1899" height="802" key="GridCell.Tab.0.bottom/0.0.1280.800/-1920.23.1920.970@-1920.23.1920.970" timestamp="1610009901230" />
     <state width="1259" height="307" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1611598580088" />
     <state width="1899" height="436" key="GridCell.Tab.0.bottom/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1614319252141" />
     <state width="1259" height="406" key="GridCell.Tab.0.bottom/0.23.1280.690@0.23.1280.690" timestamp="1609689858475" />
     <state width="1899" height="436" key="GridCell.Tab.0.bottom/0.23.1280.777/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615443604717" />
-    <state width="1899" height="436" key="GridCell.Tab.0.bottom/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1614251105695" />
-    <state width="1899" height="436" key="GridCell.Tab.0.center" timestamp="1615443604711">
-      <screen x="-1920" y="0" width="1920" height="1080" />
+    <state width="1899" height="436" key="GridCell.Tab.0.bottom/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1615458996859" />
+    <state width="1899" height="436" key="GridCell.Tab.0.center" timestamp="1615458996844">
+      <screen x="-1920" y="23" width="1920" height="970" />
     </state>
-    <state width="1899" height="436" key="GridCell.Tab.0.center/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614322208626" />
+    <state width="1899" height="436" key="GridCell.Tab.0.center/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615451298424" />
     <state width="1899" height="802" key="GridCell.Tab.0.center/0.0.1280.800/-1920.23.1920.970@-1920.23.1920.970" timestamp="1610009901228" />
     <state width="1259" height="307" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1611598580085" />
     <state width="1899" height="436" key="GridCell.Tab.0.center/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1614319252139" />
     <state width="1259" height="406" key="GridCell.Tab.0.center/0.23.1280.690@0.23.1280.690" timestamp="1609689858473" />
     <state width="1899" height="436" key="GridCell.Tab.0.center/0.23.1280.777/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615443604707" />
-    <state width="1899" height="436" key="GridCell.Tab.0.center/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1614251105643" />
-    <state width="1899" height="436" key="GridCell.Tab.0.left" timestamp="1615443604699">
-      <screen x="-1920" y="0" width="1920" height="1080" />
+    <state width="1899" height="436" key="GridCell.Tab.0.center/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1615458996844" />
+    <state width="1899" height="436" key="GridCell.Tab.0.left" timestamp="1615458996843">
+      <screen x="-1920" y="23" width="1920" height="970" />
     </state>
-    <state width="1899" height="436" key="GridCell.Tab.0.left/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614322208625" />
+    <state width="1899" height="436" key="GridCell.Tab.0.left/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615451298422" />
     <state width="1899" height="802" key="GridCell.Tab.0.left/0.0.1280.800/-1920.23.1920.970@-1920.23.1920.970" timestamp="1610009901226" />
     <state width="1259" height="307" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1611598580083" />
     <state width="1899" height="436" key="GridCell.Tab.0.left/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1614319252138" />
     <state width="1259" height="406" key="GridCell.Tab.0.left/0.23.1280.690@0.23.1280.690" timestamp="1609689858472" />
     <state width="1899" height="436" key="GridCell.Tab.0.left/0.23.1280.777/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615443604699" />
-    <state width="1899" height="436" key="GridCell.Tab.0.left/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1614251105638" />
-    <state width="1899" height="436" key="GridCell.Tab.0.right" timestamp="1615443604715">
-      <screen x="-1920" y="0" width="1920" height="1080" />
+    <state width="1899" height="436" key="GridCell.Tab.0.left/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1615458996843" />
+    <state width="1899" height="436" key="GridCell.Tab.0.right" timestamp="1615458996846">
+      <screen x="-1920" y="23" width="1920" height="970" />
     </state>
-    <state width="1899" height="436" key="GridCell.Tab.0.right/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614322208627" />
+    <state width="1899" height="436" key="GridCell.Tab.0.right/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615451298425" />
     <state width="1899" height="802" key="GridCell.Tab.0.right/0.0.1280.800/-1920.23.1920.970@-1920.23.1920.970" timestamp="1610009901229" />
     <state width="1259" height="307" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1611598580087" />
     <state width="1899" height="436" key="GridCell.Tab.0.right/0.23.1280.690/-1920.23.1920.1057@-1920.23.1920.1057" timestamp="1614319252140" />
     <state width="1259" height="406" key="GridCell.Tab.0.right/0.23.1280.690@0.23.1280.690" timestamp="1609689858474" />
     <state width="1899" height="436" key="GridCell.Tab.0.right/0.23.1280.777/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615443604715" />
-    <state width="1899" height="436" key="GridCell.Tab.0.right/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1614251105675" />
+    <state width="1899" height="436" key="GridCell.Tab.0.right/0.23.1280.777/-1920.23.1920.970@-1920.23.1920.970" timestamp="1615458996846" />
     <state x="-1451" y="179" key="SettingsEditor" timestamp="1608533455535">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="-1451" y="179" key="SettingsEditor/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1608533455535" />
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1615443623759">
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2" timestamp="1615446013357">
       <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1614406271717" />
+    <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.0.1280.800/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615446013357" />
     <state x="-1360" y="280" key="Vcs.Push.Dialog.v2/0.23.1280.777/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1615443623759" />
     <state x="-1253" y="295" width="586" height="490" key="find.popup" timestamp="1612422030050">
       <screen x="-1920" y="0" width="1920" height="1080" />

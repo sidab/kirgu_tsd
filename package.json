@@ -16,10 +16,12 @@
       "cordova-plugin-vibration": {}
     },
     "platforms": [
-      "browser"
+      "browser",
+      "android"
     ]
   },
   "dependencies": {
+    "cordova-android": "8.1.0",
     "cordova-browser": "^6.0.0",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^5.0.0"
