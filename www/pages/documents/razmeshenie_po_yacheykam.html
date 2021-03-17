@@ -76,21 +76,21 @@
 
                             <div class="accordion-item-content">
 
-                                ${ (item.Ячейки && item.Ячейки.length > 0) && $h`
+                                ${(item.Ячейки && item.Ячейки.length > 0) ? $h`
 
                                     <div class="quantity margin">Количество: ${item.Количество}</div>
 
-                                    ${(item.ТоварВЯчейках) ? $h`
+                                    ${ (item.Ячейки) ? $h`
 
-                                        ${item.ТоварВЯчейках.map((cell) => $h`
+                                        ${item.Ячейки.map((cell) => $h`
 
-                                            <div class="cell margin padding-left row disabled">
+                                            <div class="cell margin padding-left row">
 
-                                                <div class="cell-name col">${cell.Ячейка}</div>
+                                                <div class="cell-name col">${cell.Наименование}</div>
 
                                                 <div class="cell-quantity col">
 
-                                                    <input type="number" data-id="${cell.Штрихкод}" value="${cell.Остаток}" />
+                                                    <input type="number" data-id="${cell.Штрихкод}" value="${cell.Количество}" />
 
                                                 </div>
 
@@ -100,29 +100,13 @@
 
                                     ` : ``}
 
-                                    ${item.Ячейки.map((cell) => $h`
+                                ` : ``}
 
-                                        <div class="cell margin padding-left row">
-
-                                            <div class="cell-name col">${cell.Наименование}</div>
-
-                                            <div class="cell-quantity col">
-
-                                                <input type="number" data-id="${cell.Штрихкод}" value="${cell.Количество}" />
-
-                                            </div>
-
-                                        </div>
-
-                                    `)}
-
-                                `}
-
-                                ${ (!item.Ячейки || item.Ячейки.length == 0) && $h`
+                                ${ (!item.Ячейки || item.Ячейки.length == 0) ? $h`
 
                                     <div class="margin">Для данного товара не заданы ячейки.</div>
 
-                                `}
+                                ` : ``}
 
                             </div>
 
@@ -252,6 +236,38 @@
                 return 0;
 
             });
+
+            for (let i = 0; i < items.length; i++) {
+
+                if (!items[i].Ячейки) {
+
+                    items[i].Ячейки = [];
+
+                }
+
+                let cells = items[i].ТоварВДокументе;
+
+                if (cells) {
+
+                    for (let j = 0; j < cells.length; j++) {
+
+                        let cell = items[i].Ячейки.find(function ($cell) {
+
+                            return $cell.Штрихкод === cells[j].Штрихкод;
+
+                        });
+
+                        if (!cell) {
+
+                            items[i].Ячейки.push(cells[j]);
+
+                        }
+
+                    }
+
+                }
+
+            }
 
             if (filter) {
 
@@ -642,10 +658,18 @@
 
             let url = app.params.backend + '/placement_in_cells_loadstr';
 
+            let $document = document;
+
+            for (let i = 0; i < $document.Строки.length; i++) {
+
+                document.Строки[i].ТоварВДокументе = document.Строки[i].Ячейки;
+
+            }
+
             let data = {
                 kontragent: false,
                 login: app.user.data.code,
-                document: document
+                document: $document
             };
 
             data = JSON.stringify(data);
@@ -664,12 +688,27 @@
                 },
                 success: function (response) {
 
-                    app.toast.create({
-                        text: 'Ваш запрос принят!',
-                        position: 'top',
-                        cssClass: 'bg-color-teal',
-                        closeTimeout: 2000
-                    }).open();
+                    try {
+
+                        let status = JSON.parse(response).Статус;
+
+                        app.toast.create({
+                            text: 'Ваш запрос принят!',
+                            position: 'top',
+                            cssClass: 'bg-color-teal',
+                            closeTimeout: 2000
+                        }).open();
+
+                    } catch (error) {
+
+                        app.toast.create({
+                            text: response,
+                            position: 'top',
+                            cssClass: 'bg-color-teal',
+                            closeTimeout: 4000
+                        }).open();
+
+                    }
 
                     $f7router.back('/main', {
                         force: true

@@ -1096,12 +1096,27 @@
                     },
                     success: function (response) {
 
-                        app.toast.create({
-                            text: 'Ваш запрос принят!',
-                            position: 'top',
-                            cssClass: 'bg-color-teal',
-                            closeTimeout: 2000
-                        }).open();
+                        try {
+
+                            let status = JSON.parse(response).Статус;
+
+                            app.toast.create({
+                                text: 'Ваш запрос принят!',
+                                position: 'top',
+                                cssClass: 'bg-color-teal',
+                                closeTimeout: 2000
+                            }).open();
+
+                        } catch (error) {
+
+                            app.toast.create({
+                                text: response,
+                                position: 'top',
+                                cssClass: 'bg-color-teal',
+                                closeTimeout: 4000
+                            }).open();
+
+                        }
 
                         $f7router.back('/main', {
                             force: true
