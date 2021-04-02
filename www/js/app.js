@@ -17,7 +17,7 @@ app = new Framework7({
     //backend:'http://192.168.215.10/murad/hs/tsd',
     view: {
         animate: false,
-        iosDynamicNavbar: false
+        iosDynamicNavbar: false,
     },
     dialog: {
         buttonOk: 'Ок',

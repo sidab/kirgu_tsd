@@ -18,7 +18,7 @@
     <preference name="FadeSplashScreen" value="false" />
     <preference name="SplashScreenBackgroundColor" value="0xffffffff" />
     <preference name="phonegap-version" value="cli-9.0.0" />
-    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-minSdkVersion" value="22" />
     <preference name="android-targetSdkVersion" value="29" />
     <preference name="InterceptRemoteRequests" value="all" />
 </widget>
